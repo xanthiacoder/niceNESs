@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lua-local",
+      "request": "launch",
+      "name": "Debug",
+      "program": {
+        "command": "/Applications/love-11.5a.app/Contents/MacOS/love"
+      },
+      "args": [
+        "game/",
+        "debug"
+      ],
+    },
+    {
+      "type": "lua-local",
+      "request": "launch",
+      "name": "Release",
+      "program": {
+        "command": "/Applications/love-11.5a.app/Contents/MacOS/love"
+      },
+      "args": [
+        "game/",
+      ],
+    },
+  ]
+}
