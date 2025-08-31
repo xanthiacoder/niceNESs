@@ -5,6 +5,9 @@ local runtimeLoader = require("runtime.loader")
 local json = require("lib.json")
 local ansi = require("lib.ansi")
 
+-- music libraries from Marc2o https://marc2o.github.io
+require("lib.Music")
+require("lib.WriteAiff")
 
 function love.load()
   https = runtimeLoader.loadHTTPS()

@@ -1,0 +1,59 @@
+Title     :                                                                     F1:help F2:load F3:save F4:play current edit window    Envelope (time)
+Composer  :                                                                     Pattern-[F5:build F6:play] Song-[F7:build F8:play]     attack, decay,
+Programer :                                                                                                                            sustain, release
+Copyright :                                                                     Instrument   Volume              Tone                  atk dec sus rel
+Melody    : A B C D -                                                           A Pulse    | ****************. | thin fat smooth taf | 999 999 999 999 *
+Harmony 1 : A B C D -                                                           B Pulse    | ********......... | thin fat smooth taf | 999 999 999 999 *
+Harmony 2 : A B C D -                                                           C Triangle |     on / off      |                     | 999 999 999 999 *
+Bass      : A B C D -                                                           D Sawtooth | ***************** |                     | 999 999 999 999 *
+Rhythm    : - - - - E  Tempo  : 999                                             E Noise    | ***********...... |                     | 999 999 999 999 *
+Patterns  : a b c d e f g h i j k l m n o p q r s t u v w x y z                                                                        Click * to reset
+Sequence  : 
+                             >5 ║       │       │       │       ║   [Common bass patterns] 
+[Bass Sequence]              >4 ║       │       │       │       ║   Click a pattern to load it, press F4 to hear it played with your bass sequence  
+The bass sequence in a song  >3 ║       │       │       │       ║     
+pattern is made up of 4      >2 ║       │       │       │       ║       4 Beat    3rd Count Mute          Basic Arp        Double Kick
+numbers (click to change)    >1 ║       │       │       │       ║       8 Beat    3rd Count Mute Kick     Basic Alt Arp    Kick and Return
+                              7 ║       │       │       │       ║       16 Beat   3rd Count Mute Return   Basic Long Arp   Double Return
+[9]  [9]  [9]  [9]            6 ║       │       │       │       ║   
+                              5 ║       │       │       │       ║   [Choosing the 4 numbers for your bass sequence]
+Each number above will play   4 ║       │       │       │       ║   Each number in music evokes a different feeling, with these general impressions
+the bass pattern drawn here   3 ║       │       │       │       ║   
+                              2 ║       │       │       │       ║   [1] - Feels grounded, positive, homebase, certain, resolved (start or end of majors)
+bass pattern start note ----> 1 ║       │       │       │       ║   [2] - In transition but with darker, deeper tones, going somewhere (lingering) 
+                             <7 ║       │       │       │       ║   [3] - Defiant tone, serious with a need to resolve on another number (usually not the end)
+bass octave : 9              <6 ║       │       │       │       ║   [4] - In transition, much lighter feel, uplifting, can plateau (lingering) 
+              ^              <5 ║       │       │       │       ║   [5] - Triumphant, reached the goal, positive feeling, top of the world
+              |              <4 ║       │       │       │       ║   [6] - Serious start, counterpart of [1] but with a deeper tone (start or end of minors)
+Smaller number, lower note   <3 ║       │       │       │       ║ 
+                             <2 ║       │       │       │       ║   Every number is paired up, having light/dark tones! [1 & 6] [4 & 2] [5 & 3]    
+                             <1 ║       │       │       │       ║   Experiment by mixing them around in the Bass Sequence to feel their impact in a chain
+
+                                |.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-.|.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-.|.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-.|.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-. (L32)
+                                | - ^ - ' - ^ - : - ^ - ' - ^ - | - ^ - ' - ^ - : - ^ - ' - ^ - | - ^ - ' - ^ - : - ^ - ' - ^ - | - ^ - ' - ^ - : - ^ - ' - ^ -  (L16)
+                                |   ^   '   ^   :   ^   '   ^   |   ^   '   ^   :   ^   '   ^   |   ^   '   ^   :   ^   '   ^   |   ^   '   ^   :   ^   '   ^    (L8)
+                                |       '       :       '       |       '       :       '       |       '       :       '       |       '       :       '        (L4)
+                                |               :               |               :               |               :               |               :                (L2)
+                                |                               |                               |                               |                                (L1)
+                                +-------------------------------+-------------------------------+-------------------------------+-------------------------------
+0---------1---------2---------3---------4---------5---------6---------7---------8---------9---------0---------1---------2---------3---------4---------5---------
+
+
+T---------------------------------------T---------------------------------------T---------------------------------------T---------------------------------------
+
+
+Basic 4 Beat - L L L L
+Basic 8 Beat - LL LL LL LL
+Basic 16 Beat - LLLL LLLL LLLL LLLL
+
+3rd Count Mute - L L - L
+3rd Count Mute Kick - L L - L-H
+3rd Count Mute Return - L L - L-H-L 
+
+Double Kick - L L-H, L-H
+Kick and Return - L L-H, L-H-L
+Double Return - L L-H-L, L L-H-L 
+
+Basic Arp - L-M-H-M-H-M-H-M 
+Basic Alt Arp - L-H-M-H-M-H-M-H 
+Basic long Arp - L-M-H-9-10-9-H-M
