@@ -1,0 +1,25 @@
+0---------1---------2---------3---------4---------5---------6---------7---------8---------9---------0---------1---------2---------3---------4---------5---------
+
+
+ /88888888888888888888888888888888888888888888888888888888888\
+| o HHHHHHHHHHHHHhhhhhhhhhhhhhhhhh......................... o |  
+|HH. +---+                                                 .HH| 
+|HH. | B | ----------------------------------------------  .HH|  
+|HH. +---+                                   [ ]IN [ ]OUT  .HH|  
+|HH.HHHHHHHHHHHHHHHHHHHH"""""""""""""""HHHHHHHHHHHHHHHHHHHH.HH|
+|HH.HHHHHHHH   i   HHHHH               HHHHH \   / HHHHHHHH.HH| 
+|HH.HHHHHHH -     - HHHH   | | | | |   HHHH         HHHHHHH.HH| 
+|HH.HHHHHHHH   i   HHHHH               HHHHH /   \ HHHHHHHH.HH|
+|HH.HHHHHHHHHHHHHHHHHHHH,,,,,,,,,,,,,,,HHHHHHHHHHHHHHHHHHHH.HH| 
+|HH.                                              ^        .HH|
+6HH.   SDK             High Bias 70us EQ        / - \ 90   .HH9
+HHH.HHHHHHHH7/ HHHHHHHHHHhhh.....................\ HHHHHHHH.HHH
+0HH.HHHHHHH7/ HHHHH( )hhh,,,,,,,,,,,,,,,,( ),,,,,,\ HHHHHHH.HH0
+| o HHHHHH7/ HH( )hhh;;;;;;;;;;;;;;;;;;;;;;;;( );;;\ HHHHHH o |  
+ \--------g_________________________________________g -------/
+
+                                                 [Press RETURN]
+
+
+-- would be fun if the window was animated and styled like a cassette tape on B-side
+

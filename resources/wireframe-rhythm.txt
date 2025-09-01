@@ -1,12 +1,12 @@
-Title     :                                                                     F1:help F2:load F3:save F4:                            Envelope (time)
+Title     :                                                                     F1:help F2:load F3:save F4:play current edit window    Envelope (time)
 Composer  :                                                                     Pattern-[F5:build F6:play] Song-[F7:build F8:play]     attack, decay,
-Programer :                                                                                                                            sustain, release
+Programer :                                                                     F9:about/help F10:quit                                 sustain, release
 Copyright :                                                                     Instrument   Volume              Tone                  atk dec sus rel
-Melody    : A B C D -                                                           A Pulse    | ****************. | thin fat smooth taf | 999 999 999 999 *
-Harmony 1 : A B C D -                                                           B Pulse    | ********......... | thin fat smooth taf | 999 999 999 999 *
-Harmony 2 : A B C D -                                                           C Triangle |     on / off      |                     | 999 999 999 999 *
-Bass      : A B C D -                                                           D Sawtooth | ***************** |                     | 999 999 999 999 *
-Rhythm    : - - - - E  Tempo  : 999                                             E Noise    | ***********...... |                     | 999 999 999 999 *
+Melody    : A B C D -                                                           A Pulse    | ****************. | thin fat smooth taf | 999 999 999 999 *  %
+Harmony 1 : A B C D -                                                           B Pulse    | ********......... | thin fat smooth taf | 999 999 999 999 *  %
+Harmony 2 : A B C D -                                                           C Triangle |     on / off      |                     | 999 999 999 999 *  %
+Bass      : A B C D -                                                           D Sawtooth | ***************** |                     | 999 999 999 999 *  %
+Rhythm    : - - - - E  Tempo  : 999                                             E Noise    | ***********...... |                     | 999 999 999 999 *  %
 Patterns  : a b c d e f g h i j k l m n o p q r s t u v w x y z                                                                        Click * to reset
 Sequence  : 
                              >5 ║       │       │       │       ║       │       │       │       ║       │       │       │       ║       │       │       │       
@@ -28,6 +28,22 @@ the middle of a piano.       <5 ║       │       │       │       ║     
                              <3 ║       │       │       │       ║       │       │       │       ║       │       │       │       ║       │       │       │       
                              <2 ║       │       │       │       ║       │       │       │       ║       │       │       │       ║       │       │       │       
                              <1 ║       │       │       │       ║       │       │       │       ║       │       │       │       ║       │       │       │       
++-[Walkthrough Guide]-----------------------------------------------------------+-[MML Preview]----------------------------------------------------------------+
+0.........1.........2.........3.........4.........5.........6.........7.........0.........1.........2.........3.........4.........5.........6.........7.........
+|.                                                                              | t999                                                                         |
+|.                                                                              |                                                                              |
+|.                                                                              | @env0 = { 999, 999, 999, 999 }                                               |
+|.                                                                              |                                                                              |
+|.                                                                              | A @02 o3 l16 @env0 v120                                                      |
+|.                                                                              | c d e g >c d e g >c d e g >c d e g >c <g e d c <g e d c <g e d c <g e d      |
+|.                                                                              |                                                                              |
+|.                                                                              |                                                                              |
+|10                                                                             |                                                                              |
+|.                                                                              |                                                                              |
+|.                                                                              |                                                                              |
++-------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+[ App name, version, version comment | Time elapsed for current project | Creation date | Last modified date                                                   ]
+
 
                                 |.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-.|.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-.|.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-.|.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-. (L32)
                                 | - ^ - ' - ^ - : - ^ - ' - ^ - | - ^ - ' - ^ - : - ^ - ' - ^ - | - ^ - ' - ^ - : - ^ - ' - ^ - | - ^ - ' - ^ - : - ^ - ' - ^ -  (L16)

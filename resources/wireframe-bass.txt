@@ -1,33 +1,56 @@
 Title     :                                                                     F1:help F2:load F3:save F4:play current edit window    Envelope (time)
 Composer  :                                                                     Pattern-[F5:build F6:play] Song-[F7:build F8:play]     attack, decay,
-Programer :                                                                                                                            sustain, release
+Programer :                                                                     F9:about/help F10:quit                                 sustain, release
 Copyright :                                                                     Instrument   Volume              Tone                  atk dec sus rel
-Melody    : A B C D -                                                           A Pulse    | ****************. | thin fat smooth taf | 999 999 999 999 *
-Harmony 1 : A B C D -                                                           B Pulse    | ********......... | thin fat smooth taf | 999 999 999 999 *
-Harmony 2 : A B C D -                                                           C Triangle |     on / off      |                     | 999 999 999 999 *
-Bass      : A B C D -                                                           D Sawtooth | ***************** |                     | 999 999 999 999 *
-Rhythm    : - - - - E  Tempo  : 999                                             E Noise    | ***********...... |                     | 999 999 999 999 *
+Melody    : A B C D -                                                           A Pulse    | ****************. | thin fat smooth taf | 999 999 999 999 *  %
+Harmony 1 : A B C D -                                                           B Pulse    | ********......... | thin fat smooth taf | 999 999 999 999 *  %
+Harmony 2 : A B C D -                                                           C Triangle |     on / off      |                     | 999 999 999 999 *  %
+Bass      : A B C D -                                                           D Sawtooth | ***************** |                     | 999 999 999 999 *  %
+Rhythm    : - - - - E  Tempo  : 999                                             E Noise    | ***********...... |                     | 999 999 999 999 *  %
 Patterns  : a b c d e f g h i j k l m n o p q r s t u v w x y z                                                                        Click * to reset
-Sequence  : 
-                             >5 ║       │       │       │       ║   [Common bass patterns] 
-[Bass Sequence]              >4 ║       │       │       │       ║   Click a pattern to load it, press F4 to hear it played with your bass sequence  
-The bass sequence in a song  >3 ║       │       │       │       ║     
-pattern is made up of 4      >2 ║       │       │       │       ║       4 Beat    3rd Count Mute          Basic Arp        Double Kick
-numbers (click to change)    >1 ║       │       │       │       ║       8 Beat    3rd Count Mute Kick     Basic Alt Arp    Kick and Return
-                              7 ║       │       │       │       ║       16 Beat   3rd Count Mute Return   Basic Long Arp   Double Return
-[9]  [9]  [9]  [9]            6 ║       │       │       │       ║   
-                              5 ║       │       │       │       ║   [Choosing the 4 numbers for your bass sequence]
-Each number above will play   4 ║       │       │       │       ║   Each number in music evokes a different feeling, with these general impressions
-the bass pattern drawn here   3 ║       │       │       │       ║   
-                              2 ║       │       │       │       ║   [1] - Feels grounded, positive, homebase, certain, resolved (start or end of majors)
-bass pattern start note ----> 1 ║       │       │       │       ║   [2] - In transition but with darker, deeper tones, going somewhere (lingering) 
-                             <7 ║       │       │       │       ║   [3] - Defiant tone, serious with a need to resolve on another number (usually not the end)
-bass octave : 9              <6 ║       │       │       │       ║   [4] - In transition, much lighter feel, uplifting, can plateau (lingering) 
-              ^              <5 ║       │       │       │       ║   [5] - Triumphant, reached the goal, positive feeling, top of the world
-              |              <4 ║       │       │       │       ║   [6] - Serious start, counterpart of [1] but with a deeper tone (start or end of minors)
-Smaller number, lower note   <3 ║       │       │       │       ║ 
-                             <2 ║       │       │       │       ║   Every number is paired up, having light/dark tones! [1 & 6] [4 & 2] [5 & 3]    
-                             <1 ║       │       │       │       ║   Experiment by mixing them around in the Bass Sequence to feel their impact in a chain
+Sequence  :
+                             >5 ║       │       │       │       ║   [Common bass patterns] Click a pattern to load it, F4 to play it with your bass sequence
+[Bass Sequence]              >4 ║       │       │       │       ║    
+The bass sequence in a song  >3 ║       │       │       │       ║     4 Beat    3rd Count Mute          Basic Arp        Double Kick       [clear pattern]  %
+pattern is made up of 4      >2 ║       │       │       │       ║     8 Beat    3rd Count Mute Kick     Basic Alt Arp    Kick and Return   [load  pattern]
+numbers (click to change)    >1 ║       │       │       │       ║     16 Beat   3rd Count Mute Return   Basic Long Arp   Double Return     [save  pattern]
+                              7 ║       │       │       │       ║
+   [9]  [9]  [9]  [9]  %      6 ║       │       │       │       ║   [Choosing the 4 numbers for your bass sequence]
+                              5 ║       │       │       │       ║   Each number in music evokes a different feeling, with these general impressions
+Each number above will play   4 ║       │       │       │       ║
+the bass pattern drawn here   3 ║       │       │       │       ║   [1] - Feels grounded, positive, homebase, certain, resolved (start or end of majors)
+                              2 ║       │       │       │       ║   [2] - In transition but with darker, deeper tones, going somewhere (lingering) 
+bass pattern start note ----> 1 ║       │       │       │       ║   [3] - Defiant tone, serious with a need to resolve on another number (usually not the end)
+                             <7 ║       │       │       │       ║   [4] - In transition, much lighter feel, uplifting, can plateau (lingering)
+bass octave : 9              <6 ║       │       │       │       ║   [5] - Triumphant, reached the goal, positive feeling, top of the world
+              ^              <5 ║       │       │       │       ║   [6] - Serious start, counterpart of [1] but with a deeper tone (start or end of minors)
+              |              <4 ║       │       │       │       ║
+Smaller number, lower note   <3 ║       │       │       │       ║   Every number is paired up, having light/dark tones! [1 & 6] [4 & 2] [5 & 3] 
+                             <2 ║       │       │       │       ║   Experiment by mixing them around in the Bass Sequence to feel their impact in a chain
+                             <1 ║       │       │       │       ║
++-[Walkthrough Guide]-----------------------------------------------------------+-[MML Preview]----------------------------------------------------------------+
+0.........1.........2.........3.........4.........5.........6.........7.........0.........1.........2.........3.........4.........5.........6.........7.........
+|.                                                                              | t999                                                                         |
+|.                                                                              |                                                                              |
+|.                                                                              | @env0 = { 999, 999, 999, 999 }                                               |
+|.                                                                              |                                                                              |
+|.                                                                              | A @02 o3 l16 @env0 v120                                                      |
+|.                                                                              | c d e g >c d e g >c d e g >c d e g >c <g e d c <g e d c <g e d c <g e d      |
+|.                                                                              |                                                                              |
+|.                                                                              |                                                                              |
+|10                                                                             |                                                                              |
+|.                                                                              |                                                                              |
+|.                                                                              |                                                                              |
++-------------------------------------------------------------------------------+------------------------------------------------------------------------------+
+[ App name, version, version comment | Time elapsed for current project | Creation date | Last modified date                                                   ]
+
+
+Dimensions for viewport 3 : 80 x 13 (including bottom line)
+Dimensions for viewport 4 : 80 x 13 (including bottom line)
+
+user-defined bass patterns (.bpat)
+
+
 
                                 |.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-.|.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-.|.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-.|.-^-.-.'.-.^.-.:.-.^.-.'.-.^.-. (L32)
                                 | - ^ - ' - ^ - : - ^ - ' - ^ - | - ^ - ' - ^ - : - ^ - ' - ^ - | - ^ - ' - ^ - : - ^ - ' - ^ - | - ^ - ' - ^ - : - ^ - ' - ^ -  (L16)
