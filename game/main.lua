@@ -48,9 +48,13 @@ game.selectBar = {  -- coordinates for selection background box
   ["width"] = 0,
 }
 game.selected = {
-  ["pattern"] = "", -- current selected pattern : a..z
+  ["pattern"] = "a", -- current selected pattern : a..z
 }
-game.textData = "" -- string to cache data captured from keyboard
+game.inputData = "" -- string to cache data captured from keyboard
+game.inputPrompt = "" -- prompt for data entry
+game.dataType = "" -- can be "int" "str"
+game.dataLength = 0 -- max length of data input
+
 
 -- detect system OS
 game.os = love.system.getOS() -- "OS X", "Windows", "Linux", "Android" or "iOS", "Web"
@@ -120,12 +124,117 @@ SML.patternName = {
   ["y"] = "name pattern",
   ["z"] = "name pattern",
 }
+SML.volume = {
+  ["a"] = {0,0,0,0,0},
+  ["b"] = {0,0,0,0,0},
+  ["c"] = {0,0,0,0,0},
+  ["d"] = {0,0,0,0,0},
+  ["e"] = {0,0,0,0,0},
+  ["f"] = {0,0,0,0,0},
+  ["g"] = {0,0,0,0,0},
+  ["h"] = {0,0,0,0,0},
+  ["i"] = {0,0,0,0,0},
+  ["j"] = {0,0,0,0,0},
+  ["k"] = {0,0,0,0,0},
+  ["l"] = {0,0,0,0,0},
+  ["m"] = {0,0,0,0,0},
+  ["n"] = {0,0,0,0,0},
+  ["o"] = {0,0,0,0,0},
+  ["p"] = {0,0,0,0,0},
+  ["q"] = {0,0,0,0,0},
+  ["r"] = {0,0,0,0,0},
+  ["s"] = {0,0,0,0,0},
+  ["t"] = {0,0,0,0,0},
+  ["u"] = {0,0,0,0,0},
+  ["v"] = {0,0,0,0,0},
+  ["w"] = {0,0,0,0,0},
+  ["x"] = {0,0,0,0,0},
+  ["y"] = {0,0,0,0,0},
+  ["z"] = {0,0,0,0,0},
+}
 
+SML.tempo = {
+  ["a"] = 120,
+  ["b"] = 120,
+  ["c"] = 120,
+  ["d"] = 120,
+  ["e"] = 120,
+  ["f"] = 120,
+  ["g"] = 120,
+  ["h"] = 120,
+  ["i"] = 120,
+  ["j"] = 120,
+  ["k"] = 120,
+  ["l"] = 120,
+  ["m"] = 120,
+  ["n"] = 120,
+  ["o"] = 120,
+  ["p"] = 120,
+  ["q"] = 120,
+  ["r"] = 120,
+  ["s"] = 120,
+  ["t"] = 120,
+  ["u"] = 120,
+  ["v"] = 120,
+  ["w"] = 120,
+  ["x"] = 120,
+  ["y"] = 120,
+  ["z"] = 120,
+}
 
+SML.envelope = {
+  ["a"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["b"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["c"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["d"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["e"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["f"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["g"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["h"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["i"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["j"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["k"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["l"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["m"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["n"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["o"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["p"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["q"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["r"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["s"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["t"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["u"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["v"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["w"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["x"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["y"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["z"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+}
+
+---Use when requiring text data from user
+---@param type string "int" "str"
+---@param prompt string
+---@param length integer
+function startDataEntry(type,prompt,length)
+  game.dataType = type
+  game.inputPrompt = prompt
+  game.dataLength = length
+  game.inputData = "" -- clear text data cache for data entry
+  game.dataEntry = true -- must set this first before setting selectBar, start capturing data from keyboard
+end
+
+function stopDataEntry()
+  game.inputData = "" -- clear data cache
+  game.inputPrompt = "" -- clear text prompt
+  game.dataLength = "" -- clear max text length
+  game.dataType = "" -- clear input data type
+  game.selectBar["x"] = 161 -- out of screen
+  game.selectBar["y"] = 46 -- out of screen
+end
 
 function love.textinput(t) -- called for every instance of text entry
-  if game.dataEntry == true then
-    game.textData = game.textData .. t
+  if game.dataEntry == true and #game.inputData < game.dataLength then
+    game.inputData = game.inputData .. t
   end
 end
 
@@ -200,10 +309,23 @@ function love.draw()
   love.graphics.print(MML.copyright,FONT_WIDTH*12,FONT_HEIGHT*3)
   love.graphics.print(MML.sequence,FONT_WIDTH*12,FONT_HEIGHT*10)
 
+
+  -- draw current pattern's tempo
+  love.graphics.setColor(color.brightcyan)
+  love.graphics.print(SML.tempo[game.selected["pattern"]],FONT_WIDTH*32,FONT_HEIGHT*8)
+
+  -- draw current pattern's volume levels
+  love.graphics.setColor(color.brightcyan)
+  love.graphics.rectangle("fill",FONT_WIDTH*94,(FONT_HEIGHT*4)+4,FONT_WIDTH*(SML.volume[game.selected["pattern"]][1]/8),FONT_HEIGHT/2)
+  love.graphics.rectangle("fill",FONT_WIDTH*94,(FONT_HEIGHT*5)+4,FONT_WIDTH*(SML.volume[game.selected["pattern"]][2]/8),FONT_HEIGHT/2)
+  love.graphics.rectangle("fill",FONT_WIDTH*94,(FONT_HEIGHT*7)+4,FONT_WIDTH*(SML.volume[game.selected["pattern"]][4]/8),FONT_HEIGHT/2)
+  love.graphics.rectangle("fill",FONT_WIDTH*94,(FONT_HEIGHT*8)+4,FONT_WIDTH*(SML.volume[game.selected["pattern"]][5]/8),FONT_HEIGHT/2)
+
   -- status bar
+  love.graphics.setColor(color.white)
   game.statusBar = game.name .. " " .. game.version .. " " .. game.edition .. " | "
   game.statusBar = game.statusBar .. mouse.x .. "," .. mouse.y .. " | "
-  game.statusBar = game.statusBar .. game.textData
+  game.statusBar = game.statusBar .. game.inputPrompt .. ": " .. game.inputData
   love.graphics.print(game.statusBar, FONT_WIDTH*1, FONT_HEIGHT*44)
 
 end
@@ -213,34 +335,26 @@ function love.update(dt)
 
   -- title selected
   if (game.selectBar["x"] == 0 and game.selectBar["y"] == 0) and game.dataEntry == false then
-    MML.title = game.textData
-    game.textData = "" -- clear data cache
-    game.selectBar["x"] = 161 -- out of screen
-    game.selectBar["y"] = 46 -- out of screen
+    MML.title = game.inputData
+    stopDataEntry()
   end
 
   -- composer selected
   if (game.selectBar["x"] == 0 and game.selectBar["y"] == 1) and game.dataEntry == false then
-    MML.composer = game.textData
-    game.textData = "" -- clear data cache
-    game.selectBar["x"] = 161 -- out of screen
-    game.selectBar["y"] = 46 -- out of screen
+    MML.composer = game.inputData
+    stopDataEntry()
   end
 
   -- programmer selected
   if (game.selectBar["x"] == 0 and game.selectBar["y"] == 2) and game.dataEntry == false then
-    MML.programmer = game.textData
-    game.textData = "" -- clear data cache
-    game.selectBar["x"] = 161 -- out of screen
-    game.selectBar["y"] = 46 -- out of screen
+    MML.programmer = game.inputData
+    stopDataEntry()
   end
 
   -- copyright selected
   if (game.selectBar["x"] == 0 and game.selectBar["y"] == 3) and game.dataEntry == false then
-    MML.copyright = game.textData
-    game.textData = "" -- clear data cache
-    game.selectBar["x"] = 161 -- out of screen
-    game.selectBar["y"] = 46 -- out of screen
+    MML.copyright = game.inputData
+    stopDataEntry()
   end
 
 
@@ -261,7 +375,7 @@ function love.keypressed(key, scancode, isrepeat)
 
   -- user entered backspace to edit data entry
   if key == "backspace" and game.dataEntry == true then
-    game.textData = string.sub(game.textData,1,#game.textData-1)
+    game.inputData = string.sub(game.inputData,1,#game.inputData-1)
   end
 
   -- user entered RETURN to end data entry
@@ -719,6 +833,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 92
       game.selectBar["y"] = 4
       game.selectBar["width"] = 19
+      SML.volume[game.selected["pattern"]][1] = (mouse.x-94)*8
   end
 
   -- B Volume
@@ -726,6 +841,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 92
       game.selectBar["y"] = 5
       game.selectBar["width"] = 19
+      SML.volume[game.selected["pattern"]][2] = (mouse.x-94)*8
   end
 
   -- C Volume
@@ -740,6 +856,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 92
       game.selectBar["y"] = 7
       game.selectBar["width"] = 19
+      SML.volume[game.selected["pattern"]][4] = (mouse.x-94)*8
   end
 
   -- E Volume
@@ -747,6 +864,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 92
       game.selectBar["y"] = 8
       game.selectBar["width"] = 19
+      SML.volume[game.selected["pattern"]][5] = (mouse.x-94)*8
   end
 
 
@@ -808,29 +926,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- meta area detection
   if mouse.x <= 10 and mouse.y <= 11 then -- top left corner
     if mouse.y == 1 then -- Title clicked
-      game.textData = "" -- clear text data cache for data entry
-      game.dataEntry = true -- must set this first before setting selectBar, start capturing data from keyboard
+      startDataEntry("str","Enter title of music", 66)
       game.selectBar["x"] = 0
       game.selectBar["y"] = 0
       game.selectBar["width"] = 10
     end
     if mouse.y == 2 then -- Composer clicked
-      game.textData = "" -- clear text data cache for data entry
-      game.dataEntry = true -- must set this first before setting selectBar, start capturing data from keyboard
+      startDataEntry("str","Enter composer of music", 66)
       game.selectBar["x"] = 0
       game.selectBar["y"] = 1
       game.selectBar["width"] = 10
     end
     if mouse.y == 3 then -- Programmer clicked
-      game.textData = "" -- clear text data cache for data entry
-      game.dataEntry = true -- must set this first before setting selectBar, start capturing data from keyboard
+      startDataEntry("str","Enter programmer of music", 66)
       game.selectBar["x"] = 0
       game.selectBar["y"] = 2
       game.selectBar["width"] = 10
     end
     if mouse.y == 4 then -- Copyright clicked
-      game.textData = "" -- clear text data cache for data entry
-      game.dataEntry = true -- must set this first before setting selectBar, start capturing data from keyboard
+      startDataEntry("str","Enter copyright of music", 66)
       game.selectBar["x"] = 0
       game.selectBar["y"] = 3
       game.selectBar["width"] = 10
