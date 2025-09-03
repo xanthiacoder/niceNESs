@@ -1,2 +1,27 @@
 -- To have consistent, uniform color-coding for easy, intuitive use
 
+bright green - labels
+dark green   - sub-labels
+
+bright yellow - keys
+
+bright red - 
+
+bright magenta - Instruments
+
+bright blue - 
+
+bright cyan - clickable items (active / selected)
+dark cyan   - clickable items (inactive / unselected)
+
+bright white - text
+dark white   - borders / lines
+
+bright black (grey) - 
+
+
+Melody    - bright green
+Harmony 1 - bright yellow
+Harmony 2 - bright red
+Bass      - bright magenta
+Rhythm ?  - bright cyan
