@@ -46,3 +46,5 @@ HHH.HHHHHHHH7/ HHHHHHHHHHhhh.....................\ HHHHHHHH.HHH
 [animated png frames]
 ffmpeg -framerate 2 -i cassette_%d.png -pix_fmt yuv420p cassette.mp4
 
+cassette top line    - 46 chars space
+cassette bottom line - 33 chars space 

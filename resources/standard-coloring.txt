@@ -1,9 +1,11 @@
 -- To have consistent, uniform color-coding for easy, intuitive use
 
+FOREGROUND COLORS
+
 bright green - labels
 dark green   - sub-labels
 
-bright yellow - keys
+bright yellow - keyboard tips
 
 bright red - 
 
@@ -15,9 +17,7 @@ bright cyan - clickable items (active / selected)
 dark cyan   - clickable items (inactive / unselected)
 
 bright white - text
-dark white   - borders / lines
-
-bright black (grey) - 
+grey   - borders / lines
 
 
 Melody    - bright green
@@ -25,3 +25,7 @@ Harmony 1 - bright yellow
 Harmony 2 - bright red
 Bass      - bright magenta
 Rhythm ?  - bright cyan
+
+
+BACKGROUND COLORS
+current selection - 
