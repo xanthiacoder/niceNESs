@@ -183,32 +183,62 @@ SML.tempo = {
 }
 
 SML.envelope = {
-  ["a"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["b"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["c"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["d"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["e"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["f"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["g"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["h"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["i"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["j"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["k"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["l"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["m"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["n"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["o"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["p"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["q"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["r"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["s"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["t"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["u"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["v"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["w"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["x"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["y"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
-  ["z"] = {["A"] = {0,0,0,0}, ["B"] = {0,0,0,0}, ["C"] = {0,0,0,0}, ["D"] = {0,0,0,0}, ["E"] = {0,0,0,0}},
+  ["a"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["b"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["c"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["d"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["e"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["f"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["g"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["h"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["i"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["j"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["k"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["l"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["m"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["n"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["o"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["p"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["q"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["r"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["s"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["t"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["u"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["v"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["w"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["x"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["y"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+  ["z"] = {["A"] = {2,16,64,48}, ["B"] = {2,32,72,50}, ["C"] = {2,32,72,50}, ["D"] = {8,32,72,64}, ["E"] = {1,4,4,2}},
+}
+
+-- valid values are 0..3
+SML.tone = {
+  ["a"] = {["A"] = 0,["B"] = 0},
+  ["b"] = {["A"] = 0,["B"] = 0},
+  ["c"] = {["A"] = 0,["B"] = 0},
+  ["d"] = {["A"] = 0,["B"] = 0},
+  ["e"] = {["A"] = 0,["B"] = 0},
+  ["f"] = {["A"] = 0,["B"] = 0},
+  ["g"] = {["A"] = 0,["B"] = 0},
+  ["h"] = {["A"] = 0,["B"] = 0},
+  ["i"] = {["A"] = 0,["B"] = 0},
+  ["j"] = {["A"] = 0,["B"] = 0},
+  ["k"] = {["A"] = 0,["B"] = 0},
+  ["l"] = {["A"] = 0,["B"] = 0},
+  ["m"] = {["A"] = 0,["B"] = 0},
+  ["n"] = {["A"] = 0,["B"] = 0},
+  ["o"] = {["A"] = 0,["B"] = 0},
+  ["p"] = {["A"] = 0,["B"] = 0},
+  ["q"] = {["A"] = 0,["B"] = 0},
+  ["r"] = {["A"] = 0,["B"] = 0},
+  ["s"] = {["A"] = 0,["B"] = 0},
+  ["t"] = {["A"] = 0,["B"] = 0},
+  ["u"] = {["A"] = 0,["B"] = 0},
+  ["v"] = {["A"] = 0,["B"] = 0},
+  ["w"] = {["A"] = 0,["B"] = 0},
+  ["x"] = {["A"] = 0,["B"] = 0},
+  ["y"] = {["A"] = 0,["B"] = 0},
+  ["z"] = {["A"] = 0,["B"] = 0},
 }
 
 ---Use when requiring text data from user
@@ -275,6 +305,11 @@ function love.draw()
   love.graphics.setColor(color.blue)
   love.graphics.rectangle("fill",FONT_WIDTH*game.selectBar["x"],FONT_HEIGHT*game.selectBar["y"],FONT_WIDTH*game.selectBar["width"],FONT_HEIGHT)
 
+  -- highlight current selected pattern
+  love.graphics.setColor(color.blue)
+  local patternX = 11 + ((string.byte(game.selected["pattern"])-97)*2)
+  love.graphics.rectangle("fill",FONT_WIDTH*patternX,FONT_HEIGHT*9,FONT_WIDTH*3,FONT_HEIGHT)
+
   -- draw xtui stuff
     love.graphics.setFont(monoFont)
     love.graphics.setLineWidth(1)
@@ -285,6 +320,12 @@ function love.draw()
     -- manual draw for new function Name Patterns
     love.graphics.setColor(color.cyan)
     love.graphics.print("(name pattern)",FONT_WIDTH*65,FONT_HEIGHT*9)
+
+    -- manual draw for [copy previous pattern's settings] 92,10 (only for patterns after [a])
+    if string.byte(game.selected["pattern"]) >97 then
+      love.graphics.setColor(color.cyan)
+      love.graphics.print("[copy previous pattern settings]",FONT_WIDTH*91,FONT_HEIGHT*9)
+    end
 
     love.graphics.setColor(color.white)
     love.graphics.print(instrumentsPanel,1280/2,0) -- instruments panel
@@ -320,18 +361,75 @@ function love.draw()
   love.graphics.rectangle("fill",FONT_WIDTH*94,(FONT_HEIGHT*5)+4,FONT_WIDTH*(SML.volume[game.selected["pattern"]][2]/8),FONT_HEIGHT/2)
   love.graphics.rectangle("fill",FONT_WIDTH*94,(FONT_HEIGHT*7)+4,FONT_WIDTH*(SML.volume[game.selected["pattern"]][4]/8),FONT_HEIGHT/2)
   love.graphics.rectangle("fill",FONT_WIDTH*94,(FONT_HEIGHT*8)+4,FONT_WIDTH*(SML.volume[game.selected["pattern"]][5]/8),FONT_HEIGHT/2)
+  if SML.volume[game.selected["pattern"]][3] == 1 then
+    love.graphics.print("on",FONT_WIDTH*103,FONT_HEIGHT*6)
+  else
+    love.graphics.print("off",FONT_WIDTH*97,FONT_HEIGHT*6)
+  end
+
+  -- draw current pattern's instrument tones (0..3, thin fat smooth taf)
+  love.graphics.setColor(color.brightcyan)
+  if SML.tone[game.selected["pattern"]]["A"] == 0 then
+    love.graphics.print("thin",FONT_WIDTH*113,FONT_HEIGHT*4)
+  elseif SML.tone[game.selected["pattern"]]["A"] == 1 then
+    love.graphics.print("fat",FONT_WIDTH*118,FONT_HEIGHT*4)
+  elseif SML.tone[game.selected["pattern"]]["A"] == 2 then
+    love.graphics.print("smooth",FONT_WIDTH*122,FONT_HEIGHT*4)
+  elseif SML.tone[game.selected["pattern"]]["A"] == 3 then
+    love.graphics.print("taf",FONT_WIDTH*129,FONT_HEIGHT*4)
+  end
+  if SML.tone[game.selected["pattern"]]["B"] == 0 then
+    love.graphics.print("thin",FONT_WIDTH*113,FONT_HEIGHT*5)
+  elseif SML.tone[game.selected["pattern"]]["B"] == 1 then
+    love.graphics.print("fat",FONT_WIDTH*118,FONT_HEIGHT*5)
+  elseif SML.tone[game.selected["pattern"]]["B"] == 2 then
+    love.graphics.print("smooth",FONT_WIDTH*122,FONT_HEIGHT*5)
+  elseif SML.tone[game.selected["pattern"]]["B"] == 3 then
+    love.graphics.print("taf",FONT_WIDTH*129,FONT_HEIGHT*5)
+  end
+
+
+  -- draw current instrument envelopes
+  love.graphics.setColor(color.brightcyan)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["A"][1],FONT_WIDTH*135,FONT_HEIGHT*4)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["A"][2],FONT_WIDTH*139,FONT_HEIGHT*4)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["A"][3],FONT_WIDTH*143,FONT_HEIGHT*4)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["A"][4],FONT_WIDTH*147,FONT_HEIGHT*4)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["B"][1],FONT_WIDTH*135,FONT_HEIGHT*5)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["B"][2],FONT_WIDTH*139,FONT_HEIGHT*5)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["B"][3],FONT_WIDTH*143,FONT_HEIGHT*5)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["B"][4],FONT_WIDTH*147,FONT_HEIGHT*5)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["C"][1],FONT_WIDTH*135,FONT_HEIGHT*6)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["C"][2],FONT_WIDTH*139,FONT_HEIGHT*6)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["C"][3],FONT_WIDTH*143,FONT_HEIGHT*6)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["C"][4],FONT_WIDTH*147,FONT_HEIGHT*6)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["D"][1],FONT_WIDTH*135,FONT_HEIGHT*7)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["D"][2],FONT_WIDTH*139,FONT_HEIGHT*7)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["D"][3],FONT_WIDTH*143,FONT_HEIGHT*7)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["D"][4],FONT_WIDTH*147,FONT_HEIGHT*7)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["E"][1],FONT_WIDTH*135,FONT_HEIGHT*8)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["E"][2],FONT_WIDTH*139,FONT_HEIGHT*8)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["E"][3],FONT_WIDTH*143,FONT_HEIGHT*8)
+  love.graphics.print(SML.envelope[game.selected["pattern"]]["E"][4],FONT_WIDTH*147,FONT_HEIGHT*8)
+
 
   -- status bar
   love.graphics.setColor(color.white)
   game.statusBar = game.name .. " " .. game.version .. " " .. game.edition .. " | "
   game.statusBar = game.statusBar .. mouse.x .. "," .. mouse.y .. " | "
-  game.statusBar = game.statusBar .. game.inputPrompt .. ": " .. game.inputData
+  game.statusBar = game.statusBar .. game.inputPrompt .. ": " .. game.inputData .. " | "
   love.graphics.print(game.statusBar, FONT_WIDTH*1, FONT_HEIGHT*44)
 
 end
 
 function love.update(dt)
   -- Your game update here
+
+  -- tempo selected
+  if (game.selectBar["x"] == 31 and game.selectBar["y"] == 8) and game.dataEntry == false then
+    SML.tempo[game.selected["pattern"]] = tonumber(game.inputData)
+    stopDataEntry()
+  end
 
   -- title selected
   if (game.selectBar["x"] == 0 and game.selectBar["y"] == 0) and game.dataEntry == false then
@@ -844,12 +942,17 @@ function love.mousepressed( x, y, button, istouch, presses )
       SML.volume[game.selected["pattern"]][2] = (mouse.x-94)*8
   end
 
-  -- C Volume
+  -- C Volume : triangle volume can only be 0 or 1
   if mouse.x >= 94 and mouse.x <= 110 and mouse.y == 7 then
       game.selectBar["x"] = 92
       game.selectBar["y"] = 6
       game.selectBar["width"] = 19
-  end
+      if mouse.x < 102 then
+        SML.volume[game.selected["pattern"]][3] = 0
+      else
+        SML.volume[game.selected["pattern"]][3] = 1
+      end
+    end
 
   -- D Volume
   if mouse.x >= 94 and mouse.x <= 110 and mouse.y == 8 then
@@ -867,6 +970,26 @@ function love.mousepressed( x, y, button, istouch, presses )
       SML.volume[game.selected["pattern"]][5] = (mouse.x-94)*8
   end
 
+  -- [copy previous pattern settings] 92-123, 10, only pattern b..z
+  if string.byte(game.selected["pattern"]) > 97 then
+    if mouse.x >= 92 and mouse.x <= 123 and mouse.y == 10 then
+
+      local previousPattern = string.char(string.byte(game.selected["pattern"])-1)
+
+      SML.tempo[game.selected["pattern"]] = SML.tempo[previousPattern]
+
+      SML.volume[game.selected["pattern"]][1] = SML.volume[previousPattern][1]
+      SML.volume[game.selected["pattern"]][2] = SML.volume[previousPattern][2]
+      SML.volume[game.selected["pattern"]][3] = SML.volume[previousPattern][3]
+      SML.volume[game.selected["pattern"]][4] = SML.volume[previousPattern][4]
+      SML.volume[game.selected["pattern"]][5] = SML.volume[previousPattern][5]
+
+      SML.tone[game.selected["pattern"]]["A"] = SML.tone[previousPattern]["A"]
+      SML.tone[game.selected["pattern"]]["B"] = SML.tone[previousPattern]["B"]
+
+    end
+  end
+
 
   -- A Tone setting
   if mouse.x >= 114 and mouse.x <= 132 and mouse.y == 5 then
@@ -874,21 +997,25 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 112
       game.selectBar["y"] = 4
       game.selectBar["width"] = 6
+      SML.tone[game.selected["pattern"]]["A"] = 0
     end
     if mouse.x >= 119 and mouse.x <= 121 then -- fat clicked
       game.selectBar["x"] = 117
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
+      SML.tone[game.selected["pattern"]]["A"] = 1
     end
     if mouse.x >= 123 and mouse.x <= 128 then -- smooth clicked
       game.selectBar["x"] = 121
       game.selectBar["y"] = 4
       game.selectBar["width"] = 8
+      SML.tone[game.selected["pattern"]]["A"] = 2
     end
     if mouse.x >= 130 and mouse.x <= 132 then -- taf clicked
       game.selectBar["x"] = 128
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
+      SML.tone[game.selected["pattern"]]["A"] = 3
     end
   end
 
@@ -898,26 +1025,31 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 112
       game.selectBar["y"] = 5
       game.selectBar["width"] = 6
+      SML.tone[game.selected["pattern"]]["B"] = 0
     end
     if mouse.x >= 119 and mouse.x <= 121 then -- fat clicked
       game.selectBar["x"] = 117
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
+      SML.tone[game.selected["pattern"]]["B"] = 1
     end
     if mouse.x >= 123 and mouse.x <= 128 then -- smooth clicked
       game.selectBar["x"] = 121
       game.selectBar["y"] = 5
       game.selectBar["width"] = 8
+      SML.tone[game.selected["pattern"]]["B"] = 2
     end
     if mouse.x >= 130 and mouse.x <= 132 then -- taf clicked
       game.selectBar["x"] = 128
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
+      SML.tone[game.selected["pattern"]]["B"] = 3
     end
   end
 
   -- tempo setting
   if mouse.x >= 33 and mouse.x <= 35 and mouse.y == 9 then
+      startDataEntry("int","Enter a number (eg 60 is slow, 120 is mid, 180 is fast)",3)
       game.selectBar["x"] = 31
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
