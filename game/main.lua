@@ -240,6 +240,122 @@ SML.tone = {
   ["y"] = {["A"] = 0,["B"] = 0},
   ["z"] = {["A"] = 0,["B"] = 0},
 }
+-- Melody Instrument
+SML.melody = {
+  ["a"] = "A",
+  ["b"] = "A",
+  ["c"] = "A",
+  ["d"] = "A",
+  ["e"] = "A",
+  ["f"] = "A",
+  ["g"] = "A",
+  ["h"] = "A",
+  ["i"] = "A",
+  ["j"] = "A",
+  ["k"] = "A",
+  ["l"] = "A",
+  ["m"] = "A",
+  ["n"] = "A",
+  ["o"] = "A",
+  ["p"] = "A",
+  ["q"] = "A",
+  ["r"] = "A",
+  ["s"] = "A",
+  ["t"] = "A",
+  ["u"] = "A",
+  ["v"] = "A",
+  ["w"] = "A",
+  ["x"] = "A",
+  ["y"] = "A",
+  ["z"] = "A",
+}
+-- Harmony 1 Instrument
+SML.harmony1 = {
+  ["a"] = "B",
+  ["b"] = "B",
+  ["c"] = "B",
+  ["d"] = "B",
+  ["e"] = "B",
+  ["f"] = "B",
+  ["g"] = "B",
+  ["h"] = "B",
+  ["i"] = "B",
+  ["j"] = "B",
+  ["k"] = "B",
+  ["l"] = "B",
+  ["m"] = "B",
+  ["n"] = "B",
+  ["o"] = "B",
+  ["p"] = "B",
+  ["q"] = "B",
+  ["r"] = "B",
+  ["s"] = "B",
+  ["t"] = "B",
+  ["u"] = "B",
+  ["v"] = "B",
+  ["w"] = "B",
+  ["x"] = "B",
+  ["y"] = "B",
+  ["z"] = "B",
+}
+-- Harmony 2 Instrument
+SML.harmony2 = {
+  ["a"] = "C",
+  ["b"] = "C",
+  ["c"] = "C",
+  ["d"] = "C",
+  ["e"] = "C",
+  ["f"] = "C",
+  ["g"] = "C",
+  ["h"] = "C",
+  ["i"] = "C",
+  ["j"] = "C",
+  ["k"] = "C",
+  ["l"] = "C",
+  ["m"] = "C",
+  ["n"] = "C",
+  ["o"] = "C",
+  ["p"] = "C",
+  ["q"] = "C",
+  ["r"] = "C",
+  ["s"] = "C",
+  ["t"] = "C",
+  ["u"] = "C",
+  ["v"] = "C",
+  ["w"] = "C",
+  ["x"] = "C",
+  ["y"] = "C",
+  ["z"] = "C",
+}
+-- Bass Instrument
+SML.bass = {
+  ["a"] = "D",
+  ["b"] = "D",
+  ["c"] = "D",
+  ["d"] = "D",
+  ["e"] = "D",
+  ["f"] = "D",
+  ["g"] = "D",
+  ["h"] = "D",
+  ["i"] = "D",
+  ["j"] = "D",
+  ["k"] = "D",
+  ["l"] = "D",
+  ["m"] = "D",
+  ["n"] = "D",
+  ["o"] = "D",
+  ["p"] = "D",
+  ["q"] = "D",
+  ["r"] = "D",
+  ["s"] = "D",
+  ["t"] = "D",
+  ["u"] = "D",
+  ["v"] = "D",
+  ["w"] = "D",
+  ["x"] = "D",
+  ["y"] = "D",
+  ["z"] = "D",
+}
 
 ---Use when requiring text data from user
 ---@param type string "int" "str"
@@ -349,6 +465,20 @@ function love.draw()
   love.graphics.print(MML.programmer,FONT_WIDTH*12,FONT_HEIGHT*2)
   love.graphics.print(MML.copyright,FONT_WIDTH*12,FONT_HEIGHT*3)
   love.graphics.print(MML.sequence,FONT_WIDTH*12,FONT_HEIGHT*10)
+
+
+  -- draw current pattern's Instrument assignments
+  -- A = 65, B = 66, C = 67, D = 68
+  local melodyX = (string.byte(SML.melody[game.selected["pattern"]])-64)+(string.byte(SML.melody[game.selected["pattern"]])-65)
+  local harmony1X = (string.byte(SML.harmony1[game.selected["pattern"]])-64)+(string.byte(SML.harmony1[game.selected["pattern"]])-65)
+  local harmony2X = (string.byte(SML.harmony2[game.selected["pattern"]])-64)+(string.byte(SML.harmony2[game.selected["pattern"]])-65)
+  local bassX = (string.byte(SML.bass[game.selected["pattern"]])-64)+(string.byte(SML.bass[game.selected["pattern"]])-65)
+
+  love.graphics.setColor(color.brightcyan)
+  love.graphics.print(SML.melody[game.selected["pattern"]],FONT_WIDTH*(11+melodyX),FONT_HEIGHT*4)
+  love.graphics.print(SML.harmony1[game.selected["pattern"]],FONT_WIDTH*(11+harmony1X),FONT_HEIGHT*5)
+  love.graphics.print(SML.harmony2[game.selected["pattern"]],FONT_WIDTH*(11+harmony2X),FONT_HEIGHT*6)
+  love.graphics.print(SML.bass[game.selected["pattern"]],FONT_WIDTH*(11+bassX),FONT_HEIGHT*7)
 
 
   -- draw current pattern's tempo
