@@ -319,7 +319,7 @@ function love.draw()
 
     -- manual draw for new function Name Patterns
     love.graphics.setColor(color.cyan)
-    love.graphics.print("(name pattern)",FONT_WIDTH*65,FONT_HEIGHT*9)
+    love.graphics.print("(".. SML.patternName[game.selected["pattern"]] ..")",FONT_WIDTH*65,FONT_HEIGHT*9)
 
     -- manual draw for [copy previous pattern's settings] 92,10 (only for patterns after [a])
     if string.byte(game.selected["pattern"]) >97 then
@@ -457,6 +457,142 @@ function love.update(dt)
     stopDataEntry()
   end
 
+  -- B instrument : envelope 1 (atk) selected
+  if (game.selectBar["x"] == 134 and game.selectBar["y"] == 5) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["B"][1] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- B instrument : envelope 2 (dec) selected
+  if (game.selectBar["x"] == 138 and game.selectBar["y"] == 5) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["B"][2] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- B instrument : envelope 3 (sus) selected
+  if (game.selectBar["x"] == 142 and game.selectBar["y"] == 5) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["B"][3] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- B instrument : envelope 4 (rel) selected
+  if (game.selectBar["x"] == 146 and game.selectBar["y"] == 5) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["B"][4] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- C instrument : envelope 1 (atk) selected
+  if (game.selectBar["x"] == 134 and game.selectBar["y"] == 6) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["C"][1] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- C instrument : envelope 2 (dec) selected
+  if (game.selectBar["x"] == 138 and game.selectBar["y"] == 6) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["C"][2] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- C instrument : envelope 3 (sus) selected
+  if (game.selectBar["x"] == 142 and game.selectBar["y"] == 6) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["C"][3] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- C instrument : envelope 4 (rel) selected
+  if (game.selectBar["x"] == 146 and game.selectBar["y"] == 6) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["C"][4] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+
+  -- D instrument : envelope 1 (atk) selected
+  if (game.selectBar["x"] == 134 and game.selectBar["y"] == 7) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["D"][1] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- D instrument : envelope 2 (dec) selected
+  if (game.selectBar["x"] == 138 and game.selectBar["y"] == 7) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["D"][2] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- D instrument : envelope 3 (sus) selected
+  if (game.selectBar["x"] == 142 and game.selectBar["y"] == 7) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["D"][3] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- D instrument : envelope 4 (rel) selected
+  if (game.selectBar["x"] == 146 and game.selectBar["y"] == 7) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["D"][4] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+
+  -- E instrument : envelope 1 (atk) selected
+  if (game.selectBar["x"] == 134 and game.selectBar["y"] == 8) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["E"][1] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- E instrument : envelope 2 (dec) selected
+  if (game.selectBar["x"] == 138 and game.selectBar["y"] == 8) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["E"][2] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- E instrument : envelope 3 (sus) selected
+  if (game.selectBar["x"] == 142 and game.selectBar["y"] == 8) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["E"][3] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- E instrument : envelope 4 (rel) selected
+  if (game.selectBar["x"] == 146 and game.selectBar["y"] == 8) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["E"][4] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+
+  -- name pattern selected
+    if (game.selectBar["x"] == 64 and game.selectBar["y"] == 9) and game.dataEntry == false then
+      SML.patternName[game.selected["pattern"]] = game.inputData
+      stopDataEntry()
+    end
 
   -- tempo selected
   if (game.selectBar["x"] == 31 and game.selectBar["y"] == 8) and game.dataEntry == false then
@@ -784,6 +920,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selected["pattern"] = "z"
     end
     if mouse.x >= 66 and mouse.x <= 79 then
+      startDataEntry("str","Enter a name for this pattern",12)
       game.selectBar["x"] = 64
       game.selectBar["y"] = 9
       game.selectBar["width"] = 16
@@ -831,21 +968,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- B Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 6 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 134
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 138
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 142
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 146
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
@@ -865,21 +1006,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- C Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 7 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 134
       game.selectBar["y"] = 6
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 138
       game.selectBar["y"] = 6
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 142
       game.selectBar["y"] = 6
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 146
       game.selectBar["y"] = 6
       game.selectBar["width"] = 5
@@ -899,21 +1044,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- D Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 8 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 134
       game.selectBar["y"] = 7
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 138
       game.selectBar["y"] = 7
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 142
       game.selectBar["y"] = 7
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 146
       game.selectBar["y"] = 7
       game.selectBar["width"] = 5
@@ -933,21 +1082,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- E Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 9 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 134
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 138
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 142
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 146
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
@@ -1013,6 +1166,8 @@ function love.mousepressed( x, y, button, istouch, presses )
   if string.byte(game.selected["pattern"]) > 97 then
     if mouse.x >= 92 and mouse.x <= 123 and mouse.y == 10 then
 
+      local i = 0
+
       local previousPattern = string.char(string.byte(game.selected["pattern"])-1)
 
       SML.tempo[game.selected["pattern"]] = SML.tempo[previousPattern]
@@ -1025,6 +1180,14 @@ function love.mousepressed( x, y, button, istouch, presses )
 
       SML.tone[game.selected["pattern"]]["A"] = SML.tone[previousPattern]["A"]
       SML.tone[game.selected["pattern"]]["B"] = SML.tone[previousPattern]["B"]
+
+      for i = 1,4 do
+        SML.envelope[game.selected["pattern"]]["A"][i] = SML.envelope[previousPattern]["A"][i]
+        SML.envelope[game.selected["pattern"]]["B"][i] = SML.envelope[previousPattern]["B"][i]
+        SML.envelope[game.selected["pattern"]]["C"][i] = SML.envelope[previousPattern]["C"][i]
+        SML.envelope[game.selected["pattern"]]["D"][i] = SML.envelope[previousPattern]["D"][i]
+        SML.envelope[game.selected["pattern"]]["E"][i] = SML.envelope[previousPattern]["E"][i]
+      end
 
     end
   end
