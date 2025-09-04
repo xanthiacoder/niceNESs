@@ -425,9 +425,44 @@ end
 function love.update(dt)
   -- Your game update here
 
+  -- A instrument : envelope 1 (atk) selected
+  if (game.selectBar["x"] == 134 and game.selectBar["y"] == 4) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["A"][1] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- A instrument : envelope 2 (dec) selected
+  if (game.selectBar["x"] == 138 and game.selectBar["y"] == 4) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["A"][2] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- A instrument : envelope 3 (sus) selected
+  if (game.selectBar["x"] == 142 and game.selectBar["y"] == 4) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["A"][3] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- A instrument : envelope 4 (rel) selected
+  if (game.selectBar["x"] == 146 and game.selectBar["y"] == 4) and game.dataEntry == false then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
+      SML.envelope[game.selected["pattern"]]["A"][4] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+
   -- tempo selected
   if (game.selectBar["x"] == 31 and game.selectBar["y"] == 8) and game.dataEntry == false then
+  if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
     SML.tempo[game.selected["pattern"]] = tonumber(game.inputData)
+  end
     stopDataEntry()
   end
 
@@ -758,21 +793,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- A Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 5 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 134
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 138
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 142
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
+      startDataEntry("int","Enter a number from 1 to 999",3)
       game.selectBar["x"] = 146
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
