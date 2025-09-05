@@ -399,7 +399,7 @@ SML.bass4num = {
   ["z"] = {0,0,0,0},
 }
 
--- tables to store monophonic note entries by mouse
+-- tables to store monophonic noteNum entries by mouse
 SML.melodyTrack = {}
 SML.harmony1Track = {}
 SML.harmony2Track = {}
@@ -412,6 +412,123 @@ end
 for i = 1,32 do
   SML.bassTrack[i] = 0 -- set to nil equivalent
 end
+
+SML.melodyTrackString = {
+  ["a"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["b"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["c"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["d"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["e"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["f"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["g"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["h"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["i"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["j"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["k"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["l"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["m"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["n"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["o"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["p"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["q"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["r"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["s"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["t"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["u"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["v"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["w"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["x"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["y"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["z"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+}
+
+SML.harmony1TrackString = {
+  ["a"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["b"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["c"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["d"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["e"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["f"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["g"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["h"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["i"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["j"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["k"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["l"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["m"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["n"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["o"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["p"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["q"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["r"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["s"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["t"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["u"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["v"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["w"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["x"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["y"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["z"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+}
+
+SML.harmony2TrackString = {
+  ["a"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["b"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["c"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["d"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["e"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["f"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["g"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["h"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["i"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["j"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["k"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["l"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["m"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["n"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["o"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["p"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["q"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["r"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["s"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["t"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["u"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["v"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["w"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["x"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["y"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["z"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+}
+
+SML.bassTrackString = {
+  ["a"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["b"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["c"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["d"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["e"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["f"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["g"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["h"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["i"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["j"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["k"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["l"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["m"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["n"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["o"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["p"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["q"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["r"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["s"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["t"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["u"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["v"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["w"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["x"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["y"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+  ["z"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+}
+
 
 --[[
 Create a 32x1 pixel transparent-to-white gradient drawable image.
@@ -465,6 +582,19 @@ end
 function love.textinput(t) -- called for every instance of text entry
   if game.dataEntry == true and #game.inputData < game.dataLength then
     game.inputData = game.inputData .. t
+  end
+end
+
+---update all tracks with selected pattern data
+---@param fromPattern char alphabet of pattern to copy data from
+function updateTracks(fromPattern)
+  for i = 1,128 do
+    SML.melodyTrack[i] = string.byte(string.sub(SML.melodyTrackString[fromPattern],i,i))-64 -- convert from char to noteNum
+    SML.harmony1Track[i] = string.byte(string.sub(SML.harmony1TrackString[fromPattern],i,i))-64 -- convert from char to noteNum
+    SML.harmony2Track[i] = string.byte(string.sub(SML.harmony2TrackString[fromPattern],i,i))-64 -- convert from char to noteNum
+  end
+  for i = 1,32 do
+    SML.bassTrack[i] = string.byte(string.sub(SML.bassTrackString[fromPattern],i,i))-64 -- convert from char to noteNum
   end
 end
 
@@ -641,18 +771,20 @@ function love.draw()
     love.graphics.print(nicenessLogo,FONT_WIDTH*(80/2),FONT_HEIGHT*13) -- niceNESs logo
   end
 
-  -- prep data for drawing music notes
-  local melodyTrackString = ""
-  local harmony1TrackString = ""
-  local harmony2TrackString = ""
-  local bassTrackString = ""
+  -- update data for music notes
+  SML.melodyTrackString[game.selected["pattern"]] = ""
+  SML.harmony1TrackString[game.selected["pattern"]] = ""
+  SML.harmony2TrackString[game.selected["pattern"]] = ""
+  SML.bassTrackString[game.selected["pattern"]] = ""
   for i = 1,128 do
-    melodyTrackString = melodyTrackString .. string.char(64+SML.melodyTrack[i])
-    harmony1TrackString = harmony1TrackString .. string.char(64+SML.harmony1Track[i])
-    harmony2TrackString = harmony2TrackString .. string.char(64+SML.harmony2Track[i])
+    -- add 64 to noteNum to make it a printable char: A..Z
+    SML.melodyTrackString[game.selected["pattern"]] = SML.melodyTrackString[game.selected["pattern"]] .. string.char(64+SML.melodyTrack[i])
+    SML.harmony1TrackString[game.selected["pattern"]] = SML.harmony1TrackString[game.selected["pattern"]] .. string.char(64+SML.harmony1Track[i])
+    SML.harmony2TrackString[game.selected["pattern"]] = SML.harmony2TrackString[game.selected["pattern"]] .. string.char(64+SML.harmony2Track[i])
   end
   for i = 1,32 do
-    bassTrackString = bassTrackString .. string.char(64+SML.bassTrack[i])
+    -- add 64 to noteNum to make it a printable char: A..Z
+    SML.bassTrackString[game.selected["pattern"]] = SML.bassTrackString[game.selected["pattern"]] .. string.char(64+SML.bassTrack[i])
   end
 
   -- draw for "melody" section
@@ -667,7 +799,7 @@ function love.draw()
     -- draw melodyTrack notes
     love.graphics.setColor(color.brightgreen)
     for i = 1,128 do
-      local charNum = string.byte(string.sub(melodyTrackString,i,i))
+      local charNum = string.byte(string.sub(SML.melodyTrackString[game.selected["pattern"]],i,i))
       if charNum > 64 then
         love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
       end
@@ -686,7 +818,7 @@ function love.draw()
     -- draw harmony1Track notes
     love.graphics.setColor(color.brightyellow)
     for i = 1,128 do
-      local charNum = string.byte(string.sub(harmony1TrackString,i,i))
+      local charNum = string.byte(string.sub(SML.harmony1TrackString[game.selected["pattern"]],i,i))
       if charNum > 64 then
         love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
       end
@@ -705,7 +837,7 @@ function love.draw()
     -- draw harmony2Track notes
     love.graphics.setColor(color.brightred)
     for i = 1,128 do
-      local charNum = string.byte(string.sub(harmony2TrackString,i,i))
+      local charNum = string.byte(string.sub(SML.harmony2TrackString[game.selected["pattern"]],i,i))
       if charNum > 64 then
         love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
       end
@@ -725,7 +857,7 @@ function love.draw()
     -- draw bassTrack notes
     love.graphics.setColor(color.brightmagenta)
     for i = 1,32 do
-      local charNum = string.byte(string.sub(bassTrackString,i,i))
+      local charNum = string.byte(string.sub(SML.bassTrackString[game.selected["pattern"]],i,i))
       if charNum > 64 then
         love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
       end
@@ -768,13 +900,13 @@ function love.draw()
   game.debug1 = game.debug1 .. "notenum: " .. string.format("%2d",game.selected["noteNum"]) .. " | "
   game.debug2 = game.inputPrompt .. ": " .. game.inputData .. " | "
   if game.selected["section"] == "melody" then
-    game.debug3 = "melodyTrack :" .. melodyTrackString
+    game.debug3 = "melodyTrack :" .. SML.melodyTrackString[game.selected["pattern"]]
   elseif game.selected["section"] == "harmony1" then
-    game.debug3 = "harmony1Track :" .. harmony1TrackString
+    game.debug3 = "harmony1Track :" .. SML.harmony1TrackString[game.selected["pattern"]]
   elseif game.selected["section"] == "harmony2" then
-    game.debug3 = "harmony2Track :" .. harmony2TrackString
+    game.debug3 = "harmony2Track :" .. SML.harmony2TrackString[game.selected["pattern"]]
   elseif game.selected["section"] == "bass" then
-    game.debug3 = "bassTrack :" .. bassTrackString
+    game.debug3 = "bassTrack :" .. SML.bassTrackString[game.selected["pattern"]]
   else
     game.debug3 = ""
   end
@@ -797,7 +929,7 @@ function love.update(dt)
     y = math.floor(love.mouse.getY()/16)+1
   }
 
-  -- mouse data entry section [start]
+  -- music notes data entry section [start]
   if love.mouse.isDown(1) then -- primary button down to enter notes
     -- Drawing notes in melody harmony1 harmony2 section
     if (mouse.x >= 33 and mouse.x <= 160) and (mouse.y >= 12 and mouse.y <= 30) then
@@ -821,7 +953,7 @@ function love.update(dt)
   end
 
     if love.mouse.isDown(2) then -- secondary button down to erase notes
-    -- Drawing notes in melody harmony1 harmony2 section
+    -- Erasing notes in melody harmony1 harmony2 section
     if (mouse.x >= 33 and mouse.x <= 160) and (mouse.y >= 12 and mouse.y <= 30) then
       if game.selected["section"]=="melody" then
         SML.melodyTrack[mouse.x-32] = 0
@@ -834,7 +966,7 @@ function love.update(dt)
       end
     end
 
-    -- Drawing notes in bass section
+    -- Erasing notes in bass section
     if (mouse.x >= 33 and mouse.x <= 64) and (mouse.y >= 12 and mouse.y <= 30) then
       if game.selected["section"]=="bass" then
         SML.bassTrack[mouse.x-32] = 0
@@ -842,7 +974,7 @@ function love.update(dt)
     end
   end
 
-  -- mouse data entry section [end]
+  -- music notes data entry section [end]
 
 
   -- Data Entry section [start]
@@ -1194,6 +1326,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 11
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("a")
       game.selected["pattern"] = "a"
       game.selected["section"] = "pattern"
     end
@@ -1201,6 +1334,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 13
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("b")
       game.selected["pattern"] = "b"
       game.selected["section"] = "pattern"
     end
@@ -1208,6 +1342,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 15
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("c")
       game.selected["pattern"] = "c"
       game.selected["section"] = "pattern"
     end
@@ -1215,6 +1350,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 17
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("d")
       game.selected["pattern"] = "d"
       game.selected["section"] = "pattern"
     end
@@ -1222,13 +1358,15 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 19
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
-      game.selected["pattern"] = "e"
+      updateTracks("e")
+    game.selected["pattern"] = "e"
       game.selected["section"] = "pattern"
     end
     if mouse.x == 23 then -- f clicked
       game.selectBar["x"] = 21
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("f")
       game.selected["pattern"] = "f"
       game.selected["section"] = "pattern"
     end
@@ -1236,6 +1374,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 23
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("g")
       game.selected["pattern"] = "g"
       game.selected["section"] = "pattern"
     end
@@ -1243,6 +1382,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 25
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("h")
       game.selected["pattern"] = "h"
       game.selected["section"] = "pattern"
     end
@@ -1250,6 +1390,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 27
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("i")
       game.selected["pattern"] = "i"
       game.selected["section"] = "pattern"
     end
@@ -1257,6 +1398,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 29
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("j")
       game.selected["pattern"] = "j"
       game.selected["section"] = "pattern"
     end
@@ -1264,6 +1406,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 31
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("k")
       game.selected["pattern"] = "k"
       game.selected["section"] = "pattern"
     end
@@ -1271,6 +1414,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 33
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("l")
       game.selected["pattern"] = "l"
       game.selected["section"] = "pattern"
     end
@@ -1278,6 +1422,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 35
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("m")
       game.selected["pattern"] = "m"
       game.selected["section"] = "pattern"
     end
@@ -1285,6 +1430,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 37
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("n")
       game.selected["pattern"] = "n"
       game.selected["section"] = "pattern"
     end
@@ -1292,6 +1438,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 39
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("o")
       game.selected["pattern"] = "o"
       game.selected["section"] = "pattern"
     end
@@ -1299,6 +1446,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 41
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("p")
       game.selected["pattern"] = "p"
       game.selected["section"] = "pattern"
     end
@@ -1306,6 +1454,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 43
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("q")
       game.selected["pattern"] = "q"
       game.selected["section"] = "pattern"
     end
@@ -1313,6 +1462,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 45
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("r")
       game.selected["pattern"] = "r"
       game.selected["section"] = "pattern"
     end
@@ -1320,6 +1470,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 47
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("s")
       game.selected["pattern"] = "s"
       game.selected["section"] = "pattern"
     end
@@ -1327,6 +1478,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 49
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("t")
       game.selected["pattern"] = "t"
       game.selected["section"] = "pattern"
     end
@@ -1334,6 +1486,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 51
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("u")
       game.selected["pattern"] = "u"
       game.selected["section"] = "pattern"
     end
@@ -1341,6 +1494,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 53
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("v")
       game.selected["pattern"] = "v"
       game.selected["section"] = "pattern"
     end
@@ -1348,6 +1502,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 55
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("w")
       game.selected["pattern"] = "w"
       game.selected["section"] = "pattern"
     end
@@ -1355,6 +1510,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 57
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("x")
       game.selected["pattern"] = "x"
       game.selected["section"] = "pattern"
     end
@@ -1362,6 +1518,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 59
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("y")
       game.selected["pattern"] = "y"
       game.selected["section"] = "pattern"
     end
@@ -1369,6 +1526,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 61
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
+      updateTracks("z")
       game.selected["pattern"] = "z"
       game.selected["section"] = "pattern"
     end
