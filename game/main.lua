@@ -641,6 +641,7 @@ function love.draw()
     love.graphics.print(nicenessLogo,FONT_WIDTH*(80/2),FONT_HEIGHT*13) -- niceNESs logo
   end
 
+  -- prep data for drawing music notes
   local melodyTrackString = ""
   local harmony1TrackString = ""
   local harmony2TrackString = ""
@@ -700,6 +701,15 @@ function love.draw()
     love.graphics.print(musicBars,FONT_WIDTH*64,FONT_HEIGHT*11) -- 2nd music bar
     love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
     love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
+
+    -- draw harmony2Track notes
+    love.graphics.setColor(color.brightred)
+    for i = 1,128 do
+      local charNum = string.byte(string.sub(harmony2TrackString,i,i))
+      if charNum > 64 then
+        love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
+      end
+    end
   end
 
   -- draw for "bass" section
@@ -711,6 +721,15 @@ function love.draw()
     -- manual patching of xtui
     love.graphics.setColor(color.green)
     love.graphics.print("maller number, lower note",FONT_WIDTH*1,FONT_HEIGHT*27)
+
+    -- draw bassTrack notes
+    love.graphics.setColor(color.brightmagenta)
+    for i = 1,32 do
+      local charNum = string.byte(string.sub(bassTrackString,i,i))
+      if charNum > 64 then
+        love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
+      end
+    end
   end
 
   -- draw for "rhythm" section
@@ -779,7 +798,7 @@ function love.update(dt)
   }
 
   -- mouse data entry section [start]
-  if love.mouse.isDown(1) then -- primary button down
+  if love.mouse.isDown(1) then -- primary button down to enter notes
     -- Drawing notes in melody harmony1 harmony2 section
     if (mouse.x >= 33 and mouse.x <= 160) and (mouse.y >= 12 and mouse.y <= 30) then
       if game.selected["section"]=="melody" then
@@ -791,10 +810,38 @@ function love.update(dt)
       if game.selected["section"]=="harmony2" then
         SML.harmony2Track[mouse.x-32] = game.selected["noteNum"]
       end
-
     end
 
+    -- Drawing notes in bass section
+    if (mouse.x >= 33 and mouse.x <= 64) and (mouse.y >= 12 and mouse.y <= 30) then
+      if game.selected["section"]=="bass" then
+        SML.bassTrack[mouse.x-32] = game.selected["noteNum"]
+      end
+    end
   end
+
+    if love.mouse.isDown(2) then -- secondary button down to erase notes
+    -- Drawing notes in melody harmony1 harmony2 section
+    if (mouse.x >= 33 and mouse.x <= 160) and (mouse.y >= 12 and mouse.y <= 30) then
+      if game.selected["section"]=="melody" then
+        SML.melodyTrack[mouse.x-32] = 0
+      end
+      if game.selected["section"]=="harmony1" then
+        SML.harmony1Track[mouse.x-32] = 0
+      end
+      if game.selected["section"]=="harmony2" then
+        SML.harmony2Track[mouse.x-32] = 0
+      end
+    end
+
+    -- Drawing notes in bass section
+    if (mouse.x >= 33 and mouse.x <= 64) and (mouse.y >= 12 and mouse.y <= 30) then
+      if game.selected["section"]=="bass" then
+        SML.bassTrack[mouse.x-32] = 0
+      end
+    end
+  end
+
   -- mouse data entry section [end]
 
 
