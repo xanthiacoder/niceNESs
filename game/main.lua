@@ -18,10 +18,15 @@ should be variable to allow making UI assets
 64x64
 ]]
 
+-- to-da
+-- test using png images to store music data
+-- https://love2d.org/wiki/ImageData:getPixel
+-- https://love2d.org/wiki/ImageData:setPixel
+
 love.filesystem.setIdentity("niceNESs") -- for R36S file system compatibility
 love.mouse.setVisible( true ) -- make mouse cursor invis, use bitmap cursor
 love.graphics.setDefaultFilter("nearest", "nearest") -- for nearest neighbour, pixelart style
-love.keyboard.setKeyRepeat(true) -- allows held down key to repeat
+love.keyboard.setKeyRepeat(false) -- disallows held down key to repeat
 
 local json = require("lib.json")
 local ansi = require("lib.ansi")
@@ -43,18 +48,23 @@ game.dataEntry = false -- flag for when data is being captured from the keyboard
 -- game variables
 game.statusBar = "" -- content string for status Bar at the bottom
 game.selectBar = {  -- coordinates for selection background box
-  ["x"]     = 161, -- set to off screen when nothing selected
-  ["y"]     = 46, -- set to off screen when nothing selected
+  ["x"]     = 161,  -- set to off screen when nothing selected
+  ["y"]     = 46,   -- set to off screen when nothing selected
   ["width"] = 0,
 }
 game.selected = {
-  ["pattern"] = "a", -- current selected pattern : a..z
+  ["pattern"] = "a",  -- current selected pattern : a..z
 }
-game.inputData = "" -- string to cache data captured from keyboard
+game.inputData = ""   -- string to cache data captured from keyboard
 game.inputPrompt = "" -- prompt for data entry
-game.dataType = "" -- can be "int" "str"
-game.dataLength = 0 -- max length of data input
+game.dataType = ""    -- can be "int" "str"
+game.dataLength = 0   -- max length of data input
 
+-- game secrets
+game.debug1 = ""
+game.debug2 = ""
+game.debug3 = ""
+game.debug4 = ""
 
 -- detect system OS
 game.os = love.system.getOS() -- "OS X", "Windows", "Linux", "Android" or "iOS", "Web"
@@ -357,6 +367,31 @@ SML.bass = {
   ["z"] = "D",
 }
 
+
+--[[
+Create a 32x1 pixel transparent-to-white gradient drawable image.
+
+ImageData:setPixel( x, y, r, g, b, a )
+r, g, b, a = ImageData:getPixel( x, y )
+
+
+data = love.image.newImageData(32,1)
+for i=0, 31 do   -- remember: start at 0
+   data:setPixel(i, 0, 1, 1, 1, i / 31)
+end
+img = love.graphics.newImage(data)
+]]
+
+local imgData = love.image.newImageData(128,19) -- 4 bars of 32, 19 notes
+for i = 0,18 do -- columns
+  for j = 0,127 do -- rows
+    imgData:setPixel(j, i, 1, 1, 1, 1) -- rows, columns, r, g, b, a
+  end
+end
+SML.melodyData = {
+  ["a"] = love.graphics.newImage(imgData),
+}
+
 ---Use when requiring text data from user
 ---@param type string "int" "str"
 ---@param prompt string
@@ -406,6 +441,8 @@ function love.load()
   dividerWalkthru  = json.decode(love.filesystem.read("xtui/0-divider-walkthru.xtui"))
   dividerMML       = json.decode(love.filesystem.read("xtui/0-divider-mml.xtui"))
   textWindowBlank  = json.decode(love.filesystem.read("xtui/0-textwindow-blank.xtui"))
+
+
 end
 
 function love.draw()
@@ -427,34 +464,34 @@ function love.draw()
   love.graphics.rectangle("fill",FONT_WIDTH*patternX,FONT_HEIGHT*9,FONT_WIDTH*3,FONT_HEIGHT)
 
   -- draw xtui stuff
-    love.graphics.setFont(monoFont)
-    love.graphics.setLineWidth(1)
-    love.graphics.setColor(color.white)
---    love.graphics.print(nicenessLogo,FONT_WIDTH*80,FONT_HEIGHT*32) -- test drawing logo from xtui
-    love.graphics.print(metaSections,0,0) -- instruments panel
+  love.graphics.setFont(monoFont)
+  love.graphics.setLineWidth(1)
+  love.graphics.setColor(color.white)
+  --  love.graphics.print(nicenessLogo,FONT_WIDTH*80,FONT_HEIGHT*32) -- test drawing logo from xtui
+  love.graphics.print(metaSections,0,0) -- instruments panel
 
-    -- manual draw for new function Name Patterns
+  -- manual draw for new function Name Patterns
+  love.graphics.setColor(color.cyan)
+  love.graphics.print("(".. SML.patternName[game.selected["pattern"]] ..")",FONT_WIDTH*65,FONT_HEIGHT*9)
+
+  -- manual draw for [copy previous pattern's settings] 92,10 (only for patterns after [a])
+  if string.byte(game.selected["pattern"]) >97 then
     love.graphics.setColor(color.cyan)
-    love.graphics.print("(".. SML.patternName[game.selected["pattern"]] ..")",FONT_WIDTH*65,FONT_HEIGHT*9)
+    love.graphics.print("[copy previous pattern settings]",FONT_WIDTH*91,FONT_HEIGHT*9)
+  end
 
-    -- manual draw for [copy previous pattern's settings] 92,10 (only for patterns after [a])
-    if string.byte(game.selected["pattern"]) >97 then
-      love.graphics.setColor(color.cyan)
-      love.graphics.print("[copy previous pattern settings]",FONT_WIDTH*91,FONT_HEIGHT*9)
-    end
-
-    love.graphics.setColor(color.white)
-    love.graphics.print(instrumentsPanel,1280/2,0) -- instruments panel
-    love.graphics.print(functionKeys,1280/2,0) -- function keys help
-    love.graphics.print(rollMarkers,FONT_WIDTH*29,FONT_HEIGHT*11) -- piano roll note markers
-    love.graphics.print(musicBars,FONT_WIDTH*32,FONT_HEIGHT*11) -- 1st music bar
-    love.graphics.print(musicBars,FONT_WIDTH*64,FONT_HEIGHT*11) -- 2nd music bar
-    love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
-    love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
-    love.graphics.print(dividerWalkthru,0,FONT_HEIGHT*30) -- divider : walkthru
-    love.graphics.print(dividerMML,FONT_WIDTH*80,FONT_HEIGHT*30) -- divider : MML
-    love.graphics.print(textWindowBlank,0,FONT_HEIGHT*31) -- text window left : blank
-    love.graphics.print(textWindowBlank,FONT_WIDTH*80,FONT_HEIGHT*31) -- text window right : blank
+  love.graphics.setColor(color.white)
+  love.graphics.print(instrumentsPanel,1280/2,0) -- instruments panel
+  love.graphics.print(functionKeys,1280/2,0) -- function keys help
+  love.graphics.print(rollMarkers,FONT_WIDTH*29,FONT_HEIGHT*11) -- piano roll note markers
+  love.graphics.print(musicBars,FONT_WIDTH*32,FONT_HEIGHT*11) -- 1st music bar
+  love.graphics.print(musicBars,FONT_WIDTH*64,FONT_HEIGHT*11) -- 2nd music bar
+  love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
+  love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
+  love.graphics.print(dividerWalkthru,0,FONT_HEIGHT*30) -- divider : walkthru
+  love.graphics.print(dividerMML,FONT_WIDTH*80,FONT_HEIGHT*30) -- divider : MML
+  love.graphics.print(textWindowBlank,0,FONT_HEIGHT*31) -- text window left : blank
+  love.graphics.print(textWindowBlank,FONT_WIDTH*80,FONT_HEIGHT*31) -- text window right : blank
 
   -- draw meta data
   love.graphics.setFont(monoFont)
@@ -543,18 +580,44 @@ function love.draw()
   love.graphics.print(SML.envelope[game.selected["pattern"]]["E"][4],FONT_WIDTH*147,FONT_HEIGHT*8)
 
 
-  -- status bar
+  -- draw status bar
   love.graphics.setColor(color.white)
-  game.statusBar = game.name .. " " .. game.version .. " " .. game.edition .. " | "
-  game.statusBar = game.statusBar .. mouse.x .. "," .. mouse.y .. " | "
-  game.statusBar = game.statusBar .. game.inputPrompt .. ": " .. game.inputData .. " | "
+  game.statusBar = game.name .. " " .. game.version .. " " .. game.edition .. " " .. game.os .. " | "
   love.graphics.print(game.statusBar, FONT_WIDTH*1, FONT_HEIGHT*44)
+
+  -- debug window (viewable only on fullscreen, tested on 1440x900)
+  -- debug prints from FONT_HEIGHT*46 to 49
+  love.graphics.setColor(color.red)
+  love.graphics.print("+-[ Debug Section ]-",FONT_WIDTH*0,FONT_HEIGHT*45)
+  for i = 20,159 do
+    love.graphics.print("-",FONT_WIDTH*i,FONT_HEIGHT*45)
+  end
+
+  -- update debug info
+  game.debug1 = "mouse: "
+  game.debug1 = game.debug1 .. string.format("%3d",mouse.x) .. "," .. string.format("%2d",mouse.y) .. " | "
+  game.debug1 = game.debug1 .. "select: "
+  game.debug1 = game.debug1 .. string.format("%3d",game.selectBar["x"]) .. "," .. string.format("%2d",game.selectBar["y"]) .. " | "
+  game.debug2 = game.inputPrompt .. ": " .. game.inputData .. " | "
+  game.debug3 = ""
+  game.debug4 = ""
+  -- draw debug info
+  love.graphics.setColor(color.yellow)
+  love.graphics.print(game.debug1,FONT_WIDTH*0,FONT_HEIGHT*46)
+  love.graphics.print(game.debug2,FONT_WIDTH*0,FONT_HEIGHT*47)
+  love.graphics.print(game.debug3,FONT_WIDTH*0,FONT_HEIGHT*48)
+  love.graphics.print(game.debug4,FONT_WIDTH*0,FONT_HEIGHT*49)
+
+  -- rough test
+  love.graphics.setColor(color.white)
+  love.graphics.draw(SML.melodyData["a"], 1280/2,720/2)
 
 end
 
 function love.update(dt)
   -- Your game update here
 
+  -- Data Entry section [start]
   -- A instrument : envelope 1 (atk) selected
   if (game.selectBar["x"] == 134 and game.selectBar["y"] == 4) and game.dataEntry == false then
     if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 then
@@ -755,7 +818,7 @@ function love.update(dt)
     MML.copyright = game.inputData
     stopDataEntry()
   end
-
+  -- Data Entry section [end]
 
 end
 
@@ -763,9 +826,8 @@ function love.keypressed(key, scancode, isrepeat)
   print("key:"..key.." scancode:"..scancode.." isrepeat:"..tostring(isrepeat))
   if key == "f10" and love.system.getOS() ~= "Web" then
     love.event.quit()
-  else
-    -- stuff
   end
+
   if key == "f12" then
     -- toggle fullscreen
       fullscreen = not fullscreen
