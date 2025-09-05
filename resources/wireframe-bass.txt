@@ -9,13 +9,13 @@ Bass      : A B C D -                                                           
 Rhythm    : - - - - E  Tempo  : 999                                             E Noise    | ***********...... |                     | 999 999 999 999 *  %
 Patterns  : a b c d e f g h i j k l m n o p q r s t u v w x y z                                                                        Click * to reset
 Sequence  :
-                             >5 ║       │       │       │       ║   [Common bass patterns] Click a pattern to load it, F4 to play it with your bass sequence
-[Bass Sequence]              >4 ║       │       │       │       ║    
+                             >5 ║       │       │       │       ║   [ Common bass patterns ] Click a pattern to load it, F4 to play it with your bass sequence
+[ Bass Sequence ]            >4 ║       │       │       │       ║    
 The bass sequence in a song  >3 ║       │       │       │       ║     4 Beat    3rd Count Mute          Basic Arp        Double Kick       [clear pattern]  %
 pattern is made up of 4      >2 ║       │       │       │       ║     8 Beat    3rd Count Mute Kick     Basic Alt Arp    Kick and Return   [load  pattern]
 numbers (click to change)    >1 ║       │       │       │       ║     16 Beat   3rd Count Mute Return   Basic Long Arp   Double Return     [save  pattern]
                               7 ║       │       │       │       ║
-   [9]  [9]  [9]  [9]  %      6 ║       │       │       │       ║   [Choosing the 4 numbers for your bass sequence]
+   [9]  [9]  [9]  [9]  %      6 ║       │       │       │       ║   [ Choosing the 4 numbers for your bass sequence ]
                               5 ║       │       │       │       ║   Each number in music evokes a different feeling, with these general impressions
 Each number above will play   4 ║       │       │       │       ║
 the bass pattern drawn here   3 ║       │       │       │       ║   [1] - Feels grounded, positive, homebase, certain, resolved (start or end of majors)

@@ -54,6 +54,8 @@ game.selectBar = {  -- coordinates for selection background box
 }
 game.selected = {
   ["pattern"] = "a",  -- current selected pattern : a..z
+  ["section"] = "about", -- "about", "melody", "harmony1", "harmony2", "bass", "rhythm", "pattern", "sequence"
+  ["noteNum"] = 0, -- 0 = nil, normal range 1..19 , middle = 8, when 1 y=30, when 19 y=12, =32-y
 }
 game.inputData = ""   -- string to cache data captured from keyboard
 game.inputPrompt = "" -- prompt for data entry
@@ -367,6 +369,49 @@ SML.bass = {
   ["z"] = "D",
 }
 
+-- Bass 4 numbers
+SML.bass4num = {
+  ["a"] = {0,0,0,0},
+  ["b"] = {0,0,0,0},
+  ["c"] = {0,0,0,0},
+  ["d"] = {0,0,0,0},
+  ["e"] = {0,0,0,0},
+  ["f"] = {0,0,0,0},
+  ["g"] = {0,0,0,0},
+  ["h"] = {0,0,0,0},
+  ["i"] = {0,0,0,0},
+  ["j"] = {0,0,0,0},
+  ["k"] = {0,0,0,0},
+  ["l"] = {0,0,0,0},
+  ["m"] = {0,0,0,0},
+  ["n"] = {0,0,0,0},
+  ["o"] = {0,0,0,0},
+  ["p"] = {0,0,0,0},
+  ["q"] = {0,0,0,0},
+  ["r"] = {0,0,0,0},
+  ["s"] = {0,0,0,0},
+  ["t"] = {0,0,0,0},
+  ["u"] = {0,0,0,0},
+  ["v"] = {0,0,0,0},
+  ["w"] = {0,0,0,0},
+  ["x"] = {0,0,0,0},
+  ["y"] = {0,0,0,0},
+  ["z"] = {0,0,0,0},
+}
+
+-- tables to store monophonic note entries by mouse
+SML.melodyTrack = {}
+SML.harmony1Track = {}
+SML.harmony2Track = {}
+SML.bassTrack = {}
+for i = 1,128 do
+  SML.melodyTrack[i]   = 0 -- set to nil equivalent
+  SML.harmony1Track[i] = 0 -- set to nil equivalent
+  SML.harmony2Track[i] = 0 -- set to nil equivalent
+end
+for i = 1,32 do
+  SML.bassTrack[i] = 0 -- set to nil equivalent
+end
 
 --[[
 Create a 32x1 pixel transparent-to-white gradient drawable image.
@@ -380,7 +425,7 @@ for i=0, 31 do   -- remember: start at 0
    data:setPixel(i, 0, 1, 1, 1, i / 31)
 end
 img = love.graphics.newImage(data)
-]]
+
 
 local imgData = love.image.newImageData(128,19) -- 4 bars of 32, 19 notes
 for i = 0,18 do -- columns
@@ -391,6 +436,10 @@ end
 SML.melodyData = {
   ["a"] = love.graphics.newImage(imgData),
 }
+
+]]
+
+
 
 ---Use when requiring text data from user
 ---@param type string "int" "str"
@@ -441,7 +490,7 @@ function love.load()
   dividerWalkthru  = json.decode(love.filesystem.read("xtui/0-divider-walkthru.xtui"))
   dividerMML       = json.decode(love.filesystem.read("xtui/0-divider-mml.xtui"))
   textWindowBlank  = json.decode(love.filesystem.read("xtui/0-textwindow-blank.xtui"))
-
+  bassLeftPanel    = json.decode(love.filesystem.read("xtui/0-bass-leftpanel.xtui"))
 
 end
 
@@ -458,16 +507,36 @@ function love.draw()
   love.graphics.setColor(color.blue)
   love.graphics.rectangle("fill",FONT_WIDTH*game.selectBar["x"],FONT_HEIGHT*game.selectBar["y"],FONT_WIDTH*game.selectBar["width"],FONT_HEIGHT)
 
-  -- highlight current selected pattern
+  -- highlight current selected pattern (bottom layer)
   love.graphics.setColor(color.blue)
   local patternX = 11 + ((string.byte(game.selected["pattern"])-97)*2)
   love.graphics.rectangle("fill",FONT_WIDTH*patternX,FONT_HEIGHT*9,FONT_WIDTH*3,FONT_HEIGHT)
+
+  -- draw note number highlight if 33,12 .. 160,30
+  -- for sections: melody harmony1 harmony2
+  if (mouse.x >= 33 and mouse.x <= 160) and (mouse.y >= 12 and mouse.y <= 30) then
+    if game.selected["section"]=="melody" or game.selected["section"]=="harmony1" or
+    game.selected["section"]=="harmony2" then
+      love.graphics.setColor(color.brightblue)
+      love.graphics.rectangle("fill",FONT_WIDTH*29,FONT_HEIGHT*(mouse.y-1),FONT_WIDTH*3,FONT_HEIGHT)
+      game.selected["noteNum"]=31-mouse.y
+    end
+  end
+  -- draw note number highlight if 33,12 .. 64,30
+  -- for sections: bass
+  if (mouse.x >= 33 and mouse.x <= 64) and (mouse.y >= 12 and mouse.y <= 30) then
+    if game.selected["section"]=="bass" then
+      love.graphics.setColor(color.brightblue)
+      love.graphics.rectangle("fill",FONT_WIDTH*29,FONT_HEIGHT*(mouse.y-1),FONT_WIDTH*3,FONT_HEIGHT)
+      game.selected["noteNum"]=31-mouse.y
+    end
+  end
+
 
   -- draw xtui stuff
   love.graphics.setFont(monoFont)
   love.graphics.setLineWidth(1)
   love.graphics.setColor(color.white)
-  --  love.graphics.print(nicenessLogo,FONT_WIDTH*80,FONT_HEIGHT*32) -- test drawing logo from xtui
   love.graphics.print(metaSections,0,0) -- instruments panel
 
   -- manual draw for new function Name Patterns
@@ -480,19 +549,14 @@ function love.draw()
     love.graphics.print("[copy previous pattern settings]",FONT_WIDTH*91,FONT_HEIGHT*9)
   end
 
+  -- draw for all sections
   love.graphics.setColor(color.white)
   love.graphics.print(instrumentsPanel,1280/2,0) -- instruments panel
   love.graphics.print(functionKeys,1280/2,0) -- function keys help
-  love.graphics.print(rollMarkers,FONT_WIDTH*29,FONT_HEIGHT*11) -- piano roll note markers
-  love.graphics.print(musicBars,FONT_WIDTH*32,FONT_HEIGHT*11) -- 1st music bar
-  love.graphics.print(musicBars,FONT_WIDTH*64,FONT_HEIGHT*11) -- 2nd music bar
-  love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
-  love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
   love.graphics.print(dividerWalkthru,0,FONT_HEIGHT*30) -- divider : walkthru
   love.graphics.print(dividerMML,FONT_WIDTH*80,FONT_HEIGHT*30) -- divider : MML
   love.graphics.print(textWindowBlank,0,FONT_HEIGHT*31) -- text window left : blank
   love.graphics.print(textWindowBlank,FONT_WIDTH*80,FONT_HEIGHT*31) -- text window right : blank
-
   -- draw meta data
   love.graphics.setFont(monoFont)
   love.graphics.setLineWidth(1)
@@ -502,26 +566,20 @@ function love.draw()
   love.graphics.print(MML.programmer,FONT_WIDTH*12,FONT_HEIGHT*2)
   love.graphics.print(MML.copyright,FONT_WIDTH*12,FONT_HEIGHT*3)
   love.graphics.print(MML.sequence,FONT_WIDTH*12,FONT_HEIGHT*10)
-
-
   -- draw current pattern's Instrument assignments
   -- A = 65, B = 66, C = 67, D = 68
   local melodyX = (string.byte(SML.melody[game.selected["pattern"]])-64)+(string.byte(SML.melody[game.selected["pattern"]])-65)
   local harmony1X = (string.byte(SML.harmony1[game.selected["pattern"]])-64)+(string.byte(SML.harmony1[game.selected["pattern"]])-65)
   local harmony2X = (string.byte(SML.harmony2[game.selected["pattern"]])-64)+(string.byte(SML.harmony2[game.selected["pattern"]])-65)
   local bassX = (string.byte(SML.bass[game.selected["pattern"]])-64)+(string.byte(SML.bass[game.selected["pattern"]])-65)
-
   love.graphics.setColor(color.brightcyan)
   love.graphics.print(SML.melody[game.selected["pattern"]],FONT_WIDTH*(11+melodyX),FONT_HEIGHT*4)
   love.graphics.print(SML.harmony1[game.selected["pattern"]],FONT_WIDTH*(11+harmony1X),FONT_HEIGHT*5)
   love.graphics.print(SML.harmony2[game.selected["pattern"]],FONT_WIDTH*(11+harmony2X),FONT_HEIGHT*6)
   love.graphics.print(SML.bass[game.selected["pattern"]],FONT_WIDTH*(11+bassX),FONT_HEIGHT*7)
-
-
   -- draw current pattern's tempo
   love.graphics.setColor(color.brightcyan)
   love.graphics.print(SML.tempo[game.selected["pattern"]],FONT_WIDTH*32,FONT_HEIGHT*8)
-
   -- draw current pattern's volume levels
   love.graphics.setColor(color.brightcyan)
   love.graphics.rectangle("fill",FONT_WIDTH*94,(FONT_HEIGHT*4)+4,FONT_WIDTH*(SML.volume[game.selected["pattern"]][1]/8),FONT_HEIGHT/2)
@@ -533,7 +591,6 @@ function love.draw()
   else
     love.graphics.print("off",FONT_WIDTH*97,FONT_HEIGHT*6)
   end
-
   -- draw current pattern's instrument tones (0..3, thin fat smooth taf)
   love.graphics.setColor(color.brightcyan)
   if SML.tone[game.selected["pattern"]]["A"] == 0 then
@@ -554,8 +611,6 @@ function love.draw()
   elseif SML.tone[game.selected["pattern"]]["B"] == 3 then
     love.graphics.print("taf",FONT_WIDTH*129,FONT_HEIGHT*5)
   end
-
-
   -- draw current instrument envelopes
   love.graphics.setColor(color.brightcyan)
   love.graphics.print(SML.envelope[game.selected["pattern"]]["A"][1],FONT_WIDTH*135,FONT_HEIGHT*4)
@@ -580,26 +635,130 @@ function love.draw()
   love.graphics.print(SML.envelope[game.selected["pattern"]]["E"][4],FONT_WIDTH*147,FONT_HEIGHT*8)
 
 
+  -- draw for "about" section
+  if game.selected["section"] == "about" then
+    love.graphics.setColor(color.white)
+    love.graphics.print(nicenessLogo,FONT_WIDTH*(80/2),FONT_HEIGHT*13) -- niceNESs logo
+  end
+
+  local melodyTrackString = ""
+  local harmony1TrackString = ""
+  local harmony2TrackString = ""
+  local bassTrackString = ""
+  for i = 1,128 do
+    melodyTrackString = melodyTrackString .. string.char(64+SML.melodyTrack[i])
+    harmony1TrackString = harmony1TrackString .. string.char(64+SML.harmony1Track[i])
+    harmony2TrackString = harmony2TrackString .. string.char(64+SML.harmony2Track[i])
+  end
+  for i = 1,32 do
+    bassTrackString = bassTrackString .. string.char(64+SML.bassTrack[i])
+  end
+
+  -- draw for "melody" section
+  if game.selected["section"] == "melody" then
+    love.graphics.setColor(color.white)
+    love.graphics.print(rollMarkers,FONT_WIDTH*29,FONT_HEIGHT*11) -- piano roll note markers
+    love.graphics.print(musicBars,FONT_WIDTH*32,FONT_HEIGHT*11) -- 1st music bar
+    love.graphics.print(musicBars,FONT_WIDTH*64,FONT_HEIGHT*11) -- 2nd music bar
+    love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
+    love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
+
+    -- draw melodyTrack notes
+    love.graphics.setColor(color.brightgreen)
+    for i = 1,128 do
+      local charNum = string.byte(string.sub(melodyTrackString,i,i))
+      if charNum > 64 then
+        love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
+      end
+    end
+  end
+
+  -- draw for "harmony1" section
+  if game.selected["section"] == "harmony1" then
+    love.graphics.setColor(color.white)
+    love.graphics.print(rollMarkers,FONT_WIDTH*29,FONT_HEIGHT*11) -- piano roll note markers
+    love.graphics.print(musicBars,FONT_WIDTH*32,FONT_HEIGHT*11) -- 1st music bar
+    love.graphics.print(musicBars,FONT_WIDTH*64,FONT_HEIGHT*11) -- 2nd music bar
+    love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
+    love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
+
+    -- draw harmony1Track notes
+    love.graphics.setColor(color.brightyellow)
+    for i = 1,128 do
+      local charNum = string.byte(string.sub(harmony1TrackString,i,i))
+      if charNum > 64 then
+        love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
+      end
+    end
+  end
+
+  -- draw for "harmony2" section
+  if game.selected["section"] == "harmony2" then
+    love.graphics.setColor(color.white)
+    love.graphics.print(rollMarkers,FONT_WIDTH*29,FONT_HEIGHT*11) -- piano roll note markers
+    love.graphics.print(musicBars,FONT_WIDTH*32,FONT_HEIGHT*11) -- 1st music bar
+    love.graphics.print(musicBars,FONT_WIDTH*64,FONT_HEIGHT*11) -- 2nd music bar
+    love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
+    love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
+  end
+
+  -- draw for "bass" section
+  if game.selected["section"] == "bass" then
+    love.graphics.setColor(color.white)
+    love.graphics.print(rollMarkers,FONT_WIDTH*29,FONT_HEIGHT*11) -- piano roll note markers
+    love.graphics.print(musicBars,FONT_WIDTH*32,FONT_HEIGHT*11) -- 1st music bar
+    love.graphics.print(bassLeftPanel,FONT_WIDTH*0,FONT_HEIGHT*11)
+    -- manual patching of xtui
+    love.graphics.setColor(color.green)
+    love.graphics.print("maller number, lower note",FONT_WIDTH*1,FONT_HEIGHT*27)
+  end
+
+  -- draw for "rhythm" section
+  if game.selected["section"] == "rhythm" then
+    love.graphics.setColor(color.white)
+    love.graphics.print(rollMarkers,FONT_WIDTH*29,FONT_HEIGHT*11) -- piano roll note markers
+    love.graphics.print(musicBars,FONT_WIDTH*32,FONT_HEIGHT*11) -- 1st music bar
+  end
+
+  -- draw for "sequence" section
+  if game.selected["section"] == "sequence" then
+    love.graphics.setColor(color.white)
+  end
+
   -- draw status bar
   love.graphics.setColor(color.white)
   game.statusBar = game.name .. " " .. game.version .. " " .. game.edition .. " " .. game.os .. " | "
   love.graphics.print(game.statusBar, FONT_WIDTH*1, FONT_HEIGHT*44)
 
+
   -- debug window (viewable only on fullscreen, tested on 1440x900)
   -- debug prints from FONT_HEIGHT*46 to 49
   love.graphics.setColor(color.red)
-  love.graphics.print("+-[ Debug Section ]-",FONT_WIDTH*0,FONT_HEIGHT*45)
+  love.graphics.print("--[ Debug Section ]-",FONT_WIDTH*0,FONT_HEIGHT*45)
   for i = 20,159 do
     love.graphics.print("-",FONT_WIDTH*i,FONT_HEIGHT*45)
   end
-
   -- update debug info
   game.debug1 = "mouse: "
   game.debug1 = game.debug1 .. string.format("%3d",mouse.x) .. "," .. string.format("%2d",mouse.y) .. " | "
-  game.debug1 = game.debug1 .. "select: "
+  game.debug1 = game.debug1 .. "select XY: "
   game.debug1 = game.debug1 .. string.format("%3d",game.selectBar["x"]) .. "," .. string.format("%2d",game.selectBar["y"]) .. " | "
+  game.debug1 = game.debug1 .. "section: "
+  game.debug1 = game.debug1 .. string.format("%-8s",game.selected["section"]) .. " | "
+  game.debug1 = game.debug1 .. "pattern: " .. game.selected["pattern"] .. " | "
+  game.debug1 = game.debug1 .. "notenum: " .. string.format("%2d",game.selected["noteNum"]) .. " | "
   game.debug2 = game.inputPrompt .. ": " .. game.inputData .. " | "
-  game.debug3 = ""
+  if game.selected["section"] == "melody" then
+    game.debug3 = "melodyTrack :" .. melodyTrackString
+  elseif game.selected["section"] == "harmony1" then
+    game.debug3 = "harmony1Track :" .. harmony1TrackString
+  elseif game.selected["section"] == "harmony2" then
+    game.debug3 = "harmony2Track :" .. harmony2TrackString
+  elseif game.selected["section"] == "bass" then
+    game.debug3 = "bassTrack :" .. bassTrackString
+  else
+    game.debug3 = ""
+  end
   game.debug4 = ""
   -- draw debug info
   love.graphics.setColor(color.yellow)
@@ -608,14 +767,36 @@ function love.draw()
   love.graphics.print(game.debug3,FONT_WIDTH*0,FONT_HEIGHT*48)
   love.graphics.print(game.debug4,FONT_WIDTH*0,FONT_HEIGHT*49)
 
-  -- rough test
-  love.graphics.setColor(color.white)
-  love.graphics.draw(SML.melodyData["a"], 1280/2,720/2)
-
 end
 
 function love.update(dt)
   -- Your game update here
+
+  -- convert mouse position to ansi text coordinates
+  local mouse = {
+    x = math.floor(love.mouse.getX()/8)+1,
+    y = math.floor(love.mouse.getY()/16)+1
+  }
+
+  -- mouse data entry section [start]
+  if love.mouse.isDown(1) then -- primary button down
+    -- Drawing notes in melody harmony1 harmony2 section
+    if (mouse.x >= 33 and mouse.x <= 160) and (mouse.y >= 12 and mouse.y <= 30) then
+      if game.selected["section"]=="melody" then
+        SML.melodyTrack[mouse.x-32] = game.selected["noteNum"]
+      end
+      if game.selected["section"]=="harmony1" then
+        SML.harmony1Track[mouse.x-32] = game.selected["noteNum"]
+      end
+      if game.selected["section"]=="harmony2" then
+        SML.harmony2Track[mouse.x-32] = game.selected["noteNum"]
+      end
+
+    end
+
+  end
+  -- mouse data entry section [end]
+
 
   -- Data Entry section [start]
   -- A instrument : envelope 1 (atk) selected
@@ -828,6 +1009,13 @@ function love.keypressed(key, scancode, isrepeat)
     love.event.quit()
   end
 
+  if key == "f1" then
+    -- change section to "about" : the welcome screen
+    game.selected["section"] = "about"
+    game.selectBar["x"] = 161 -- out of screen
+    game.selectBar["y"] = 46 -- out of screen
+  end
+
   if key == "f12" then
     -- toggle fullscreen
       fullscreen = not fullscreen
@@ -960,156 +1148,182 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "a"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 15 then -- b clicked
       game.selectBar["x"] = 13
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "b"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 17 then -- c clicked
       game.selectBar["x"] = 15
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "c"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 19 then -- d clicked
       game.selectBar["x"] = 17
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "d"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 21 then -- e clicked
       game.selectBar["x"] = 19
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "e"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 23 then -- f clicked
       game.selectBar["x"] = 21
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "f"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 25 then -- g clicked
       game.selectBar["x"] = 23
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "g"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 27 then -- h clicked
       game.selectBar["x"] = 25
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "h"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 29 then -- i clicked
       game.selectBar["x"] = 27
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "i"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 31 then -- j clicked
       game.selectBar["x"] = 29
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "j"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 33 then -- k clicked
       game.selectBar["x"] = 31
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "k"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 35 then -- l clicked
       game.selectBar["x"] = 33
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "l"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 37 then -- m clicked
       game.selectBar["x"] = 35
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "m"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 39 then -- n clicked
       game.selectBar["x"] = 37
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "n"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 41 then -- o clicked
       game.selectBar["x"] = 39
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "o"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 43 then -- p clicked
       game.selectBar["x"] = 41
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "p"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 45 then -- q clicked
       game.selectBar["x"] = 43
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "q"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 47 then -- r clicked
       game.selectBar["x"] = 45
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "r"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 49 then -- s clicked
       game.selectBar["x"] = 47
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "s"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 51 then -- t clicked
       game.selectBar["x"] = 49
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "t"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 53 then -- u clicked
       game.selectBar["x"] = 51
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "u"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 55 then -- v clicked
       game.selectBar["x"] = 53
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "v"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 57 then -- w clicked
       game.selectBar["x"] = 55
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "w"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 59 then -- x clicked
       game.selectBar["x"] = 57
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "x"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 61 then -- y clicked
       game.selectBar["x"] = 59
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "y"
+      game.selected["section"] = "pattern"
     end
     if mouse.x == 63 then -- z clicked
       game.selectBar["x"] = 61
       game.selectBar["y"] = 9
       game.selectBar["width"] = 3
       game.selected["pattern"] = "z"
+      game.selected["section"] = "pattern"
     end
     if mouse.x >= 66 and mouse.x <= 79 then
       startDataEntry("str","Enter a name for this pattern",12)
@@ -1479,33 +1693,40 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 0
       game.selectBar["y"] = 4
       game.selectBar["width"] = 10
+      game.selected["section"] = "melody"
     end
     if mouse.y == 6 then -- Harmony 1 clicked
       game.selectBar["x"] = 0
       game.selectBar["y"] = 5
       game.selectBar["width"] = 10
+      game.selected["section"] = "harmony1"
     end
     if mouse.y == 7 then -- Harmony 2 clicked
       game.selectBar["x"] = 0
       game.selectBar["y"] = 6
       game.selectBar["width"] = 10
+      game.selected["section"] = "harmony2"
     end
     if mouse.y == 8 then -- Bass clicked
       game.selectBar["x"] = 0
       game.selectBar["y"] = 7
       game.selectBar["width"] = 10
+      game.selected["section"] = "bass"
     end
     if mouse.y == 9 then  -- Rhythnm clicked
       game.selectBar["x"] = 0
       game.selectBar["y"] = 8
       game.selectBar["width"] = 10
+      game.selected["section"] = "rhythm"
     end
     if mouse.y == 11 then -- Sequence clicked
       game.selectBar["x"] = 0
       game.selectBar["y"] = 10
       game.selectBar["width"] = 10
+      game.selected["section"] = "sequence"
     end
   end
+
 end
 
 function love.touchpressed(id, x, y, dx, dy, pressure)
