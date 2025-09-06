@@ -114,11 +114,6 @@ mkdir("autosave")
 
 -- game data
 local MML = {}
-MML.title      = "< click (   title    ) to change >"
-MML.composer   = "< click (  composer  ) to change >"
-MML.programmer = "< click ( programmer ) to change >"
-MML.copyright  = "< click ( copyright  ) to change >"
-MML.sequence   = "< click (  sequence  ) to change >" -- string of alphabets denoting the song sequence
 
 MML.data = {}
 
@@ -130,6 +125,8 @@ SML.composer   = "< click (  composer  ) to change >"
 SML.programmer = "< click ( programmer ) to change >"
 SML.copyright  = "< click ( copyright  ) to change >"
 SML.sequence   = "< click (  sequence  ) to change >" -- string of alphabets denoting the song sequence
+
+SML.version    = game.version -- embed app's version into SML data
 
 SML.patternName = {
   ["a"] = "name pattern",
@@ -614,6 +611,11 @@ end
 function loadSML(filename,directory)
     SML = json.decode(love.filesystem.read(directory .."/"..filename))
     print(filename .. " loaded into memory")
+    if not (SML.version == game.version) then
+      -- issue warning for mismatched app and data versions
+      -- https://love2d.org/wiki/love.window.showMessageBox
+      love.window.showMessageBox("Version mismatch", "File's SML version is "..SML.version..", app version is "..game.version, "warning", true)
+    end
 end
 
 ---Use when requiring text data from user
@@ -690,11 +692,11 @@ function love.load()
   textWindowBlank  = json.decode(love.filesystem.read("xtui/0-textwindow-blank.xtui"))
   bassLeftPanel    = json.decode(love.filesystem.read("xtui/0-bass-leftpanel.xtui"))
 
-  if love.filesystem.getInfo("autosave/lastrun.sml") == nil then
-    print("lastrun.sml not found!")
+  if love.filesystem.getInfo("autosave/niceNESs_SaveOnQuit.sml") == nil then
+    print("niceNESs_SaveOnQuit.sml not found!")
   else
-    print("lastrun.sml found!")
-    loadSML("lastrun.sml","autosave")
+    print("niceNESs_SaveOnQuit.sml found!")
+    loadSML("niceNESs_SaveOnQuit.sml","autosave")
   end
 
 end
@@ -1287,7 +1289,7 @@ function love.keypressed(key, scancode, isrepeat)
     updateTracks("a")
 
     saveSML(os.date("%Y-%b-%d_%H-%M") .. ".sml","autosave",true)
-    saveSML("lastrun.sml","autosave",true)
+    saveSML("niceNESs_SaveOnQuit.sml","autosave",true)
     love.event.quit()
   end
 
