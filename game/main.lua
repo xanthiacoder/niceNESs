@@ -91,14 +91,18 @@ function mkdir(dirname)
     elseif game.os ~= "Web" then
       love.filesystem.createDirectory(dirname)
       print("Created directory - " .. dirname)
-      local success = love.filesystem.remove( dirname .. "/.DS_Store" ) -- cleanup for Mac
-      if success then
-        print("DS_Store removed from " .. dirname)
-      else
-        print("No files removed from " .. dirname)
-      end
     end
   end
+  -- clear invisible files on mac
+  if game.os == "Mac" then
+    local success = love.filesystem.remove( dirname .. "/.DS_Store" ) -- cleanup for Mac
+    if success then
+      print("DS_Store removed from " .. dirname)
+    else
+      print("No files removed from " .. dirname)
+    end
+  end
+
 end
 
 mkdir("mmldata")
@@ -120,6 +124,13 @@ MML.data = {}
 
 
 local SML = {}
+
+SML.title      = "< click (   title    ) to change >"
+SML.composer   = "< click (  composer  ) to change >"
+SML.programmer = "< click ( programmer ) to change >"
+SML.copyright  = "< click ( copyright  ) to change >"
+SML.sequence   = "< click (  sequence  ) to change >" -- string of alphabets denoting the song sequence
+
 SML.patternName = {
   ["a"] = "name pattern",
   ["b"] = "name pattern",
@@ -568,7 +579,42 @@ SML.melodyData = {
 
 ]]
 
+---use to save SML table into file
+---@param filename string
+---@param directory string valid option : "autosave" "smldata"
+---@param silent boolean "true" for no message window
+function saveSML(filename,directory,silent)
 
+  if game.os ~= "R36S" and game.os ~= "Web" then
+
+    local success, message =love.filesystem.write(directory.."/"..filename, json.encode(SML))
+    if success then
+      if not silent then
+        -- https://love2d.org/wiki/love.window.showMessageBox
+        love.window.showMessageBox("Success", filename .. " saved at " .. love.filesystem.getSaveDirectory() .. "/" .. directory, "info", true)
+      end
+      print (filename .. " saved at " .. love.filesystem.getSaveDirectory() .. "/".. directory)
+    else
+      -- https://love2d.org/wiki/love.window.showMessageBox
+      love.window.showMessageBox("Cannot write file", message, "error", true)
+	    print (love.filesystem.getSaveDirectory() .. "/" .. directory .. "/" .. filename .. " creation failed! " .. message)
+    end
+  end
+  if game.os == "R36S" then
+    -- save for R36S using lua io
+    local f = io.open(love.filesystem.getSaveDirectory().."//"..directory.."/"..filename, "w")
+    f:write(json.encode(SML))
+    f:close()
+  end
+end
+
+---use to load SML table into memory
+---@param filename string
+---@param directory string valid option : "autosave" "smldata"
+function loadSML(filename,directory)
+    SML = json.decode(love.filesystem.read(directory .."/"..filename))
+    print(filename .. " loaded into memory")
+end
 
 ---Use when requiring text data from user
 ---@param type string "int" "str"
@@ -596,6 +642,16 @@ function love.textinput(t) -- called for every instance of text entry
     game.inputData = game.inputData .. t
   end
 end
+
+
+function flattenString(s)
+  -- replace spaces with dashes
+  s = string.gsub(s,"%s+", "-")
+  -- Remove special characters (keep only alphanumeric and dashes)
+  s = string.gsub(s,"[^%w%-%_%.]+", "")
+  return s
+end
+
 
 ---update all tracks with selected pattern data
 ---@param fromPattern char alphabet of pattern to copy data from
@@ -634,8 +690,14 @@ function love.load()
   textWindowBlank  = json.decode(love.filesystem.read("xtui/0-textwindow-blank.xtui"))
   bassLeftPanel    = json.decode(love.filesystem.read("xtui/0-bass-leftpanel.xtui"))
 
-end
+  if love.filesystem.getInfo("autosave/lastrun.sml") == nil then
+    print("lastrun.sml not found!")
+  else
+    print("lastrun.sml found!")
+    loadSML("lastrun.sml","autosave")
+  end
 
+end
 function love.draw()
   -- Your game draw here
 
@@ -703,11 +765,11 @@ function love.draw()
   love.graphics.setFont(monoFont)
   love.graphics.setLineWidth(1)
   love.graphics.setColor(color.white)
-  love.graphics.print(MML.title,FONT_WIDTH*12,FONT_HEIGHT*0)
-  love.graphics.print(MML.composer,FONT_WIDTH*12,FONT_HEIGHT*1)
-  love.graphics.print(MML.programmer,FONT_WIDTH*12,FONT_HEIGHT*2)
-  love.graphics.print(MML.copyright,FONT_WIDTH*12,FONT_HEIGHT*3)
-  love.graphics.print(MML.sequence,FONT_WIDTH*12,FONT_HEIGHT*10)
+  love.graphics.print(SML.title,FONT_WIDTH*12,FONT_HEIGHT*0)
+  love.graphics.print(SML.composer,FONT_WIDTH*12,FONT_HEIGHT*1)
+  love.graphics.print(SML.programmer,FONT_WIDTH*12,FONT_HEIGHT*2)
+  love.graphics.print(SML.copyright,FONT_WIDTH*12,FONT_HEIGHT*3)
+  love.graphics.print(SML.sequence,FONT_WIDTH*12,FONT_HEIGHT*10)
   -- draw current pattern's Instrument assignments
   -- A = 65, B = 66, C = 67, D = 68
   local melodyX = (string.byte(SML.melody[game.selected["pattern"]])-64)+(string.byte(SML.melody[game.selected["pattern"]])-65)
@@ -1169,25 +1231,25 @@ function love.update(dt)
 
   -- title selected
   if (game.selectBar["x"] == 0 and game.selectBar["y"] == 0) and game.dataEntry == false then
-    MML.title = game.inputData
+    SML.title = game.inputData
     stopDataEntry()
   end
 
   -- composer selected
   if (game.selectBar["x"] == 0 and game.selectBar["y"] == 1) and game.dataEntry == false then
-    MML.composer = game.inputData
+    SML.composer = game.inputData
     stopDataEntry()
   end
 
   -- programmer selected
   if (game.selectBar["x"] == 0 and game.selectBar["y"] == 2) and game.dataEntry == false then
-    MML.programmer = game.inputData
+    SML.programmer = game.inputData
     stopDataEntry()
   end
 
   -- copyright selected
   if (game.selectBar["x"] == 0 and game.selectBar["y"] == 3) and game.dataEntry == false then
-    MML.copyright = game.inputData
+    SML.copyright = game.inputData
     stopDataEntry()
   end
   -- Data Entry section [end]
@@ -1196,15 +1258,32 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
   print("key:"..key.." scancode:"..scancode.." isrepeat:"..tostring(isrepeat))
-  if key == "f10" and love.system.getOS() ~= "Web" then
-    love.event.quit()
-  end
 
   if key == "f1" then
     -- change section to "about" : the welcome screen
     game.selected["section"] = "about"
     game.selectBar["x"] = 161 -- out of screen
     game.selectBar["y"] = 46 -- out of screen
+  end
+
+  if key == "f3" and love.system.getOS() ~= "Web" then
+    game.selected["section"] = "about"
+    game.selectBar["x"] = 94
+    game.selectBar["y"] = 0
+    game.selectBar["width"] = 4
+    -- load pattern "a" tracks before saving (if not pattern "a" data messes up on save and reload)
+    updateTracks("a")
+    -- get filename from meta data and flatten it
+    saveSML(flattenString(SML.composer.."_"..SML.title..".sml"),"smldata",false)
+  end
+
+  if key == "f10" and love.system.getOS() ~= "Web" then
+    -- load pattern "a" tracks before quitting (if not pattern "a" data messes up on save and reload)
+    updateTracks("a")
+
+    saveSML(os.date("%Y-%b-%d_%H-%M") .. ".sml","autosave",true)
+    saveSML("lastrun.sml","autosave",true)
+    love.event.quit()
   end
 
   if key == "f12" then
