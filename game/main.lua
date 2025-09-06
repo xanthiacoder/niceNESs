@@ -79,22 +79,34 @@ print("systemOS: "..game.os)
 
 
 -- check / create file directories
-if love.filesystem.getInfo("autosave") == nil then
-  if game.os == "R36S" then
-    os.execute("mkdir " .. love.filesystem.getSaveDirectory()) -- OS creation
-    os.execute("mkdir " .. love.filesystem.getSaveDirectory() .. "//autosave")
-    print("R36S: created directory - autosave")
-  else
-    love.filesystem.createDirectory("autosave")
-    print("Created directory - autosave")
+
+---function for savedata directories
+---@param dirname string
+function mkdir(dirname)
+  if love.filesystem.getInfo(dirname) == nil then
+    if game.os == "R36S" then
+      os.execute("mkdir " .. love.filesystem.getSaveDirectory()) -- OS creation
+      os.execute("mkdir " .. love.filesystem.getSaveDirectory() .. "//" .. dirname)
+      print("R36S: created directory - " .. dirname)
+    elseif game.os ~= "Web" then
+      love.filesystem.createDirectory(dirname)
+      print("Created directory - " .. dirname)
+      local success = love.filesystem.remove( dirname .. "/.DS_Store" ) -- cleanup for Mac
+      if success then
+        print("DS_Store removed from " .. dirname)
+      else
+        print("No files removed from " .. dirname)
+      end
+    end
   end
 end
-local success = love.filesystem.remove( "autosave/.DS_Store" ) -- cleanup for Mac
-if success then
-  print("DS_Store removed from autosave")
-else
-  print("No files removed from autosave")
-end
+
+mkdir("mmldata")
+mkdir("music")
+mkdir("smldata")
+mkdir("cache")
+mkdir("autosave")
+
 
 -- game data
 local MML = {}
