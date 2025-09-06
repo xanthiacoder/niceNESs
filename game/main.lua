@@ -1264,6 +1264,11 @@ function love.keypressed(key, scancode, isrepeat)
     game.selected["section"] = "about"
     game.selectBar["x"] = 161 -- out of screen
     game.selectBar["y"] = 46 -- out of screen
+    -- change pattern to "a", noteNum to 0
+    game.selected["pattern"] = "a"
+    game.selected["noteNum"] = 0
+    -- load new.sml (file with empty data)
+    loadSML("new.sml","sml")
   end
 
   if key == "f3" and love.system.getOS() ~= "Web" then
