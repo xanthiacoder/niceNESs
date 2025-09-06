@@ -418,6 +418,35 @@ SML.bass4num = {
   ["y"] = {0,0,0,0},
   ["z"] = {0,0,0,0},
 }
+-- octave setting for melody harmony1 harmony2 bass
+SML.octave = {
+  ["a"] = {4,4,3,2},
+  ["b"] = {4,4,3,2},
+  ["c"] = {4,4,3,2},
+  ["d"] = {4,4,3,2},
+  ["e"] = {4,4,3,2},
+  ["f"] = {4,4,3,2},
+  ["g"] = {4,4,3,2},
+  ["h"] = {4,4,3,2},
+  ["i"] = {4,4,3,2},
+  ["j"] = {4,4,3,2},
+  ["k"] = {4,4,3,2},
+  ["l"] = {4,4,3,2},
+  ["m"] = {4,4,3,2},
+  ["n"] = {4,4,3,2},
+  ["o"] = {4,4,3,2},
+  ["p"] = {4,4,3,2},
+  ["q"] = {4,4,3,2},
+  ["r"] = {4,4,3,2},
+  ["s"] = {4,4,3,2},
+  ["t"] = {4,4,3,2},
+  ["u"] = {4,4,3,2},
+  ["v"] = {4,4,3,2},
+  ["w"] = {4,4,3,2},
+  ["x"] = {4,4,3,2},
+  ["y"] = {4,4,3,2},
+  ["z"] = {4,4,3,2},
+}
 
 -- tables to store monophonic noteNum entries by mouse
 SML.melodyTrack = {}
@@ -680,7 +709,7 @@ function love.load()
   print(monoFont2x:getWidth("█"))
   print(monoFont2x:getHeight())
 
-  -- xtui screens using monoFont
+  -- load xtui using monoFont
   nicenessLogo     = json.decode(love.filesystem.read("xtui/0-niceness-logo.xtui"))
   metaSections     = json.decode(love.filesystem.read("xtui/0-metadata-sections.xtui"))
   functionKeys     = json.decode(love.filesystem.read("xtui/0-function-keys.xtui"))
@@ -691,6 +720,17 @@ function love.load()
   dividerMML       = json.decode(love.filesystem.read("xtui/0-divider-mml.xtui"))
   textWindowBlank  = json.decode(love.filesystem.read("xtui/0-textwindow-blank.xtui"))
   bassLeftPanel    = json.decode(love.filesystem.read("xtui/0-bass-leftpanel.xtui"))
+
+  melodyGroove = {
+    [1] = json.decode(love.filesystem.read("xtui/0-melody-groove1.xtui")),
+    [2] = json.decode(love.filesystem.read("xtui/0-melody-groove2.xtui")),
+    [3] = json.decode(love.filesystem.read("xtui/0-melody-groove3.xtui")),
+    [4] = json.decode(love.filesystem.read("xtui/0-melody-groove4.xtui")),
+    [5] = json.decode(love.filesystem.read("xtui/0-melody-groove5.xtui")),
+    [6] = json.decode(love.filesystem.read("xtui/0-melody-groove6.xtui")),
+    [7] = json.decode(love.filesystem.read("xtui/0-melody-groove7.xtui")),
+  }
+  bassGroove = json.decode(love.filesystem.read("xtui/0-bass-groove.xtui"))
 
   if love.filesystem.getInfo("autosave/niceNESs_SaveOnQuit.sml") == nil then
     print("niceNESs_SaveOnQuit.sml not found!")
@@ -872,6 +912,13 @@ function love.draw()
     love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
     love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
 
+    -- draw melody track lights based on bass4nums
+    for i = 1,4 do
+      if SML.bass4num[game.selected["pattern"]][i] ~= 0 then
+        love.graphics.print(melodyGroove[SML.bass4num[game.selected["pattern"]][i]],FONT_WIDTH*(i*32),FONT_HEIGHT*11)
+      end
+    end
+
     -- draw melodyTrack notes
     love.graphics.setColor(color.brightgreen)
     for i = 1,128 do
@@ -891,6 +938,32 @@ function love.draw()
     love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
     love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
 
+    -- draw melody track lights based on bass4nums
+    for i = 1,4 do
+      if SML.bass4num[game.selected["pattern"]][i] ~= 0 then
+        love.graphics.print(melodyGroove[SML.bass4num[game.selected["pattern"]][i]],FONT_WIDTH*(i*32),FONT_HEIGHT*11)
+      end
+    end
+
+    -- draw melodyTrack notes as onion skin
+    love.graphics.setColor(0,1,0,0.4) -- bright green with transparency
+    for i = 1,128 do
+      local charNum = string.byte(string.sub(SML.melodyTrackString[game.selected["pattern"]],i,i))
+      if charNum > 64 then
+        love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
+      end
+    end
+
+    -- draw harmony2Track notes as onion skin
+    love.graphics.setColor(1,0,0,0.4) -- bright red with transparency
+    for i = 1,128 do
+      local charNum = string.byte(string.sub(SML.harmony2TrackString[game.selected["pattern"]],i,i))
+      if charNum > 64 then
+        love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
+      end
+    end
+
+
     -- draw harmony1Track notes
     love.graphics.setColor(color.brightyellow)
     for i = 1,128 do
@@ -909,6 +982,31 @@ function love.draw()
     love.graphics.print(musicBars,FONT_WIDTH*64,FONT_HEIGHT*11) -- 2nd music bar
     love.graphics.print(musicBars,FONT_WIDTH*96,FONT_HEIGHT*11) -- 3rd music bar
     love.graphics.print(musicBars,FONT_WIDTH*128,FONT_HEIGHT*11) -- 4th music bar
+
+    -- draw melody track lights based on bass4nums
+    for i = 1,4 do
+      if SML.bass4num[game.selected["pattern"]][i] ~= 0 then
+        love.graphics.print(melodyGroove[SML.bass4num[game.selected["pattern"]][i]],FONT_WIDTH*(i*32),FONT_HEIGHT*11)
+      end
+    end
+
+    -- draw melodyTrack notes as onion skin
+    love.graphics.setColor(0,1,0,0.4) -- bright green with transparency
+    for i = 1,128 do
+      local charNum = string.byte(string.sub(SML.melodyTrackString[game.selected["pattern"]],i,i))
+      if charNum > 64 then
+        love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
+      end
+    end
+
+    -- draw harmony1Track notes as onion skin
+    love.graphics.setColor(1,1,0,0.4) -- bright yellow with transparency
+    for i = 1,128 do
+      local charNum = string.byte(string.sub(SML.harmony1TrackString[game.selected["pattern"]],i,i))
+      if charNum > 64 then
+        love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
+      end
+    end
 
     -- draw harmony2Track notes
     love.graphics.setColor(color.brightred)
@@ -930,6 +1028,10 @@ function love.draw()
     love.graphics.setColor(color.green)
     love.graphics.print("maller number, lower note",FONT_WIDTH*1,FONT_HEIGHT*27)
 
+    -- draw bass groove
+    love.graphics.setColor(color.white)
+    love.graphics.print(bassGroove,FONT_WIDTH*32,FONT_HEIGHT*11)
+
     -- draw bassTrack notes
     love.graphics.setColor(color.brightmagenta)
     for i = 1,32 do
@@ -938,6 +1040,18 @@ function love.draw()
         love.graphics.print("█",FONT_WIDTH*(31+i),FONT_HEIGHT*(94-charNum))
       end
     end
+
+    -- draw bass4nums
+    love.graphics.setColor(color.brightcyan)
+    love.graphics.print(SML.bass4num[game.selected["pattern"]][1],FONT_WIDTH*4,FONT_HEIGHT*17)
+    love.graphics.print(SML.bass4num[game.selected["pattern"]][2],FONT_WIDTH*9,FONT_HEIGHT*17)
+    love.graphics.print(SML.bass4num[game.selected["pattern"]][3],FONT_WIDTH*14,FONT_HEIGHT*17)
+    love.graphics.print(SML.bass4num[game.selected["pattern"]][4],FONT_WIDTH*19,FONT_HEIGHT*17)
+
+    -- draw bass octave
+    love.graphics.setColor(color.brightcyan)
+    love.graphics.print(SML.octave[game.selected["pattern"]][4],FONT_WIDTH*14,FONT_HEIGHT*24)
+
   end
 
   -- draw for "rhythm" section
@@ -974,7 +1088,7 @@ function love.draw()
   game.debug1 = game.debug1 .. string.format("%-8s",game.selected["section"]) .. " | "
   game.debug1 = game.debug1 .. "pattern: " .. game.selected["pattern"] .. " | "
   game.debug1 = game.debug1 .. "notenum: " .. string.format("%2d",game.selected["noteNum"]) .. " | "
-  game.debug2 = game.inputPrompt .. ": " .. game.inputData .. " | "
+  game.debug2 = "Input type:"..type(game.inputData).. " " .. game.inputPrompt .. ": " .. game.inputData .. " | "
   if game.selected["section"] == "melody" then
     game.debug3 = "melodyTrack :" .. SML.melodyTrackString[game.selected["pattern"]]
   elseif game.selected["section"] == "harmony1" then
@@ -1254,6 +1368,49 @@ function love.update(dt)
     SML.copyright = game.inputData
     stopDataEntry()
   end
+
+  -- bass section left panel
+  if (game.selectBar["x"] == 3 and game.selectBar["y"] == 17) and game.dataEntry == false
+  and game.selected["section"] == "bass" then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 and tonumber(game.inputData) < 8 then
+      SML.bass4num[game.selected["pattern"]][1] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  if (game.selectBar["x"] == 8 and game.selectBar["y"] == 17) and game.dataEntry == false
+  and game.selected["section"] == "bass" then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 and tonumber(game.inputData) < 8 then
+      SML.bass4num[game.selected["pattern"]][2] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  if (game.selectBar["x"] == 13 and game.selectBar["y"] == 17) and game.dataEntry == false
+  and game.selected["section"] == "bass" then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 and tonumber(game.inputData) < 8 then
+      SML.bass4num[game.selected["pattern"]][3] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  if (game.selectBar["x"] == 18 and game.selectBar["y"] == 17) and game.dataEntry == false
+  and game.selected["section"] == "bass" then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 and tonumber(game.inputData) < 8 then
+      SML.bass4num[game.selected["pattern"]][4] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
+  -- bass octave data entry
+  if (game.selectBar["x"] == 13 and game.selectBar["y"] == 24) and game.dataEntry == false
+  and game.selected["section"] == "bass" then
+    if tonumber(game.inputData) ~= nil and tonumber(game.inputData) > 0 and tonumber(game.inputData) < 9 then
+      SML.octave[game.selected["pattern"]][4] = tonumber(game.inputData)
+    end
+    stopDataEntry()
+  end
+
   -- Data Entry section [end]
 
 end
@@ -1964,6 +2121,43 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["x"] = 31
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
+  end
+
+  -- bass section detection
+  if game.selected["section"] == "bass" then
+    -- bass left panel detection
+    if mouse.x == 5 and mouse.y == 18 then
+      startDataEntry("int","Enter a number (1 to 7)",1)
+      game.selectBar["x"] = 3
+      game.selectBar["y"] = 17
+      game.selectBar["width"] = 3
+    end
+    if mouse.x == 10 and mouse.y == 18 then
+      startDataEntry("int","Enter a number (1 to 7)",1)
+      game.selectBar["x"] = 8
+      game.selectBar["y"] = 17
+      game.selectBar["width"] = 3
+    end
+    if mouse.x == 15 and mouse.y == 18 then
+      startDataEntry("int","Enter a number (1 to 7)",1)
+      game.selectBar["x"] = 13
+      game.selectBar["y"] = 17
+      game.selectBar["width"] = 3
+    end
+    if mouse.x == 20 and mouse.y == 18 then
+      startDataEntry("int","Enter a number (1 to 7)",1)
+      game.selectBar["x"] = 18
+      game.selectBar["y"] = 17
+      game.selectBar["width"] = 3
+    end
+    -- bass octave selected
+    if mouse.x == 15 and mouse.y == 25 then
+      startDataEntry("int","Enter an octave number (1 to 8)",1)
+      game.selectBar["x"] = 13
+      game.selectBar["y"] = 24
+      game.selectBar["width"] = 3
+    end
+
   end
 
   -- meta area detection
