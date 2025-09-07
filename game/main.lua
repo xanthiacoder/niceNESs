@@ -1846,6 +1846,20 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("a")
       game.selected["pattern"] = "a"
       game.selected["section"] = "pattern"
+
+      -- compile MML from sections
+      MML.preview = ""
+      if MML.melody[game.selected["pattern"]] ~= nil then
+        MML.preview = MML.preview .. MML.melody[game.selected["pattern"]]
+      end
+      if MML.harmony1[game.selected["pattern"]] ~= nil then
+        MML.preview = MML.preview .. MML.harmony1[game.selected["pattern"]]
+      end
+      if MML.harmony2[game.selected["pattern"]] ~= nil then
+        MML.preview = MML.preview .. MML.harmony2[game.selected["pattern"]]
+      end
+
+
     end
     if mouse.x == 15 then -- b clicked
       game.selectBar["x"] = 13
