@@ -117,31 +117,64 @@ mkdir("autosave")
 --[[ charCount to noteLen
       1  = 32
       2  = 16
-      3  = 12
+      3  =
       4  = 8
-      5  = 7
-      6  = 6
-      7  = 5
+      5  =
+      6  =
+      7  =
       8  = 4
-      9  = 3.
-      10 = 3.
-      11 = 3
-      12 = 3
-      13 = 2.
-      14 = 2.
-      15 = 2
+      9  =
+      10 =
+      11 =
+      12 =
+      13 =
+      14 =
+      15 =
       16 = 2
       32 = 1
-      ]]
+
+                                 2(16)
+                                 ..
+      27 ***************************
+         |     16(2)    |........  .
+                            8(4)   1(32)
+
+
+
+                                  4(8)
+                                 ....
+      28 ****************************
+         |     16(2)    |........
+                            8(4)
+
+
+
+                                  4(8)
+                                 ....
+      29 *****************************
+         |     16(2)    |........    .
+                            8(4)     1(32)
+
+
+
+                                 4(8)  1(32)
+                                 ....  .
+      31 *******************************
+         |     16(2)    |........    ..
+                            8(4)     2(16)
+
+
+                            ]]
+
 LUTcharToLen = {
-  [1]  = "32", [2]  = "16", [3] = "12",  [4] = "8",
-  [5]  = "7",  [6]  = "6",  [7] = "5",   [8] = "4",
-  [9]  = "3.", [10] = "3.", [11] = "3",  [12] = "3",
-  [13] = "2.", [14] = "2.", [15] = "2",  [16] = "2",
-  [17] = "1.", [18] = "1.", [19] = "1.", [20] = "1.",
-  [21] = "1.", [22] = "1.", [23] = "1.", [24] = "1.",
-  [25] = "1",  [26] = "1",  [27] = "1",  [28] = "1",
-  [29] = "1",  [30] = "1",  [31] = "1",  [32] = "1",
+  [1]  = "32", [2]  = "16", [3] = "16 w32",  [4] = "8",
+  [5]  = "8 w32",  [6]  = "8 w16",  [7] = "8 w16 w32",   [8] = "4",
+  [9]  = "4 w32", [10] = "4 w16", [11] = "4 w16 w32",  [12] = "4 w8",
+  [13] = "4 w8 w32", [14] = "4 w8 w16", [15] = "4 w8 w16 w32",  [16] = "2",
+  [17] = "2 w32", [18] = "2 w16", [19] = "2 w16 w32", [20] = "2 w8",
+  [21] = "2 w8 w32", [22] = "2 w8 w16", [23] = "2 w8 w16 w32", [24] = "2 w4",
+  [25] = "2 w4 w32",  [26] = "2 w4 w16",  [27] = "2 w4 w16 w32",  [28] = "2 w4 w8",
+  [29] = "2 w4 w8 w32",  [30] = "2 w4 w8 w16",  [31] = "2 w4 w8 w16 w32",  [32] = "1",
 }
 
 
@@ -919,6 +952,22 @@ function updateTracks(fromPattern)
     SML.bassTrack[i] = string.byte(string.sub(SML.bassTrackString[fromPattern],i,i))-64 -- convert from char to noteNum
   end
 end
+
+
+function makePatternMML()
+      -- compile MML from sections
+      MML.preview = ""
+      if MML.melody[game.selected["pattern"]] ~= nil then
+        MML.preview = MML.preview .. MML.melody[game.selected["pattern"]]
+      end
+      if MML.harmony1[game.selected["pattern"]] ~= nil then
+        MML.preview = MML.preview .. MML.harmony1[game.selected["pattern"]]
+      end
+      if MML.harmony2[game.selected["pattern"]] ~= nil then
+        MML.preview = MML.preview .. MML.harmony2[game.selected["pattern"]]
+      end
+end
+
 
 function love.load()
   -- https = runtimeLoader.loadHTTPS()
@@ -1846,20 +1895,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("a")
       game.selected["pattern"] = "a"
       game.selected["section"] = "pattern"
-
-      -- compile MML from sections
-      MML.preview = ""
-      if MML.melody[game.selected["pattern"]] ~= nil then
-        MML.preview = MML.preview .. MML.melody[game.selected["pattern"]]
-      end
-      if MML.harmony1[game.selected["pattern"]] ~= nil then
-        MML.preview = MML.preview .. MML.harmony1[game.selected["pattern"]]
-      end
-      if MML.harmony2[game.selected["pattern"]] ~= nil then
-        MML.preview = MML.preview .. MML.harmony2[game.selected["pattern"]]
-      end
-
-
+      makePatternMML()
     end
     if mouse.x == 15 then -- b clicked
       game.selectBar["x"] = 13
@@ -1868,6 +1904,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("b")
       game.selected["pattern"] = "b"
       game.selected["section"] = "pattern"
+      makePatternMML()
     end
     if mouse.x == 17 then -- c clicked
       game.selectBar["x"] = 15
