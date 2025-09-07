@@ -152,6 +152,123 @@ MML.data = "" -- test as a super-long string
 MML.preview = "" -- test it as string first, convert to table if too limited
 
 
+MML.melody = {
+  ["a"] = "",
+  ["b"] = "",
+  ["c"] = "",
+  ["d"] = "",
+  ["e"] = "",
+  ["f"] = "",
+  ["g"] = "",
+  ["h"] = "",
+  ["i"] = "",
+  ["j"] = "",
+  ["k"] = "",
+  ["l"] = "",
+  ["m"] = "",
+  ["n"] = "",
+  ["o"] = "",
+  ["p"] = "",
+  ["q"] = "",
+  ["r"] = "",
+  ["s"] = "",
+  ["t"] = "",
+  ["u"] = "",
+  ["v"] = "",
+  ["w"] = "",
+  ["x"] = "",
+  ["y"] = "",
+  ["z"] = "",
+}
+
+MML.harmony1 = {
+  ["a"] = "",
+  ["b"] = "",
+  ["c"] = "",
+  ["d"] = "",
+  ["e"] = "",
+  ["f"] = "",
+  ["g"] = "",
+  ["h"] = "",
+  ["i"] = "",
+  ["j"] = "",
+  ["k"] = "",
+  ["l"] = "",
+  ["m"] = "",
+  ["n"] = "",
+  ["o"] = "",
+  ["p"] = "",
+  ["q"] = "",
+  ["r"] = "",
+  ["s"] = "",
+  ["t"] = "",
+  ["u"] = "",
+  ["v"] = "",
+  ["w"] = "",
+  ["x"] = "",
+  ["y"] = "",
+  ["z"] = "",
+}
+
+MML.harmony2 = {
+  ["a"] = "",
+  ["b"] = "",
+  ["c"] = "",
+  ["d"] = "",
+  ["e"] = "",
+  ["f"] = "",
+  ["g"] = "",
+  ["h"] = "",
+  ["i"] = "",
+  ["j"] = "",
+  ["k"] = "",
+  ["l"] = "",
+  ["m"] = "",
+  ["n"] = "",
+  ["o"] = "",
+  ["p"] = "",
+  ["q"] = "",
+  ["r"] = "",
+  ["s"] = "",
+  ["t"] = "",
+  ["u"] = "",
+  ["v"] = "",
+  ["w"] = "",
+  ["x"] = "",
+  ["y"] = "",
+  ["z"] = "",
+}
+
+MML.bass = {
+  ["a"] = "",
+  ["b"] = "",
+  ["c"] = "",
+  ["d"] = "",
+  ["e"] = "",
+  ["f"] = "",
+  ["g"] = "",
+  ["h"] = "",
+  ["i"] = "",
+  ["j"] = "",
+  ["k"] = "",
+  ["l"] = "",
+  ["m"] = "",
+  ["n"] = "",
+  ["o"] = "",
+  ["p"] = "",
+  ["q"] = "",
+  ["r"] = "",
+  ["s"] = "",
+  ["t"] = "",
+  ["u"] = "",
+  ["v"] = "",
+  ["w"] = "",
+  ["x"] = "",
+  ["y"] = "",
+  ["z"] = "",
+}
+
+
 local SML = {}
 
 SML.title      = "< click (   title    ) to change >"
@@ -612,121 +729,6 @@ SML.bassTrackString = {
   ["z"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
 }
 
-SML.melodyTrackMML = {
-  ["a"] = "",
-  ["b"] = "",
-  ["c"] = "",
-  ["d"] = "",
-  ["e"] = "",
-  ["f"] = "",
-  ["g"] = "",
-  ["h"] = "",
-  ["i"] = "",
-  ["j"] = "",
-  ["k"] = "",
-  ["l"] = "",
-  ["m"] = "",
-  ["n"] = "",
-  ["o"] = "",
-  ["p"] = "",
-  ["q"] = "",
-  ["r"] = "",
-  ["s"] = "",
-  ["t"] = "",
-  ["u"] = "",
-  ["v"] = "",
-  ["w"] = "",
-  ["x"] = "",
-  ["y"] = "",
-  ["z"] = "",
-}
-
-SML.harmony1TrackMML = {
-  ["a"] = "",
-  ["b"] = "",
-  ["c"] = "",
-  ["d"] = "",
-  ["e"] = "",
-  ["f"] = "",
-  ["g"] = "",
-  ["h"] = "",
-  ["i"] = "",
-  ["j"] = "",
-  ["k"] = "",
-  ["l"] = "",
-  ["m"] = "",
-  ["n"] = "",
-  ["o"] = "",
-  ["p"] = "",
-  ["q"] = "",
-  ["r"] = "",
-  ["s"] = "",
-  ["t"] = "",
-  ["u"] = "",
-  ["v"] = "",
-  ["w"] = "",
-  ["x"] = "",
-  ["y"] = "",
-  ["z"] = "",
-}
-
-SML.harmony2TrackMML = {
-  ["a"] = "",
-  ["b"] = "",
-  ["c"] = "",
-  ["d"] = "",
-  ["e"] = "",
-  ["f"] = "",
-  ["g"] = "",
-  ["h"] = "",
-  ["i"] = "",
-  ["j"] = "",
-  ["k"] = "",
-  ["l"] = "",
-  ["m"] = "",
-  ["n"] = "",
-  ["o"] = "",
-  ["p"] = "",
-  ["q"] = "",
-  ["r"] = "",
-  ["s"] = "",
-  ["t"] = "",
-  ["u"] = "",
-  ["v"] = "",
-  ["w"] = "",
-  ["x"] = "",
-  ["y"] = "",
-  ["z"] = "",
-}
-
-SML.bassTrackMML = {
-  ["a"] = "",
-  ["b"] = "",
-  ["c"] = "",
-  ["d"] = "",
-  ["e"] = "",
-  ["f"] = "",
-  ["g"] = "",
-  ["h"] = "",
-  ["i"] = "",
-  ["j"] = "",
-  ["k"] = "",
-  ["l"] = "",
-  ["m"] = "",
-  ["n"] = "",
-  ["o"] = "",
-  ["p"] = "",
-  ["q"] = "",
-  ["r"] = "",
-  ["s"] = "",
-  ["t"] = "",
-  ["u"] = "",
-  ["v"] = "",
-  ["w"] = "",
-  ["x"] = "",
-  ["y"] = "",
-  ["z"] = "",
-}
 
 
 --[[
@@ -786,14 +788,15 @@ end
 
 
 ---use to save MML data into text file
+---@param data MML data string
 ---@param filename string
 ---@param directory string valid option : "autosave" "mmldata"
 ---@param silent boolean "true" for no message window
-function saveMML(filename,directory,silent)
+function saveMML(data,filename,directory,silent)
 
   if game.os ~= "R36S" and game.os ~= "Web" then
 
-    local success, message =love.filesystem.write(directory.."/"..filename, MML.preview)
+    local success, message =love.filesystem.write(directory.."/"..filename, data)
     if success then
       if not silent then
         -- https://love2d.org/wiki/love.window.showMessageBox
@@ -1690,7 +1693,7 @@ function love.keypressed(key, scancode, isrepeat)
   if key == "f4" and love.system.getOS() ~= "Web" then
     -- get filename from meta data and flatten it
     -- saveMML(flattenString(SML.composer.."_"..SML.title.."-temp.mml"),"mmldata",false)
-    saveMML("temp.mml","cache",true)
+    saveMML(MML.preview,"temp.mml","cache",true)
     loadMML("cache/temp.mml")
 	  Music:play()
   end
@@ -2450,6 +2453,8 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["y"] = 4
       game.selectBar["width"] = 10
       game.selected["section"] = "melody"
+
+      -- store Melody MML data [start]
       -- MML preview "env setting , tempo , inst (tone) octave env vol (vib) "
       MML.preview = "#env1 = { " .. SML.envelope[game.selected["pattern"]]["A"][1] .. " " .. SML.envelope[game.selected["pattern"]]["A"][2] .. " " .. SML.envelope[game.selected["pattern"]]["A"][3] .. " " .. SML.envelope[game.selected["pattern"]]["A"][4] .. " }\n\n"
       MML.preview = MML.preview .. "t" .. SML.tempo[game.selected["pattern"]] .. "\n\n"
@@ -2507,18 +2512,151 @@ function love.mousepressed( x, y, button, istouch, presses )
       MML.preview = string.gsub(MML.preview,"*","D") -- revert placeholder "*" to "D"
       MML.preview = string.gsub(MML.preview,"!","E") -- revert placeholder "!" to "E"
 
+      MML.melody[game.selected["pattern"]] = MML.preview
+
+      -- store melody MML data [end]
     end
+
     if mouse.y == 6 then -- Harmony 1 clicked
       game.selectBar["x"] = 0
       game.selectBar["y"] = 5
       game.selectBar["width"] = 10
       game.selected["section"] = "harmony1"
+
+      -- store Harmony 1 MML data [start]
+      -- MML preview "env setting , tempo , inst (tone) octave env vol (vib) "
+      MML.preview = "#env2 = { " .. SML.envelope[game.selected["pattern"]]["B"][1] .. " " .. SML.envelope[game.selected["pattern"]]["B"][2] .. " " .. SML.envelope[game.selected["pattern"]]["B"][3] .. " " .. SML.envelope[game.selected["pattern"]]["B"][4] .. " }\n\n"
+      MML.preview = MML.preview .. "t" .. SML.tempo[game.selected["pattern"]] .. "\n\n"
+      MML.preview = MML.preview .. "~ #0" .. SML.tone[game.selected["pattern"]]["B"] .. " o" .. SML.octave[game.selected["pattern"]][2] .. " #env2 v" .. SML.volume[game.selected["pattern"]][2] .. "\n"
+
+      local currentChar = ""
+      local charCount = 0
+      for i = 1,128 do
+        if i == 1 then
+          currentChar = string.sub(SML.harmony1TrackString[game.selected["pattern"]],1,1)
+        end
+        if string.sub(SML.harmony1TrackString[game.selected["pattern"]],i,i) == currentChar then
+          if charCount <= 31 then
+            charCount = charCount + 1
+          else
+            -- note too long, break into another note of the same tone
+            MML.preview = MML.preview .. currentChar.."1 "
+            charCount = 1
+          end
+        else
+          MML.preview = MML.preview .. currentChar .. LUTcharToLen[charCount] .. " "
+          currentChar = string.sub(SML.harmony1TrackString[game.selected["pattern"]],i,i)
+          charCount = 1
+        end
+        if i == 128 then
+          MML.preview = MML.preview .. currentChar .. LUTcharToLen[charCount] .. "\n"
+        end
+      end
+      -- convert chars into actual MML notes
+      MML.preview = string.gsub(MML.preview,"A","o".. SML.octave[game.selected["pattern"]][2] -1 .."c")
+      MML.preview = string.gsub(MML.preview,"B","o".. SML.octave[game.selected["pattern"]][2] -1 .."d")
+      MML.preview = string.gsub(MML.preview,"C","o".. SML.octave[game.selected["pattern"]][2] -1 .."e")
+      MML.preview = string.gsub(MML.preview,"D","o".. SML.octave[game.selected["pattern"]][2] -1 .."f")
+      MML.preview = string.gsub(MML.preview,"E","o".. SML.octave[game.selected["pattern"]][2] -1 .."g")
+      MML.preview = string.gsub(MML.preview,"F","o".. SML.octave[game.selected["pattern"]][2] -1 .."a")
+      MML.preview = string.gsub(MML.preview,"G","o".. SML.octave[game.selected["pattern"]][2] -1 .."b")
+      MML.preview = string.gsub(MML.preview,"H","o".. SML.octave[game.selected["pattern"]][2] .."c")
+      MML.preview = string.gsub(MML.preview,"I","o".. SML.octave[game.selected["pattern"]][2] .."d")
+      MML.preview = string.gsub(MML.preview,"J","o".. SML.octave[game.selected["pattern"]][2] .."e")
+      MML.preview = string.gsub(MML.preview,"K","o".. SML.octave[game.selected["pattern"]][2] .."f")
+      MML.preview = string.gsub(MML.preview,"L","o".. SML.octave[game.selected["pattern"]][2] .."g")
+      MML.preview = string.gsub(MML.preview,"M","o".. SML.octave[game.selected["pattern"]][2] .."a")
+      MML.preview = string.gsub(MML.preview,"N","o".. SML.octave[game.selected["pattern"]][2] .."b")
+      MML.preview = string.gsub(MML.preview,"O","o".. SML.octave[game.selected["pattern"]][2] +1 .."c")
+      MML.preview = string.gsub(MML.preview,"P","o".. SML.octave[game.selected["pattern"]][2] +1 .."d")
+      MML.preview = string.gsub(MML.preview,"Q","o".. SML.octave[game.selected["pattern"]][2] +1 .."e")
+      MML.preview = string.gsub(MML.preview,"R","o".. SML.octave[game.selected["pattern"]][2] +1 .."f")
+      MML.preview = string.gsub(MML.preview,"S","o".. SML.octave[game.selected["pattern"]][2] +1 .."g")
+      MML.preview = string.gsub(MML.preview,"@","r")
+      MML.preview = string.gsub(MML.preview,"#","@") -- revert placeholder "#" to "@"
+      MML.preview = string.gsub(MML.preview,"-","A") -- revert placeholder "-" to "A"
+      MML.preview = string.gsub(MML.preview,"~","B") -- revert placeholder "~" to "B"
+      MML.preview = string.gsub(MML.preview,"&","C") -- revert placeholder "&" to "C"
+      MML.preview = string.gsub(MML.preview,"*","D") -- revert placeholder "*" to "D"
+      MML.preview = string.gsub(MML.preview,"!","E") -- revert placeholder "!" to "E"
+
+      MML.harmony1[game.selected["pattern"]] = MML.preview
+
+      -- store harmony1TrackMML [end]
+
+
+
     end
     if mouse.y == 7 then -- Harmony 2 clicked
       game.selectBar["x"] = 0
       game.selectBar["y"] = 6
       game.selectBar["width"] = 10
       game.selected["section"] = "harmony2"
+
+      -- store Harmony 2 MML data [start]
+      -- MML preview "env setting , tempo , inst (tone) octave env vol (vib) "
+      MML.preview = "#env3 = { " .. SML.envelope[game.selected["pattern"]]["C"][1] .. " " .. SML.envelope[game.selected["pattern"]]["C"][2] .. " " .. SML.envelope[game.selected["pattern"]]["C"][3] .. " " .. SML.envelope[game.selected["pattern"]]["C"][4] .. " }\n\n"
+      MML.preview = MML.preview .. "t" .. SML.tempo[game.selected["pattern"]] .. "\n\n"
+      MML.preview = MML.preview .. "& o" .. SML.octave[game.selected["pattern"]][3] .. " #env3 v" .. SML.volume[game.selected["pattern"]][3] .. "\n"
+
+      local currentChar = ""
+      local charCount = 0
+      for i = 1,128 do
+        if i == 1 then
+          currentChar = string.sub(SML.harmony2TrackString[game.selected["pattern"]],1,1)
+        end
+        if string.sub(SML.harmony2TrackString[game.selected["pattern"]],i,i) == currentChar then
+          if charCount <= 31 then
+            charCount = charCount + 1
+          else
+            -- note too long, break into another note of the same tone
+            MML.preview = MML.preview .. currentChar.."1 "
+            charCount = 1
+          end
+        else
+          MML.preview = MML.preview .. currentChar .. LUTcharToLen[charCount] .. " "
+          currentChar = string.sub(SML.harmony2TrackString[game.selected["pattern"]],i,i)
+          charCount = 1
+        end
+        if i == 128 then
+          MML.preview = MML.preview .. currentChar .. LUTcharToLen[charCount] .. "\n"
+        end
+      end
+      -- convert chars into actual MML notes
+      MML.preview = string.gsub(MML.preview,"A","o".. SML.octave[game.selected["pattern"]][2] -1 .."c")
+      MML.preview = string.gsub(MML.preview,"B","o".. SML.octave[game.selected["pattern"]][2] -1 .."d")
+      MML.preview = string.gsub(MML.preview,"C","o".. SML.octave[game.selected["pattern"]][2] -1 .."e")
+      MML.preview = string.gsub(MML.preview,"D","o".. SML.octave[game.selected["pattern"]][2] -1 .."f")
+      MML.preview = string.gsub(MML.preview,"E","o".. SML.octave[game.selected["pattern"]][2] -1 .."g")
+      MML.preview = string.gsub(MML.preview,"F","o".. SML.octave[game.selected["pattern"]][2] -1 .."a")
+      MML.preview = string.gsub(MML.preview,"G","o".. SML.octave[game.selected["pattern"]][2] -1 .."b")
+      MML.preview = string.gsub(MML.preview,"H","o".. SML.octave[game.selected["pattern"]][2] .."c")
+      MML.preview = string.gsub(MML.preview,"I","o".. SML.octave[game.selected["pattern"]][2] .."d")
+      MML.preview = string.gsub(MML.preview,"J","o".. SML.octave[game.selected["pattern"]][2] .."e")
+      MML.preview = string.gsub(MML.preview,"K","o".. SML.octave[game.selected["pattern"]][2] .."f")
+      MML.preview = string.gsub(MML.preview,"L","o".. SML.octave[game.selected["pattern"]][2] .."g")
+      MML.preview = string.gsub(MML.preview,"M","o".. SML.octave[game.selected["pattern"]][2] .."a")
+      MML.preview = string.gsub(MML.preview,"N","o".. SML.octave[game.selected["pattern"]][2] .."b")
+      MML.preview = string.gsub(MML.preview,"O","o".. SML.octave[game.selected["pattern"]][2] +1 .."c")
+      MML.preview = string.gsub(MML.preview,"P","o".. SML.octave[game.selected["pattern"]][2] +1 .."d")
+      MML.preview = string.gsub(MML.preview,"Q","o".. SML.octave[game.selected["pattern"]][2] +1 .."e")
+      MML.preview = string.gsub(MML.preview,"R","o".. SML.octave[game.selected["pattern"]][2] +1 .."f")
+      MML.preview = string.gsub(MML.preview,"S","o".. SML.octave[game.selected["pattern"]][2] +1 .."g")
+      MML.preview = string.gsub(MML.preview,"@","r")
+      MML.preview = string.gsub(MML.preview,"#","@") -- revert placeholder "#" to "@"
+      MML.preview = string.gsub(MML.preview,"-","A") -- revert placeholder "-" to "A"
+      MML.preview = string.gsub(MML.preview,"~","B") -- revert placeholder "~" to "B"
+      MML.preview = string.gsub(MML.preview,"&","C") -- revert placeholder "&" to "C"
+      MML.preview = string.gsub(MML.preview,"*","D") -- revert placeholder "*" to "D"
+      MML.preview = string.gsub(MML.preview,"!","E") -- revert placeholder "!" to "E"
+
+      MML.harmony2[game.selected["pattern"]] = MML.preview
+
+      -- store harmony2TrackMML [end]
+
+
+
+
     end
     if mouse.y == 8 then -- Bass clicked
       game.selectBar["x"] = 0
