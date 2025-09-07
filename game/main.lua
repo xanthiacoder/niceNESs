@@ -117,6 +117,8 @@ local MML = {}
 
 MML.data = {}
 
+MML.preview = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultrices placerat urna ac ultrices. Cras egestas dolor libero, sed bibendum diam ultrices nec. Mauris tristique elit mauris, sed iaculis tortor vulputate eget. Praesent iaculis orci in ex ullamcorper, vel luctus odio blandit. Donec vitae tellus vulputate, egestas lectus ut, dapibus nisi. Duis volutpat nunc vitae sem aliquam suscipit ut non sapien. Maecenas at orci non ex eleifend vulputate. Nulla neque lacus, volutpat quis ex nec, hendrerit consectetur turpis. Duis gravida efficitur eros in finibus. Sed ac augue magna. Vestibulum aliquet eu quam ut cursus. Suspendisse ut orci placerat, dignissim elit sit amet, gravida erat." -- test it as string first, convert to table if too limited
+
 
 local SML = {}
 
@@ -1065,6 +1067,14 @@ function love.draw()
   if game.selected["section"] == "sequence" then
     love.graphics.setColor(color.white)
   end
+
+
+  -- draw for Walkthrough Guide window
+
+  -- draw for MML Preview window
+  love.graphics.setColor(color.white)
+  -- love.graphics.printf( text, x, y, limit (in pixels), align (center, left, right), r, sx, sy, ox, oy, kx, ky )
+  love.graphics.printf(MML.preview, FONT_WIDTH*82,FONT_HEIGHT*31,FONT_WIDTH*77,"left")
 
   -- draw status bar
   love.graphics.setColor(color.white)
@@ -2191,6 +2201,31 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["y"] = 4
       game.selectBar["width"] = 10
       game.selected["section"] = "melody"
+      -- MML preview "env setting , tempo , inst (tone) octave env vol (vib) "
+      MML.preview = "@env1 = { " .. SML.envelope[game.selected["pattern"]]["A"][1] .. " " .. SML.envelope[game.selected["pattern"]]["A"][2] .. " " .. SML.envelope[game.selected["pattern"]]["A"][3] .. " " .. SML.envelope[game.selected["pattern"]]["A"][4] .. " }\n\n"
+      MML.preview = MML.preview .. "t" .. SML.tempo[game.selected["pattern"]] .. "\n\n"
+      MML.preview = MML.preview .. "A @0" .. SML.tone[game.selected["pattern"]]["A"] .. " o" .. SML.octave[game.selected["pattern"]][1] .. " env1 v" .. SML.volume[game.selected["pattern"]][1] .. "\n"
+      -- MML.preview = MML.preview .. SML.melodyTrackString[game.selected["pattern"]] .. "\n"
+
+      -- convert TrackString to MML
+      local currentChar = ""
+      local charCount = 0
+      for i = 1,128 do
+        if i == 1 then
+          currentChar = string.sub(SML.melodyTrackString[game.selected["pattern"]],1,1)
+        end
+        if string.sub(SML.melodyTrackString[game.selected["pattern"]],i,i) == currentChar then
+          charCount = charCount + 1
+        else
+          MML.preview = MML.preview .. currentChar .. charCount .. " "
+          currentChar = string.sub(SML.melodyTrackString[game.selected["pattern"]],i,i)
+          charCount = 1
+        end
+        if i == 128 then
+          MML.preview = MML.preview .. currentChar .. charCount .. "\n"
+        end
+      end
+
     end
     if mouse.y == 6 then -- Harmony 1 clicked
       game.selectBar["x"] = 0
