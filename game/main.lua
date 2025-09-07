@@ -181,7 +181,7 @@ LUTcharToLen = {
 -- game data
 local MML = {}
 
-MML.data = "" -- test as a super-long string
+MML.song = "" -- test as a super-long string
 MML.preview = "" -- test it as string first, convert to table if too limited
 
 
@@ -301,6 +301,34 @@ MML.bass = {
   ["z"] = "",
 }
 
+MML.pattern = {
+  ["a"] = "",
+  ["b"] = "",
+  ["c"] = "",
+  ["d"] = "",
+  ["e"] = "",
+  ["f"] = "",
+  ["g"] = "",
+  ["h"] = "",
+  ["i"] = "",
+  ["j"] = "",
+  ["k"] = "",
+  ["l"] = "",
+  ["m"] = "",
+  ["n"] = "",
+  ["o"] = "",
+  ["p"] = "",
+  ["q"] = "",
+  ["r"] = "",
+  ["s"] = "",
+  ["t"] = "",
+  ["u"] = "",
+  ["v"] = "",
+  ["w"] = "",
+  ["x"] = "",
+  ["y"] = "",
+  ["z"] = "",
+}
 
 local SML = {}
 
@@ -1265,22 +1293,38 @@ function generateBassMML()
 end
 
 
-
-function makePatternMML()
+---comment
+---@param pattern string letter of alphabet of pattern to build
+function makePatternMML(pattern)
       -- compile MML from sections
       MML.preview = ""
       if MML.melody[game.selected["pattern"]] ~= nil then
-        MML.preview = MML.preview .. MML.melody[game.selected["pattern"]]
+        MML.preview = MML.preview .. MML.melody[pattern]
       end
       if MML.harmony1[game.selected["pattern"]] ~= nil then
-        MML.preview = MML.preview .. MML.harmony1[game.selected["pattern"]]
+        MML.preview = MML.preview .. MML.harmony1[pattern]
       end
       if MML.harmony2[game.selected["pattern"]] ~= nil then
-        MML.preview = MML.preview .. MML.harmony2[game.selected["pattern"]]
+        MML.preview = MML.preview .. MML.harmony2[pattern]
       end
       if MML.bass[game.selected["pattern"]] ~= nil then
-        MML.preview = MML.preview .. MML.bass[game.selected["pattern"]]
+        MML.preview = MML.preview .. MML.bass[pattern]
       end
+      return MML.preview
+end
+
+
+function makeSongMML()
+  -- save the whole song
+  MML.song = ""
+  local currentStep = ""
+  for i = 1,#SML.sequence do
+    currentStep = string.lower(string.sub(SML.sequence,i,i))
+    print("MML.song: adding part " .. currentStep)
+    MML.song = MML.song .. makePatternMML(currentStep)
+  end
+  saveMML(MML.song,flattenString(SML.composer.."_"..SML.title..".mml"),"mmldata",false)
+
 end
 
 
@@ -1664,7 +1708,7 @@ function love.draw()
   -- draw for MML Preview window
   love.graphics.setColor(color.white)
   -- love.graphics.printf( text, x, y, limit (in pixels), align (center, left, right), r, sx, sy, ox, oy, kx, ky )
-  love.graphics.printf(MML.preview, FONT_WIDTH*82,FONT_HEIGHT*31,FONT_WIDTH*77,"left")
+    love.graphics.printf(MML.preview, FONT_WIDTH*82,FONT_HEIGHT*31,FONT_WIDTH*77,"left")
 
   -- draw status bar
   love.graphics.setColor(color.white)
@@ -1714,6 +1758,8 @@ function love.draw()
     game.debug3 = "harmony2Track :" .. SML.harmony2TrackString[game.selected["pattern"]]
   elseif game.selected["section"] == "bass" then
     game.debug3 = "bassTrack :" .. SML.bassTrackString[game.selected["pattern"]]
+elseif game.selected["section"] == "sequence" then
+    game.debug3 = "sequence :" .. SML.sequence
   else
     game.debug3 = ""
   end
@@ -1986,6 +2032,13 @@ function love.update(dt)
     stopDataEntry()
   end
 
+  -- sequence selected
+  if (game.selectBar["x"] == 0 and game.selectBar["y"] == 10) and game.dataEntry == false then
+    SML.sequence = game.inputData
+    stopDataEntry()
+  end
+
+
   -- bass section left panel
   if (game.selectBar["x"] == 3 and game.selectBar["y"] == 17) and game.dataEntry == false
   and game.selected["section"] == "bass" then
@@ -2070,6 +2123,12 @@ function love.keypressed(key, scancode, isrepeat)
   if key == "space" then
     -- pause music
 	  Music:pause()
+  end
+
+  if key == "f8" then
+    makeSongMML()
+    -- save all data (not done yet)
+
   end
 
   if key == "f10" and love.system.getOS() ~= "Web" then
@@ -2216,7 +2275,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("a")
       game.selected["pattern"] = "a"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("a")
     end
     if mouse.x == 15 then -- b clicked
       game.selectBar["x"] = 13
@@ -2225,7 +2284,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("b")
       game.selected["pattern"] = "b"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("b")
     end
     if mouse.x == 17 then -- c clicked
       game.selectBar["x"] = 15
@@ -2234,7 +2293,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("c")
       game.selected["pattern"] = "c"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("c")
     end
     if mouse.x == 19 then -- d clicked
       game.selectBar["x"] = 17
@@ -2243,7 +2302,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("d")
       game.selected["pattern"] = "d"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("d")
     end
     if mouse.x == 21 then -- e clicked
       game.selectBar["x"] = 19
@@ -2252,7 +2311,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("e")
       game.selected["pattern"] = "e"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("e")
     end
     if mouse.x == 23 then -- f clicked
       game.selectBar["x"] = 21
@@ -2261,7 +2320,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("f")
       game.selected["pattern"] = "f"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("f")
     end
     if mouse.x == 25 then -- g clicked
       game.selectBar["x"] = 23
@@ -2270,7 +2329,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("g")
       game.selected["pattern"] = "g"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("g")
     end
     if mouse.x == 27 then -- h clicked
       game.selectBar["x"] = 25
@@ -2279,7 +2338,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("h")
       game.selected["pattern"] = "h"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("h")
     end
     if mouse.x == 29 then -- i clicked
       game.selectBar["x"] = 27
@@ -2288,7 +2347,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("i")
       game.selected["pattern"] = "i"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("i")
     end
     if mouse.x == 31 then -- j clicked
       game.selectBar["x"] = 29
@@ -2297,7 +2356,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("j")
       game.selected["pattern"] = "j"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("j")
     end
     if mouse.x == 33 then -- k clicked
       game.selectBar["x"] = 31
@@ -2306,7 +2365,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("k")
       game.selected["pattern"] = "k"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("k")
     end
     if mouse.x == 35 then -- l clicked
       game.selectBar["x"] = 33
@@ -2315,7 +2374,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("l")
       game.selected["pattern"] = "l"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("l")
     end
     if mouse.x == 37 then -- m clicked
       game.selectBar["x"] = 35
@@ -2324,7 +2383,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("m")
       game.selected["pattern"] = "m"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("m")
     end
     if mouse.x == 39 then -- n clicked
       game.selectBar["x"] = 37
@@ -2333,7 +2392,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("n")
       game.selected["pattern"] = "n"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("n")
     end
     if mouse.x == 41 then -- o clicked
       game.selectBar["x"] = 39
@@ -2342,7 +2401,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("o")
       game.selected["pattern"] = "o"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("o")
     end
     if mouse.x == 43 then -- p clicked
       game.selectBar["x"] = 41
@@ -2351,7 +2410,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("p")
       game.selected["pattern"] = "p"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("p")
     end
     if mouse.x == 45 then -- q clicked
       game.selectBar["x"] = 43
@@ -2360,7 +2419,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("q")
       game.selected["pattern"] = "q"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("q")
     end
     if mouse.x == 47 then -- r clicked
       game.selectBar["x"] = 45
@@ -2369,7 +2428,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("r")
       game.selected["pattern"] = "r"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("r")
     end
     if mouse.x == 49 then -- s clicked
       game.selectBar["x"] = 47
@@ -2378,7 +2437,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("s")
       game.selected["pattern"] = "s"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("s")
     end
     if mouse.x == 51 then -- t clicked
       game.selectBar["x"] = 49
@@ -2387,7 +2446,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("t")
       game.selected["pattern"] = "t"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("t")
     end
     if mouse.x == 53 then -- u clicked
       game.selectBar["x"] = 51
@@ -2396,7 +2455,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("u")
       game.selected["pattern"] = "u"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("u")
     end
     if mouse.x == 55 then -- v clicked
       game.selectBar["x"] = 53
@@ -2405,7 +2464,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("v")
       game.selected["pattern"] = "v"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("v")
     end
     if mouse.x == 57 then -- w clicked
       game.selectBar["x"] = 55
@@ -2414,7 +2473,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("w")
       game.selected["pattern"] = "w"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("w")
     end
     if mouse.x == 59 then -- x clicked
       game.selectBar["x"] = 57
@@ -2423,7 +2482,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("x")
       game.selected["pattern"] = "x"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("x")
     end
     if mouse.x == 61 then -- y clicked
       game.selectBar["x"] = 59
@@ -2432,7 +2491,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("y")
       game.selected["pattern"] = "y"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("y")
     end
     if mouse.x == 63 then -- z clicked
       game.selectBar["x"] = 61
@@ -2441,7 +2500,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       updateTracks("z")
       game.selected["pattern"] = "z"
       game.selected["section"] = "pattern"
-      makePatternMML()
+      makePatternMML("z")
     end
     if mouse.x >= 66 and mouse.x <= 79 then
       startDataEntry("str","Enter a name for this pattern",12,SML.patternName[game.selected["pattern"]])
@@ -3135,6 +3194,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selected["section"] = "rhythm"
     end
     if mouse.y == 11 then -- Sequence clicked
+      startDataEntry("str","Enter sequence of patterns for the complete song (eg. aabbccaaccdde)", 160, SML.sequence)
       game.selectBar["x"] = 0
       game.selectBar["y"] = 10
       game.selectBar["width"] = 10
