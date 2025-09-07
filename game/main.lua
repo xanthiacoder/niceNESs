@@ -105,19 +105,51 @@ function mkdir(dirname)
 
 end
 
+mkdir("smldata")
+mkdir("xtuidata")
 mkdir("mmldata")
 mkdir("music")
-mkdir("smldata")
 mkdir("cache")
 mkdir("autosave")
+
+
+-- LUT Look Up Tables
+--[[ charCount to noteLen
+      1  = 32
+      2  = 16
+      3  = 12
+      4  = 8
+      5  = 7
+      6  = 6
+      7  = 5
+      8  = 4
+      9  = 3.
+      10 = 3.
+      11 = 3
+      12 = 3
+      13 = 2.
+      14 = 2.
+      15 = 2
+      16 = 2
+      32 = 1
+      ]]
+LUTcharToLen = {
+  [1]  = "32", [2]  = "16", [3] = "12",  [4] = "8",
+  [5]  = "7",  [6]  = "6",  [7] = "5",   [8] = "4",
+  [9]  = "3.", [10] = "3.", [11] = "3",  [12] = "3",
+  [13] = "2.", [14] = "2.", [15] = "2",  [16] = "2",
+  [17] = "1.", [18] = "1.", [19] = "1.", [20] = "1.",
+  [21] = "1.", [22] = "1.", [23] = "1.", [24] = "1.",
+  [25] = "1",  [26] = "1",  [27] = "1",  [28] = "1",
+  [29] = "1",  [30] = "1",  [31] = "1",  [32] = "1",
+}
 
 
 -- game data
 local MML = {}
 
-MML.data = {}
-
-MML.preview = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultrices placerat urna ac ultrices. Cras egestas dolor libero, sed bibendum diam ultrices nec. Mauris tristique elit mauris, sed iaculis tortor vulputate eget. Praesent iaculis orci in ex ullamcorper, vel luctus odio blandit. Donec vitae tellus vulputate, egestas lectus ut, dapibus nisi. Duis volutpat nunc vitae sem aliquam suscipit ut non sapien. Maecenas at orci non ex eleifend vulputate. Nulla neque lacus, volutpat quis ex nec, hendrerit consectetur turpis. Duis gravida efficitur eros in finibus. Sed ac augue magna. Vestibulum aliquet eu quam ut cursus. Suspendisse ut orci placerat, dignissim elit sit amet, gravida erat." -- test it as string first, convert to table if too limited
+MML.data = "" -- test as a super-long string
+MML.preview = "" -- test it as string first, convert to table if too limited
 
 
 local SML = {}
@@ -580,6 +612,122 @@ SML.bassTrackString = {
   ["z"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
 }
 
+SML.melodyTrackMML = {
+  ["a"] = "",
+  ["b"] = "",
+  ["c"] = "",
+  ["d"] = "",
+  ["e"] = "",
+  ["f"] = "",
+  ["g"] = "",
+  ["h"] = "",
+  ["i"] = "",
+  ["j"] = "",
+  ["k"] = "",
+  ["l"] = "",
+  ["m"] = "",
+  ["n"] = "",
+  ["o"] = "",
+  ["p"] = "",
+  ["q"] = "",
+  ["r"] = "",
+  ["s"] = "",
+  ["t"] = "",
+  ["u"] = "",
+  ["v"] = "",
+  ["w"] = "",
+  ["x"] = "",
+  ["y"] = "",
+  ["z"] = "",
+}
+
+SML.harmony1TrackMML = {
+  ["a"] = "",
+  ["b"] = "",
+  ["c"] = "",
+  ["d"] = "",
+  ["e"] = "",
+  ["f"] = "",
+  ["g"] = "",
+  ["h"] = "",
+  ["i"] = "",
+  ["j"] = "",
+  ["k"] = "",
+  ["l"] = "",
+  ["m"] = "",
+  ["n"] = "",
+  ["o"] = "",
+  ["p"] = "",
+  ["q"] = "",
+  ["r"] = "",
+  ["s"] = "",
+  ["t"] = "",
+  ["u"] = "",
+  ["v"] = "",
+  ["w"] = "",
+  ["x"] = "",
+  ["y"] = "",
+  ["z"] = "",
+}
+
+SML.harmony2TrackMML = {
+  ["a"] = "",
+  ["b"] = "",
+  ["c"] = "",
+  ["d"] = "",
+  ["e"] = "",
+  ["f"] = "",
+  ["g"] = "",
+  ["h"] = "",
+  ["i"] = "",
+  ["j"] = "",
+  ["k"] = "",
+  ["l"] = "",
+  ["m"] = "",
+  ["n"] = "",
+  ["o"] = "",
+  ["p"] = "",
+  ["q"] = "",
+  ["r"] = "",
+  ["s"] = "",
+  ["t"] = "",
+  ["u"] = "",
+  ["v"] = "",
+  ["w"] = "",
+  ["x"] = "",
+  ["y"] = "",
+  ["z"] = "",
+}
+
+SML.bassTrackMML = {
+  ["a"] = "",
+  ["b"] = "",
+  ["c"] = "",
+  ["d"] = "",
+  ["e"] = "",
+  ["f"] = "",
+  ["g"] = "",
+  ["h"] = "",
+  ["i"] = "",
+  ["j"] = "",
+  ["k"] = "",
+  ["l"] = "",
+  ["m"] = "",
+  ["n"] = "",
+  ["o"] = "",
+  ["p"] = "",
+  ["q"] = "",
+  ["r"] = "",
+  ["s"] = "",
+  ["t"] = "",
+  ["u"] = "",
+  ["v"] = "",
+  ["w"] = "",
+  ["x"] = "",
+  ["y"] = "",
+  ["z"] = "",
+}
+
 
 --[[
 Create a 32x1 pixel transparent-to-white gradient drawable image.
@@ -636,6 +784,39 @@ function saveSML(filename,directory,silent)
   end
 end
 
+
+---use to save MML data into text file
+---@param filename string
+---@param directory string valid option : "autosave" "mmldata"
+---@param silent boolean "true" for no message window
+function saveMML(filename,directory,silent)
+
+  if game.os ~= "R36S" and game.os ~= "Web" then
+
+    local success, message =love.filesystem.write(directory.."/"..filename, MML.preview)
+    if success then
+      if not silent then
+        -- https://love2d.org/wiki/love.window.showMessageBox
+        love.window.showMessageBox("Success", filename .. " saved at " .. love.filesystem.getSaveDirectory() .. "/" .. directory, "info", true)
+      end
+      print (filename .. " saved at " .. love.filesystem.getSaveDirectory() .. "/".. directory)
+    else
+      -- https://love2d.org/wiki/love.window.showMessageBox
+      love.window.showMessageBox("Cannot write file", message, "error", true)
+	    print (love.filesystem.getSaveDirectory() .. "/" .. directory .. "/" .. filename .. " creation failed! " .. message)
+    end
+  end
+  if game.os == "R36S" then
+    -- save for R36S using lua io
+    local f = io.open(love.filesystem.getSaveDirectory().."//"..directory.."/"..filename, "w")
+    f:write(MML.preview)
+    f:close()
+  end
+end
+
+
+
+
 ---use to load SML table into memory
 ---@param filename string
 ---@param directory string valid option : "autosave" "smldata"
@@ -649,15 +830,52 @@ function loadSML(filename,directory)
     end
 end
 
+---load MML file
+---@param song string path to song file
+function loadMML(song)
+  local file = love.filesystem.newFile(song)
+  Music:pause()
+
+  if file then
+    file:open("r")
+    --file_content = file:read()
+    local content = {}
+
+    for line in file:lines() do
+      if string.len(line) > 0 then table.insert(content, line) end
+    end
+
+    file:close()
+
+    Music:init()
+
+    local success = false
+    if pcall(function () Music:parse_mml(content) end) then
+      success = true
+    else
+      -- error
+      local error = love.window.showMessageBox("Error", "Malformed mml", "info", true)
+    end
+    if success then
+      Music:render_audio()
+
+    end
+  else
+    local error = love.window.showMessageBox("Error", "Unable to open file", "info", true)
+  end
+end
+
+
 ---Use when requiring text data from user
 ---@param type string "int" "str"
 ---@param prompt string
 ---@param length integer
-function startDataEntry(type,prompt,length)
+---@param data string prepopulate with this data, use tostring(s) if data is a number
+function startDataEntry(type,prompt,length,data)
   game.dataType = type
   game.inputPrompt = prompt
   game.dataLength = length
-  game.inputData = "" -- clear text data cache for data entry
+  game.inputData = data
   game.dataEntry = true -- must set this first before setting selectBar, start capturing data from keyboard
 end
 
@@ -1069,7 +1287,8 @@ function love.draw()
   end
 
 
-  -- draw for Walkthrough Guide window
+  -- draw for Visualizer window
+
 
   -- draw for MML Preview window
   love.graphics.setColor(color.white)
@@ -1080,6 +1299,23 @@ function love.draw()
   love.graphics.setColor(color.white)
   game.statusBar = game.name .. " " .. game.version .. " " .. game.edition .. " " .. game.os .. " | "
   love.graphics.print(game.statusBar, FONT_WIDTH*1, FONT_HEIGHT*44)
+
+
+  -- draw for dataEntry
+  if game.dataEntry then
+    love.graphics.setColor(color.blue)
+    love.graphics.rectangle("fill",FONT_WIDTH*0,FONT_HEIGHT*14,FONT_WIDTH*160,FONT_HEIGHT*5)
+    love.graphics.setColor(0,0,1,0.25)
+    love.graphics.rectangle("fill",FONT_WIDTH*0,FONT_HEIGHT*19,FONT_WIDTH*160,FONT_HEIGHT*1)
+    love.graphics.setColor(color.brightcyan)
+    love.graphics.printf(game.inputPrompt,FONT_WIDTH*0,FONT_HEIGHT*15,FONT_WIDTH*160,"center")
+    love.graphics.setColor(color.darkgrey)
+    for i = 0,game.dataLength-1 do
+      love.graphics.print("▒",FONT_WIDTH*(math.floor((160-game.dataLength)/2)+i),FONT_HEIGHT*16)
+    end
+    love.graphics.setColor(color.brightyellow)
+    love.graphics.printf(game.inputData,FONT_WIDTH*math.floor((160-game.dataLength)/2),FONT_HEIGHT*16,FONT_WIDTH*160,"left")
+  end
 
 
   -- debug window (viewable only on fullscreen, tested on 1440x900)
@@ -1451,6 +1687,19 @@ function love.keypressed(key, scancode, isrepeat)
     saveSML(flattenString(SML.composer.."_"..SML.title..".sml"),"smldata",false)
   end
 
+  if key == "f4" and love.system.getOS() ~= "Web" then
+    -- get filename from meta data and flatten it
+    -- saveMML(flattenString(SML.composer.."_"..SML.title.."-temp.mml"),"mmldata",false)
+    saveMML("temp.mml","cache",true)
+    loadMML("cache/temp.mml")
+	  Music:play()
+  end
+
+  if key == "space" then
+    -- pause music
+	  Music:pause()
+  end
+
   if key == "f10" and love.system.getOS() ~= "Web" then
     -- load pattern "a" tracks before quitting (if not pattern "a" data messes up on save and reload)
     updateTracks("a")
@@ -1796,7 +2045,7 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selected["section"] = "pattern"
     end
     if mouse.x >= 66 and mouse.x <= 79 then
-      startDataEntry("str","Enter a name for this pattern",12)
+      startDataEntry("str","Enter a name for this pattern",12,SML.patternName[game.selected["pattern"]])
       game.selectBar["x"] = 64
       game.selectBar["y"] = 9
       game.selectBar["width"] = 16
@@ -1806,25 +2055,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- A Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 5 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["A"][1]))
       game.selectBar["x"] = 134
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["A"][2]))
       game.selectBar["x"] = 138
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["A"][3]))
       game.selectBar["x"] = 142
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["A"][4]))
       game.selectBar["x"] = 146
       game.selectBar["y"] = 4
       game.selectBar["width"] = 5
@@ -1844,25 +2093,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- B Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 6 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["B"][1]))
       game.selectBar["x"] = 134
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["B"][2]))
       game.selectBar["x"] = 138
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["B"][3]))
       game.selectBar["x"] = 142
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["B"][4]))
       game.selectBar["x"] = 146
       game.selectBar["y"] = 5
       game.selectBar["width"] = 5
@@ -1882,25 +2131,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- C Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 7 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["C"][1]))
       game.selectBar["x"] = 134
       game.selectBar["y"] = 6
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["C"][2]))
       game.selectBar["x"] = 138
       game.selectBar["y"] = 6
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["C"][3]))
       game.selectBar["x"] = 142
       game.selectBar["y"] = 6
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["C"][4]))
       game.selectBar["x"] = 146
       game.selectBar["y"] = 6
       game.selectBar["width"] = 5
@@ -1920,25 +2169,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- D Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 8 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["D"][1]))
       game.selectBar["x"] = 134
       game.selectBar["y"] = 7
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["D"][2]))
       game.selectBar["x"] = 138
       game.selectBar["y"] = 7
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["D"][3]))
       game.selectBar["x"] = 142
       game.selectBar["y"] = 7
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["D"][4]))
       game.selectBar["x"] = 146
       game.selectBar["y"] = 7
       game.selectBar["width"] = 5
@@ -1958,25 +2207,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- E Envelope
   if mouse.x >= 136 and mouse.x <= 155 and mouse.y == 9 then
     if mouse.x >=136 and mouse.x <= 138 then -- atk clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["E"][1]))
       game.selectBar["x"] = 134
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
     end
     if mouse.x >=140 and mouse.x <= 142 then -- dec clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["E"][2]))
       game.selectBar["x"] = 138
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
     end
     if mouse.x >=144 and mouse.x <= 146 then -- sus clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["E"][3]))
       game.selectBar["x"] = 142
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
     end
     if mouse.x >=148 and mouse.x <= 150 then -- rel clicked
-      startDataEntry("int","Enter a number from 1 to 999",3)
+      startDataEntry("int","Enter a number from 1 to 999",3,tostring(SML.envelope[game.selected["pattern"]]["E"][4]))
       game.selectBar["x"] = 146
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
@@ -2127,7 +2376,7 @@ function love.mousepressed( x, y, button, istouch, presses )
 
   -- tempo setting
   if mouse.x >= 33 and mouse.x <= 35 and mouse.y == 9 then
-      startDataEntry("int","Enter a number (eg 60 is slow, 120 is mid, 180 is fast)",3)
+      startDataEntry("int","Enter a number (eg 60 is slow, 120 is mid, 180 is fast)",3,tostring(SML.tempo[game.selected["pattern"]]))
       game.selectBar["x"] = 31
       game.selectBar["y"] = 8
       game.selectBar["width"] = 5
@@ -2137,32 +2386,32 @@ function love.mousepressed( x, y, button, istouch, presses )
   if game.selected["section"] == "bass" then
     -- bass left panel detection
     if mouse.x == 5 and mouse.y == 18 then
-      startDataEntry("int","Enter a number (1 to 7)",1)
+      startDataEntry("int","Enter a number (1 to 7)",1,tostring(SML.bass4num[game.selected["pattern"]][1]))
       game.selectBar["x"] = 3
       game.selectBar["y"] = 17
       game.selectBar["width"] = 3
     end
     if mouse.x == 10 and mouse.y == 18 then
-      startDataEntry("int","Enter a number (1 to 7)",1)
+      startDataEntry("int","Enter a number (1 to 7)",1,tostring(SML.bass4num[game.selected["pattern"]][2]))
       game.selectBar["x"] = 8
       game.selectBar["y"] = 17
       game.selectBar["width"] = 3
     end
     if mouse.x == 15 and mouse.y == 18 then
-      startDataEntry("int","Enter a number (1 to 7)",1)
+      startDataEntry("int","Enter a number (1 to 7)",1,tostring(SML.bass4num[game.selected["pattern"]][3]))
       game.selectBar["x"] = 13
       game.selectBar["y"] = 17
       game.selectBar["width"] = 3
     end
     if mouse.x == 20 and mouse.y == 18 then
-      startDataEntry("int","Enter a number (1 to 7)",1)
+      startDataEntry("int","Enter a number (1 to 7)",1,tostring(SML.bass4num[game.selected["pattern"]][4]))
       game.selectBar["x"] = 18
       game.selectBar["y"] = 17
       game.selectBar["width"] = 3
     end
     -- bass octave selected
     if mouse.x == 15 and mouse.y == 25 then
-      startDataEntry("int","Enter an octave number (1 to 8)",1)
+      startDataEntry("int","Enter an octave number (1 to 8)",1,tostring(SML.octave[game.selected["pattern"]][4]))
       game.selectBar["x"] = 13
       game.selectBar["y"] = 24
       game.selectBar["width"] = 3
@@ -2173,25 +2422,25 @@ function love.mousepressed( x, y, button, istouch, presses )
   -- meta area detection
   if mouse.x <= 10 and mouse.y <= 11 then -- top left corner
     if mouse.y == 1 then -- Title clicked
-      startDataEntry("str","Enter title of music", 66)
+      startDataEntry("str","Enter title of music", 66, SML.title)
       game.selectBar["x"] = 0
       game.selectBar["y"] = 0
       game.selectBar["width"] = 10
     end
     if mouse.y == 2 then -- Composer clicked
-      startDataEntry("str","Enter composer of music", 66)
+      startDataEntry("str","Enter composer of music", 66, SML.composer)
       game.selectBar["x"] = 0
       game.selectBar["y"] = 1
       game.selectBar["width"] = 10
     end
     if mouse.y == 3 then -- Programmer clicked
-      startDataEntry("str","Enter programmer of music", 66)
+      startDataEntry("str","Enter programmer of music", 66, SML.programmer)
       game.selectBar["x"] = 0
       game.selectBar["y"] = 2
       game.selectBar["width"] = 10
     end
     if mouse.y == 4 then -- Copyright clicked
-      startDataEntry("str","Enter copyright of music", 66)
+      startDataEntry("str","Enter copyright of music", 66, SML.copyright)
       game.selectBar["x"] = 0
       game.selectBar["y"] = 3
       game.selectBar["width"] = 10
@@ -2202,12 +2451,11 @@ function love.mousepressed( x, y, button, istouch, presses )
       game.selectBar["width"] = 10
       game.selected["section"] = "melody"
       -- MML preview "env setting , tempo , inst (tone) octave env vol (vib) "
-      MML.preview = "@env1 = { " .. SML.envelope[game.selected["pattern"]]["A"][1] .. " " .. SML.envelope[game.selected["pattern"]]["A"][2] .. " " .. SML.envelope[game.selected["pattern"]]["A"][3] .. " " .. SML.envelope[game.selected["pattern"]]["A"][4] .. " }\n\n"
+      MML.preview = "#env1 = { " .. SML.envelope[game.selected["pattern"]]["A"][1] .. " " .. SML.envelope[game.selected["pattern"]]["A"][2] .. " " .. SML.envelope[game.selected["pattern"]]["A"][3] .. " " .. SML.envelope[game.selected["pattern"]]["A"][4] .. " }\n\n"
       MML.preview = MML.preview .. "t" .. SML.tempo[game.selected["pattern"]] .. "\n\n"
-      MML.preview = MML.preview .. "A @0" .. SML.tone[game.selected["pattern"]]["A"] .. " o" .. SML.octave[game.selected["pattern"]][1] .. " env1 v" .. SML.volume[game.selected["pattern"]][1] .. "\n"
+      MML.preview = MML.preview .. "- #0" .. SML.tone[game.selected["pattern"]]["A"] .. " o" .. SML.octave[game.selected["pattern"]][1] .. " #env1 v" .. SML.volume[game.selected["pattern"]][1] .. "\n"
       -- MML.preview = MML.preview .. SML.melodyTrackString[game.selected["pattern"]] .. "\n"
 
-      -- convert TrackString to MML
       local currentChar = ""
       local charCount = 0
       for i = 1,128 do
@@ -2215,16 +2463,49 @@ function love.mousepressed( x, y, button, istouch, presses )
           currentChar = string.sub(SML.melodyTrackString[game.selected["pattern"]],1,1)
         end
         if string.sub(SML.melodyTrackString[game.selected["pattern"]],i,i) == currentChar then
-          charCount = charCount + 1
+          if charCount <= 31 then
+            charCount = charCount + 1
+          else
+            -- note too long, break into another note of the same tone
+            MML.preview = MML.preview .. currentChar.."1 "
+            charCount = 1
+          end
         else
-          MML.preview = MML.preview .. currentChar .. charCount .. " "
+          MML.preview = MML.preview .. currentChar .. LUTcharToLen[charCount] .. " "
           currentChar = string.sub(SML.melodyTrackString[game.selected["pattern"]],i,i)
           charCount = 1
         end
         if i == 128 then
-          MML.preview = MML.preview .. currentChar .. charCount .. "\n"
+          MML.preview = MML.preview .. currentChar .. LUTcharToLen[charCount] .. "\n"
         end
       end
+      -- convert chars into actual MML notes
+      MML.preview = string.gsub(MML.preview,"A","o".. SML.octave[game.selected["pattern"]][1] -1 .."c")
+      MML.preview = string.gsub(MML.preview,"B","o".. SML.octave[game.selected["pattern"]][1] -1 .."d")
+      MML.preview = string.gsub(MML.preview,"C","o".. SML.octave[game.selected["pattern"]][1] -1 .."e")
+      MML.preview = string.gsub(MML.preview,"D","o".. SML.octave[game.selected["pattern"]][1] -1 .."f")
+      MML.preview = string.gsub(MML.preview,"E","o".. SML.octave[game.selected["pattern"]][1] -1 .."g")
+      MML.preview = string.gsub(MML.preview,"F","o".. SML.octave[game.selected["pattern"]][1] -1 .."a")
+      MML.preview = string.gsub(MML.preview,"G","o".. SML.octave[game.selected["pattern"]][1] -1 .."b")
+      MML.preview = string.gsub(MML.preview,"H","o".. SML.octave[game.selected["pattern"]][1] .."c")
+      MML.preview = string.gsub(MML.preview,"I","o".. SML.octave[game.selected["pattern"]][1] .."d")
+      MML.preview = string.gsub(MML.preview,"J","o".. SML.octave[game.selected["pattern"]][1] .."e")
+      MML.preview = string.gsub(MML.preview,"K","o".. SML.octave[game.selected["pattern"]][1] .."f")
+      MML.preview = string.gsub(MML.preview,"L","o".. SML.octave[game.selected["pattern"]][1] .."g")
+      MML.preview = string.gsub(MML.preview,"M","o".. SML.octave[game.selected["pattern"]][1] .."a")
+      MML.preview = string.gsub(MML.preview,"N","o".. SML.octave[game.selected["pattern"]][1] .."b")
+      MML.preview = string.gsub(MML.preview,"O","o".. SML.octave[game.selected["pattern"]][1] +1 .."c")
+      MML.preview = string.gsub(MML.preview,"P","o".. SML.octave[game.selected["pattern"]][1] +1 .."d")
+      MML.preview = string.gsub(MML.preview,"Q","o".. SML.octave[game.selected["pattern"]][1] +1 .."e")
+      MML.preview = string.gsub(MML.preview,"R","o".. SML.octave[game.selected["pattern"]][1] +1 .."f")
+      MML.preview = string.gsub(MML.preview,"S","o".. SML.octave[game.selected["pattern"]][1] +1 .."g")
+      MML.preview = string.gsub(MML.preview,"@","r")
+      MML.preview = string.gsub(MML.preview,"#","@") -- revert placeholder "#" to "@"
+      MML.preview = string.gsub(MML.preview,"-","A") -- revert placeholder "-" to "A"
+      MML.preview = string.gsub(MML.preview,"~","B") -- revert placeholder "~" to "B"
+      MML.preview = string.gsub(MML.preview,"&","C") -- revert placeholder "&" to "C"
+      MML.preview = string.gsub(MML.preview,"*","D") -- revert placeholder "*" to "D"
+      MML.preview = string.gsub(MML.preview,"!","E") -- revert placeholder "!" to "E"
 
     end
     if mouse.y == 6 then -- Harmony 1 clicked
