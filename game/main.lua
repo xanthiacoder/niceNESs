@@ -345,34 +345,7 @@ SML.sequence   = "< click (  sequence  ) to change >" -- string of alphabets den
 
 SML.version    = game.version -- embed app's version into SML data
 
-SML.patternName = {
-  ["a"] = "name pattern",
-  ["b"] = "name pattern",
-  ["c"] = "name pattern",
-  ["d"] = "name pattern",
-  ["e"] = "name pattern",
-  ["f"] = "name pattern",
-  ["g"] = "name pattern",
-  ["h"] = "name pattern",
-  ["i"] = "name pattern",
-  ["j"] = "name pattern",
-  ["k"] = "name pattern",
-  ["l"] = "name pattern",
-  ["m"] = "name pattern",
-  ["n"] = "name pattern",
-  ["o"] = "name pattern",
-  ["p"] = "name pattern",
-  ["q"] = "name pattern",
-  ["r"] = "name pattern",
-  ["s"] = "name pattern",
-  ["t"] = "name pattern",
-  ["u"] = "name pattern",
-  ["v"] = "name pattern",
-  ["w"] = "name pattern",
-  ["x"] = "name pattern",
-  ["y"] = "name pattern",
-  ["z"] = "name pattern",
-}
+
 SML.volume = {
   ["a"] = {104,104,1,104,104},
   ["b"] = {104,104,1,104,104},
@@ -677,6 +650,211 @@ for i = 1,128 do
   SML.bassTrack[i] = 0 -- set to nil equivalent
 end
 
+blankScreenRed = {}
+for i = 1,1944 do
+  -- if i is odd, fill {0,0,0,0}
+  -- if i is even, fill with "."
+  if (i % 2 == 0) then
+    -- even number
+    blankScreenRed[i] = "▒"
+  else
+    -- odd number
+    blankScreenRed[i] = {i/1944,0,0,1}
+  end
+end
+for i = 1,12 do
+  blankScreenRed[i*162] = "\n"
+end
+
+blankScreenGreen = {}
+for i = 1,1944 do
+  -- if i is odd, fill {0,0,0,0}
+  -- if i is even, fill with "."
+  if (i % 2 == 0) then
+    -- even number
+    blankScreenGreen[i] = "▒"
+  else
+    -- odd number
+    blankScreenGreen[i] = {0,i/1944,0,1}
+  end
+end
+for i = 1,12 do
+  blankScreenGreen[i*162] = "\n"
+end
+
+blankScreenBlue = {}
+for i = 1,1944 do
+  -- if i is odd, fill {0,0,0,0}
+  -- if i is even, fill with "."
+  if (i % 2 == 0) then
+    -- even number
+    blankScreenBlue[i] = "▒"
+  else
+    -- odd number
+    blankScreenBlue[i] = {0,0,i/1944,1}
+  end
+end
+for i = 1,12 do
+  blankScreenBlue[i*162] = "\n"
+end
+
+blankScreenWhite = {}
+for i = 1,1944 do
+  -- if i is odd, fill {0,0,0,0}
+  -- if i is even, fill with "."
+  if (i % 2 == 0) then
+    -- even number
+    blankScreenWhite[i] = "▒"
+  else
+    -- odd number
+    blankScreenWhite[i] = {i/1944,i/1944,i/1944,1}
+  end
+end
+for i = 1,12 do
+  blankScreenWhite[i*162] = "\n"
+end
+
+
+
+SML.screen = {}
+SML.screen.about = {}
+SML.screen.a = {}
+SML.screen.b = {}
+SML.screen.c = {}
+SML.screen.d = {}
+SML.screen.e = {}
+SML.screen.f = {}
+SML.screen.g = {}
+SML.screen.h = {}
+SML.screen.i = {}
+SML.screen.j = {}
+SML.screen.k = {}
+SML.screen.l = {}
+SML.screen.m = {}
+SML.screen.n = {}
+SML.screen.o = {}
+SML.screen.p = {}
+SML.screen.q = {}
+SML.screen.r = {}
+SML.screen.s = {}
+SML.screen.t = {}
+SML.screen.u = {}
+SML.screen.v = {}
+SML.screen.w = {}
+SML.screen.x = {}
+SML.screen.y = {}
+SML.screen.z = {}
+SML.screen.about[1] = blankScreenRed
+SML.screen.about[2] = blankScreenGreen
+SML.screen.about[3] = blankScreenBlue
+SML.screen.about[4] = blankScreenWhite
+SML.screen.a[1] = blankScreenRed
+SML.screen.a[2] = blankScreenGreen
+SML.screen.a[3] = blankScreenBlue
+SML.screen.a[4] = blankScreenWhite
+SML.screen.b[1] = blankScreenRed
+SML.screen.b[2] = blankScreenGreen
+SML.screen.b[3] = blankScreenBlue
+SML.screen.b[4] = blankScreenWhite
+SML.screen.c[1] = blankScreenRed
+SML.screen.c[2] = blankScreenGreen
+SML.screen.c[3] = blankScreenBlue
+SML.screen.c[4] = blankScreenWhite
+SML.screen.d[1] = blankScreenRed
+SML.screen.d[2] = blankScreenGreen
+SML.screen.d[3] = blankScreenBlue
+SML.screen.d[4] = blankScreenWhite
+SML.screen.e[1] = blankScreenRed
+SML.screen.e[2] = blankScreenGreen
+SML.screen.e[3] = blankScreenBlue
+SML.screen.e[4] = blankScreenWhite
+SML.screen.f[1] = blankScreenRed
+SML.screen.f[2] = blankScreenGreen
+SML.screen.f[3] = blankScreenBlue
+SML.screen.f[4] = blankScreenWhite
+SML.screen.g[1] = blankScreenRed
+SML.screen.g[2] = blankScreenGreen
+SML.screen.g[3] = blankScreenBlue
+SML.screen.g[4] = blankScreenWhite
+SML.screen.h[1] = blankScreenRed
+SML.screen.h[2] = blankScreenGreen
+SML.screen.h[3] = blankScreenBlue
+SML.screen.h[4] = blankScreenWhite
+SML.screen.i[1] = blankScreenRed
+SML.screen.i[2] = blankScreenGreen
+SML.screen.i[3] = blankScreenBlue
+SML.screen.i[4] = blankScreenWhite
+SML.screen.j[1] = blankScreenRed
+SML.screen.j[2] = blankScreenGreen
+SML.screen.j[3] = blankScreenBlue
+SML.screen.j[4] = blankScreenWhite
+SML.screen.k[1] = blankScreenRed
+SML.screen.k[2] = blankScreenGreen
+SML.screen.k[3] = blankScreenBlue
+SML.screen.k[4] = blankScreenWhite
+SML.screen.l[1] = blankScreenRed
+SML.screen.l[2] = blankScreenGreen
+SML.screen.l[3] = blankScreenBlue
+SML.screen.l[4] = blankScreenWhite
+SML.screen.m[1] = blankScreenRed
+SML.screen.m[2] = blankScreenGreen
+SML.screen.m[3] = blankScreenBlue
+SML.screen.m[4] = blankScreenWhite
+SML.screen.n[1] = blankScreenRed
+SML.screen.n[2] = blankScreenGreen
+SML.screen.n[3] = blankScreenBlue
+SML.screen.n[4] = blankScreenWhite
+SML.screen.o[1] = blankScreenRed
+SML.screen.o[2] = blankScreenGreen
+SML.screen.o[3] = blankScreenBlue
+SML.screen.o[4] = blankScreenWhite
+SML.screen.p[1] = blankScreenRed
+SML.screen.p[2] = blankScreenGreen
+SML.screen.p[3] = blankScreenBlue
+SML.screen.p[4] = blankScreenWhite
+SML.screen.q[1] = blankScreenRed
+SML.screen.q[2] = blankScreenGreen
+SML.screen.q[3] = blankScreenBlue
+SML.screen.q[4] = blankScreenWhite
+SML.screen.r[1] = blankScreenRed
+SML.screen.r[2] = blankScreenGreen
+SML.screen.r[3] = blankScreenBlue
+SML.screen.r[4] = blankScreenWhite
+SML.screen.s[1] = blankScreenRed
+SML.screen.s[2] = blankScreenGreen
+SML.screen.s[3] = blankScreenBlue
+SML.screen.s[4] = blankScreenWhite
+SML.screen.t[1] = blankScreenRed
+SML.screen.t[2] = blankScreenGreen
+SML.screen.t[3] = blankScreenBlue
+SML.screen.t[4] = blankScreenWhite
+SML.screen.u[1] = blankScreenRed
+SML.screen.u[2] = blankScreenGreen
+SML.screen.u[3] = blankScreenBlue
+SML.screen.u[4] = blankScreenWhite
+SML.screen.v[1] = blankScreenRed
+SML.screen.v[2] = blankScreenGreen
+SML.screen.v[3] = blankScreenBlue
+SML.screen.v[4] = blankScreenWhite
+SML.screen.w[1] = blankScreenRed
+SML.screen.w[2] = blankScreenGreen
+SML.screen.w[3] = blankScreenBlue
+SML.screen.w[4] = blankScreenWhite
+SML.screen.x[1] = blankScreenRed
+SML.screen.x[2] = blankScreenGreen
+SML.screen.x[3] = blankScreenBlue
+SML.screen.x[4] = blankScreenWhite
+SML.screen.y[1] = blankScreenRed
+SML.screen.y[2] = blankScreenGreen
+SML.screen.y[3] = blankScreenBlue
+SML.screen.y[4] = blankScreenWhite
+SML.screen.z[1] = blankScreenRed
+SML.screen.z[2] = blankScreenGreen
+SML.screen.z[3] = blankScreenBlue
+SML.screen.z[4] = blankScreenWhite
+
+
+
 SML.melodyTrackString = {
   ["a"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
   ["b"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
@@ -792,6 +970,7 @@ SML.bassTrackString = {
   ["y"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
   ["z"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
 }
+
 
 -- Visualizer data
 
@@ -914,6 +1093,37 @@ function saveSML(filename,directory,silent)
 end
 
 
+---use to save VIZ table into file
+---@param filename string
+---@param directory string valid option : "autosave" "vizdata"
+---@param silent boolean "true" for no message window
+function saveVIZ(filename,directory,silent)
+
+  if game.os ~= "R36S" and game.os ~= "Web" then
+
+    local success, message =love.filesystem.write(directory.."/"..filename, json.encode(VIZ))
+    if success then
+      if not silent then
+        -- https://love2d.org/wiki/love.window.showMessageBox
+        love.window.showMessageBox("Success", filename .. " saved at " .. love.filesystem.getSaveDirectory() .. "/" .. directory, "info", true)
+      end
+      print (filename .. " saved at " .. love.filesystem.getSaveDirectory() .. "/".. directory)
+    else
+      -- https://love2d.org/wiki/love.window.showMessageBox
+      love.window.showMessageBox("Cannot write file", message, "error", true)
+	    print (love.filesystem.getSaveDirectory() .. "/" .. directory .. "/" .. filename .. " creation failed! " .. message)
+    end
+  end
+  if game.os == "R36S" then
+    -- save for R36S using lua io
+    local f = io.open(love.filesystem.getSaveDirectory().."//"..directory.."/"..filename, "w")
+    f:write(json.encode(VIZ))
+    f:close()
+  end
+end
+
+
+
 ---use to save MML table into file
 ---@param filename string
 ---@param directory string valid option : "autosave" "smldata"
@@ -989,6 +1199,15 @@ function loadSML(filename,directory)
       -- https://love2d.org/wiki/love.window.showMessageBox
       love.window.showMessageBox("Version mismatch", "File's SML version is "..SML.version..", app version is "..game.version, "warning", true)
     end
+end
+
+
+---use to load VIZ table into memory
+---@param filename string
+---@param directory string valid option : "autosave" "vizdata"
+function loadVIZ(filename,directory)
+    SML = json.decode(love.filesystem.read(directory .."/"..filename))
+    print(filename .. " loaded into memory")
 end
 
 
@@ -1366,23 +1585,24 @@ end
 function makePatternMML(pattern)
       -- compile MML from sections
       MML.preview = ""
-      if MML.melody[game.selected["pattern"]] ~= nil then
+      if MML.melody[pattern] ~= nil then
         MML.preview = MML.preview .. MML.melody[pattern]
       end
-      if MML.harmony1[game.selected["pattern"]] ~= nil then
+      if MML.harmony1[pattern] ~= nil then
         MML.preview = MML.preview .. MML.harmony1[pattern]
       end
-      if MML.harmony2[game.selected["pattern"]] ~= nil then
+      if MML.harmony2[pattern] ~= nil then
         MML.preview = MML.preview .. MML.harmony2[pattern]
       end
-      if MML.bass[game.selected["pattern"]] ~= nil then
+      if MML.bass[pattern] ~= nil then
         MML.preview = MML.preview .. MML.bass[pattern]
       end
       return MML.preview
 end
 
-
-function makeSongMML()
+---comment
+---@param silent boolean true to not have messagebox pop up
+function makeSongMML(silent)
   -- save the whole song
   MML.song = ""
   local currentStep = ""
@@ -1391,7 +1611,7 @@ function makeSongMML()
     print("MML.song: adding part " .. currentStep)
     MML.song = MML.song .. makePatternMML(currentStep)
   end
-  saveMML(MML.song,flattenString(SML.composer.."_"..SML.title..".mml"),"mmldata",false)
+  saveMML(MML.song,flattenString(SML.composer.."_"..SML.title..".mml"),"mmldata",silent)
 
 end
 
@@ -1440,11 +1660,20 @@ function love.load()
     loadSML("niceNESs_SaveOnQuit.sml","autosave")
   end
 
+
   if love.filesystem.getInfo("autosave/niceNESs_SaveOnQuit.mml") == nil then
     print("niceNESs_SaveOnQuit.mml not found!")
   else
     print("niceNESs_SaveOnQuit.mml found!")
     loadMMLtable("niceNESs_SaveOnQuit.mml","autosave")
+  end
+
+
+  if love.filesystem.getInfo("autosave/niceNESs_SaveOnQuit.viz") == nil then
+    print("niceNESs_SaveOnQuit.viz not found!")
+  else
+    print("niceNESs_SaveOnQuit.viz found!")
+    loadVIZ("niceNESs_SaveOnQuit.viz","autosave")
   end
 
 
@@ -1485,9 +1714,7 @@ function love.draw()
   love.graphics.setColor(color.white)
   love.graphics.print(metaSections,0,0) -- instruments panel
 
-  -- manual draw for new function Name Patterns
-  love.graphics.setColor(color.cyan)
-  love.graphics.print("(".. SML.patternName[game.selected["pattern"]] ..")",FONT_WIDTH*65,FONT_HEIGHT*9)
+
 
   -- manual draw for [copy previous pattern's settings] 92,10 (only for patterns after [a])
   if string.byte(game.selected["pattern"]) >97 then
@@ -1783,8 +2010,11 @@ function love.draw()
   love.graphics.print(VIZ.mouseX,FONT_WIDTH*68,FONT_HEIGHT*30)
   love.graphics.print(VIZ.mouseY,FONT_WIDTH*75,FONT_HEIGHT*30)
   if game.selected["section"]== "about" then
-    love.graphics.print(VIZ.about[game.selected["vizPage"]],FONT_WIDTH*0,FONT_HEIGHT*31)
+    love.graphics.print(SML.screen.about[game.selected["vizPage"]],FONT_WIDTH*0,FONT_HEIGHT*31)
+  else
+    love.graphics.print(SML.screen[game.selected["pattern"]][game.selected["vizPage"]],FONT_WIDTH*0,FONT_HEIGHT*31)
   end
+
 
 
 
@@ -2111,11 +2341,6 @@ function love.update(dt)
   end
 
 
-  -- name pattern selected
-    if (game.selectBar["x"] == 64 and game.selectBar["y"] == 9) and game.dataEntry == false then
-      SML.patternName[game.selected["pattern"]] = game.inputData
-      stopDataEntry()
-    end
 
   -- tempo selected
   if (game.selectBar["x"] == 31 and game.selectBar["y"] == 8) and game.dataEntry == false then
@@ -2213,6 +2438,15 @@ function love.keypressed(key, scancode, isrepeat)
     -- change pattern to "a", noteNum to 0
     game.selected["pattern"] = "a"
     game.selected["noteNum"] = 0
+
+    -- save data in case of undo
+    -- load pattern "a" tracks before saving (if not pattern "a" data messes up on save and reload)
+    updateTracks("a")
+    -- get filename from meta data and flatten it
+    saveSML(flattenString("undo.sml"),"autosave",true)
+    saveMMLtable(flattenString("undo-MML.tbl"),"autosave",true)
+    saveVIZ(flattenString("undo.viz"),"autosave",true)
+
     -- load new.sml (file with empty data)
     loadSML("new.sml","sml")
   end
@@ -2227,14 +2461,18 @@ function love.keypressed(key, scancode, isrepeat)
     -- get filename from meta data and flatten it
     saveSML(flattenString(SML.composer.."_"..SML.title..".sml"),"smldata",false)
     saveMMLtable(flattenString(SML.composer.."_"..SML.title.."-MML.tbl"),"autosave",false)
+    saveVIZ(flattenString(SML.composer.."_"..SML.title..".viz"),"vizdata",false)
+    makeSongMML(false)
   end
 
   if key == "f4" and love.system.getOS() ~= "Web" then
     -- get filename from meta data and flatten it
     -- saveMML(flattenString(SML.composer.."_"..SML.title.."-temp.mml"),"mmldata",false)
-    saveMML(MML.preview,"temp.mml","cache",true)
-    loadMML("cache/temp.mml")
-	  Music:play()
+    if MML.preview ~= "" then
+      saveMML(MML.preview,"temp.mml","cache",true)
+      loadMML("cache/temp.mml")
+  	  Music:play()
+    end
   end
 
   if key == "space" then
@@ -2243,7 +2481,7 @@ function love.keypressed(key, scancode, isrepeat)
   end
 
   if key == "f8" then
-    makeSongMML()
+    makeSongMML(false) -- saves .mml
     -- save all data (not done yet)
 
   end
@@ -2255,6 +2493,7 @@ function love.keypressed(key, scancode, isrepeat)
     saveSML(os.date("%Y-%b-%d_%H-%M") .. ".sml","autosave",true)
     saveSML("niceNESs_SaveOnQuit.sml","autosave",true)
     saveMMLtable("niceNESs_SaveOnQuit.mml","autosave",true)
+--    saveVIZ("niceNESs_SaveOnQuit.viz","autosave",true)
     love.event.quit()
   end
 
