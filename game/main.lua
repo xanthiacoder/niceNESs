@@ -35,6 +35,8 @@ local ansi = require("lib.ansi")
 require("lib.Music")
 require("lib.WriteAiff")
 
+local oneSecTimer = 0 -- used for the one second timer in update(dt)
+
 local game = {}
 
 -- game meta
@@ -44,6 +46,7 @@ game.edition = "(LÖVEJAM 2025 B-side)"
 
 -- game flags
 game.dataEntry = false -- flag for when data is being captured from the keyboard
+game.vizAnimate = false -- to start / stop Visualizer animation
 
 -- game variables
 game.statusBar = "" -- content string for status Bar at the bottom
@@ -56,6 +59,7 @@ game.selected = {
   ["pattern"] = "a",  -- current selected pattern : a..z
   ["section"] = "about", -- "about", "melody", "harmony1", "harmony2", "bass", "rhythm", "pattern", "sequence"
   ["noteNum"] = 0, -- 0 = nil, normal range 1..19 , middle = 8, when 1 y=30, when 19 y=12, =32-y
+  ["vizPage"] = 1, -- default to showing 1st page of visualizer
 }
 game.inputData = ""   -- string to cache data captured from keyboard
 game.inputPrompt = "" -- prompt for data entry
@@ -108,6 +112,7 @@ end
 mkdir("smldata")
 mkdir("xtuidata")
 mkdir("mmldata")
+mkdir("vizdata")
 mkdir("music")
 mkdir("cache")
 mkdir("autosave")
@@ -788,7 +793,70 @@ SML.bassTrackString = {
   ["z"] = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
 }
 
+-- Visualizer data
 
+-- full page is 80 x 12, + 1 column for \n = 81 x 12
+-- full table is double width, 81*2 x 12 = 162 x 12
+-- each coord stores {color} and string
+-- init each odd number coord with {color}
+-- init each even number coord with text string char
+-- fill 162 x 1..12 with "\n"
+--[[
+    local printTable = {}
+    -- {{1,1,1,1},"Hello",{1,1,0,1}," world!"}
+    printTable[1] = {1,1,1,1}
+    printTable[2] = "Hello"
+    printTable[3] = {1,1,0,1}
+    printTable[4] = " world!"
+
+so 1 char needs a table[1..2]
+2 chars needs table[1..4]
+1 line of 81 chars needs table[1..162]
+12 lines of 81 chars needs table[1..1944]
+insert "\n" at 1*162, 2*162 .. 12*162
+]]
+local blankVizPage1 = {}
+local blankVizPage2 = {}
+local blankVizPage3 = {}
+local blankVizPage4 = {}
+
+for i = 1,1944 do
+  -- if i is odd, fill {0,0,0,0}
+  -- if i is even, fill with "."
+  if (i % 2 == 0) then
+    -- even number
+    blankVizPage1[i] = "▒"
+    blankVizPage2[i] = "▒"
+    blankVizPage3[i] = "▒"
+    blankVizPage4[i] = "▒"
+  else
+    -- odd number
+    blankVizPage1[i] = {i/1944,0,0,1}
+    blankVizPage2[i] = {0,i/1944,0,1}
+    blankVizPage3[i] = {0,0,i/1944,1}
+    blankVizPage4[i] = {i/1944,i/1944,i/1944,1}
+  end
+end
+for i = 1,12 do
+  blankVizPage1[i*162] = "\n"
+  blankVizPage2[i*162] = "\n"
+  blankVizPage3[i*162] = "\n"
+  blankVizPage4[i*162] = "\n"
+end
+
+
+local VIZ = {}
+
+VIZ.about = {
+  [1] = blankVizPage1,
+  [2] = blankVizPage2,
+  [3] = blankVizPage3,
+  [4] = blankVizPage4,
+}
+
+
+VIZ.mouseX = 0
+VIZ.mouseY = 0
 
 --[[
 Create a 32x1 pixel transparent-to-white gradient drawable image.
@@ -1351,6 +1419,8 @@ function love.load()
   dividerMML       = json.decode(love.filesystem.read("xtui/0-divider-mml.xtui"))
   textWindowBlank  = json.decode(love.filesystem.read("xtui/0-textwindow-blank.xtui"))
   bassLeftPanel    = json.decode(love.filesystem.read("xtui/0-bass-leftpanel.xtui"))
+  visualizerTop    = json.decode(love.filesystem.read("xtui/0-visualizer-top.xtui"))
+  visualizerBottom = json.decode(love.filesystem.read("xtui/0-visualizer-bottom.xtui"))
 
   melodyGroove = {
     [1] = json.decode(love.filesystem.read("xtui/0-melody-groove1.xtui")),
@@ -1429,9 +1499,15 @@ function love.draw()
   love.graphics.setColor(color.white)
   love.graphics.print(instrumentsPanel,1280/2,0) -- instruments panel
   love.graphics.print(functionKeys,1280/2,0) -- function keys help
-  love.graphics.print(dividerWalkthru,0,FONT_HEIGHT*30) -- divider : walkthru
+
+-- love.graphics.print(dividerWalkthru,0,FONT_HEIGHT*30) -- divider : walkthru
+-- love.graphics.print(textWindowBlank,0,FONT_HEIGHT*31) -- text window left : blank
+
+  -- new Visualizer section draw
+  love.graphics.print(visualizerTop,FONT_WIDTH*0,FONT_HEIGHT*30) -- divider : Visualizer top
+  love.graphics.print(visualizerBottom,FONT_WIDTH*0,FONT_HEIGHT*43)  -- divider : Visualizer bottom
+
   love.graphics.print(dividerMML,FONT_WIDTH*80,FONT_HEIGHT*30) -- divider : MML
-  love.graphics.print(textWindowBlank,0,FONT_HEIGHT*31) -- text window left : blank
   love.graphics.print(textWindowBlank,FONT_WIDTH*80,FONT_HEIGHT*31) -- text window right : blank
   -- draw meta data
   love.graphics.setFont(monoFont)
@@ -1703,6 +1779,13 @@ function love.draw()
 
 
   -- draw for Visualizer window
+  love.graphics.setColor(color.white)
+  love.graphics.print(VIZ.mouseX,FONT_WIDTH*68,FONT_HEIGHT*30)
+  love.graphics.print(VIZ.mouseY,FONT_WIDTH*75,FONT_HEIGHT*30)
+  if game.selected["section"]== "about" then
+    love.graphics.print(VIZ.about[game.selected["vizPage"]],FONT_WIDTH*0,FONT_HEIGHT*31)
+  end
+
 
 
   -- draw for MML Preview window
@@ -1775,6 +1858,40 @@ end
 
 function love.update(dt)
   -- Your game update here
+
+  -- oneSecTimer code for simple frame animation
+  local currentFrame = 0 -- init currentFrame
+  if oneSecTimer < 1/4 then
+    currentFrame = 1
+  end
+  oneSecTimer = oneSecTimer + dt
+  if oneSecTimer > 1/4 and currentFrame == 1 then
+    currentFrame = 2
+  end
+  if oneSecTimer > 2/4 and currentFrame == 2 then
+    currentFrame = 3
+  end
+  if oneSecTimer > 3/4 and currentFrame == 3 then
+    currentFrame = 4
+  end
+  if oneSecTimer > 4/4 and currentFrame == 4 then
+    currentFrame = 1
+    oneSecTimer = 0
+  end
+
+  -- stuff that happens on 4fps
+  if currentFrame == 1 then
+
+  end
+  if currentFrame == 2 then
+
+  end
+  if currentFrame == 3 then
+
+  end
+  if currentFrame == 4 then
+  end
+
 
   -- convert mouse position to ansi text coordinates
   local mouse = {
@@ -2160,6 +2277,8 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 
+
+
 function love.mousepressed( x, y, button, istouch, presses )
 
   -- convert mouse position to ansi text coordinates
@@ -2167,6 +2286,33 @@ function love.mousepressed( x, y, button, istouch, presses )
     x = math.floor(love.mouse.getX()/8)+1,
     y = math.floor(love.mouse.getY()/16)+1
   }
+
+  -- Visualizer area detection
+  if (mouse.x >= 1 and mouse.x <= 80) and (mouse.y >= 32 and mouse.y <= 43)then
+    VIZ.mouseX = mouse.x
+    VIZ.mouseY = mouse.y-31
+  else
+    VIZ.mouseX = 0
+    VIZ.mouseY = 0
+  end
+
+  -- Visualizer Page changing
+  if mouse.x == 19 and mouse.y == 31 then
+    -- change to page 1
+    game.selected["vizPage"] = 1
+  end
+  if mouse.x == 23 and mouse.y == 31 then
+    -- change to page 2
+    game.selected["vizPage"] = 2
+  end
+  if mouse.x == 27 and mouse.y == 31 then
+    -- change to page 1
+    game.selected["vizPage"] = 3
+  end
+  if mouse.x == 31 and mouse.y == 31 then
+    -- change to page 1
+    game.selected["vizPage"] = 4
+  end
 
   -- Melody Instrument
   if mouse.x >= 13 and mouse.x <= 19 and mouse.y == 5 then
