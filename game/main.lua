@@ -36,6 +36,7 @@ require("lib.Music")
 require("lib.WriteAiff")
 
 local oneSecTimer = 0 -- used for the one second timer in update(dt)
+local currentFrame = 0 -- init currentFrame
 
 local game = {}
 
@@ -1734,6 +1735,8 @@ function love.draw()
   love.graphics.print(visualizerTop,FONT_WIDTH*0,FONT_HEIGHT*30) -- divider : Visualizer top
   love.graphics.print(visualizerBottom,FONT_WIDTH*0,FONT_HEIGHT*43)  -- divider : Visualizer bottom
 
+
+  love.graphics.setColor(color.white)
   love.graphics.print(dividerMML,FONT_WIDTH*80,FONT_HEIGHT*30) -- divider : MML
   love.graphics.print(textWindowBlank,FONT_WIDTH*80,FONT_HEIGHT*31) -- text window right : blank
   -- draw meta data
@@ -2015,6 +2018,13 @@ function love.draw()
     love.graphics.print(SML.screen[game.selected["pattern"]][game.selected["vizPage"]],FONT_WIDTH*0,FONT_HEIGHT*31)
   end
 
+  -- show visualizer cursor
+  if VIZ.mouseX > 0 and VIZ.mouseY > 0 then
+    -- show blinking cursor
+    love.graphics.setColor(oneSecTimer/1,oneSecTimer/1,oneSecTimer/1,oneSecTimer/1)
+    love.graphics.print("▒",FONT_WIDTH*(VIZ.mouseX-1),FONT_HEIGHT*(VIZ.mouseY+30))
+
+  end
 
 
 
@@ -2076,7 +2086,7 @@ elseif game.selected["section"] == "sequence" then
   else
     game.debug3 = ""
   end
-  game.debug4 = ""
+  game.debug4 = "currentFrame: "..currentFrame.." | ".."timer: "..oneSecTimer
   -- draw debug info
   love.graphics.setColor(color.yellow)
   love.graphics.print(game.debug1,FONT_WIDTH*0,FONT_HEIGHT*46)
@@ -2090,11 +2100,10 @@ function love.update(dt)
   -- Your game update here
 
   -- oneSecTimer code for simple frame animation
-  local currentFrame = 0 -- init currentFrame
+  oneSecTimer = oneSecTimer + dt
   if oneSecTimer < 1/4 then
     currentFrame = 1
   end
-  oneSecTimer = oneSecTimer + dt
   if oneSecTimer > 1/4 and currentFrame == 1 then
     currentFrame = 2
   end
