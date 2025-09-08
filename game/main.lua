@@ -47,7 +47,8 @@ game.edition = "(LÖVEJAM 2025 B-side)"
 
 -- game flags
 game.dataEntry = false -- flag for when data is being captured from the keyboard
-game.vizAnimate = false -- to start / stop Visualizer animation
+game.vizAnimate = true -- to start / stop Visualizer animation, start with animation
+game.vizOnion = false -- onion skinning for Visualizer editing
 
 -- game variables
 game.statusBar = "" -- content string for status Bar at the bottom
@@ -61,6 +62,8 @@ game.selected = {
   ["section"] = "about", -- "about", "melody", "harmony1", "harmony2", "bass", "rhythm", "pattern", "sequence"
   ["noteNum"] = 0, -- 0 = nil, normal range 1..19 , middle = 8, when 1 y=30, when 19 y=12, =32-y
   ["vizPage"] = 1, -- default to showing 1st page of visualizer
+  ["vizColor"] = 15, -- color in numbers
+
 }
 game.inputData = ""   -- string to cache data captured from keyboard
 game.inputPrompt = "" -- prompt for data entry
@@ -1285,6 +1288,20 @@ function love.textinput(t) -- called for every instance of text entry
   if game.dataEntry == true and #game.inputData < game.dataLength then
     game.inputData = game.inputData .. t
   end
+  if VIZ.mouseX > 0 and VIZ.mouseY > 0 and game.selected["section"] ~= "about" then
+    -- cursor captured in Visualizer for data entry
+    -- update table location = (mouseY-1)*162 + mouseX*2
+    SML.screen[game.selected["pattern"]][game.selected["vizPage"]][((VIZ.mouseX*2)+((VIZ.mouseY-1)*162))-1] = color[game.selected["vizColor"]]
+    SML.screen[game.selected["pattern"]][game.selected["vizPage"]][(VIZ.mouseX*2)+((VIZ.mouseY-1)*162)] = t
+    if VIZ.mouseX < 80 then
+      VIZ.mouseX = VIZ.mouseX + 1
+    else
+      if VIZ.mouseY < 12 then
+        VIZ.mouseY = VIZ.mouseY + 1
+        VIZ.mouseX = 1
+      end
+    end
+  end
 end
 
 
@@ -2015,7 +2032,19 @@ function love.draw()
   if game.selected["section"]== "about" then
     love.graphics.print(SML.screen.about[game.selected["vizPage"]],FONT_WIDTH*0,FONT_HEIGHT*31)
   else
+    love.graphics.setColor(color.white)
     love.graphics.print(SML.screen[game.selected["pattern"]][game.selected["vizPage"]],FONT_WIDTH*0,FONT_HEIGHT*31)
+    -- Visualizer Onion Skin section overlay
+    if game.vizOnion == true and game.selected["vizPage"] > 1 then
+      -- show previous page with transparency
+      love.graphics.setColor(1,1,1,0.6)
+      love.graphics.print(SML.screen[game.selected["pattern"]][game.selected["vizPage"]-1],FONT_WIDTH*0,FONT_HEIGHT*31)
+    end
+    if game.vizOnion == true and game.selected["vizPage"] == 1 then
+      -- on page one, show page 4 with transparency
+      love.graphics.setColor(1,1,1,0.6)
+      love.graphics.print(SML.screen[game.selected["pattern"]][4],FONT_WIDTH*0,FONT_HEIGHT*31)
+    end
   end
 
   -- show visualizer cursor
@@ -2086,7 +2115,7 @@ elseif game.selected["section"] == "sequence" then
   else
     game.debug3 = ""
   end
-  game.debug4 = "currentFrame: "..currentFrame.." | ".."timer: "..oneSecTimer
+  game.debug4 = "currentFrame: "..currentFrame.." | timer: "..string.format("%.2f",oneSecTimer) .. " | vizColor: "..game.selected["vizColor"] .. " | visOnion: " .. tostring(game.vizOnion)
   -- draw debug info
   love.graphics.setColor(color.yellow)
   love.graphics.print(game.debug1,FONT_WIDTH*0,FONT_HEIGHT*46)
@@ -2120,15 +2149,24 @@ function love.update(dt)
 
   -- stuff that happens on 4fps
   if currentFrame == 1 then
-
+    if game.vizAnimate == true then
+      game.selected["vizPage"] = 1
+    end
   end
   if currentFrame == 2 then
-
+    if game.vizAnimate == true then
+      game.selected["vizPage"] = 2
+    end
   end
   if currentFrame == 3 then
-
+    if game.vizAnimate == true then
+      game.selected["vizPage"] = 3
+    end
   end
   if currentFrame == 4 then
+    if game.vizAnimate == true then
+      game.selected["vizPage"] = 4
+    end
   end
 
 
@@ -2442,6 +2480,7 @@ function love.keypressed(key, scancode, isrepeat)
   if key == "f1" then
     -- change section to "about" : the welcome screen
     game.selected["section"] = "about"
+    game.vizAnimate = true
     game.selectBar["x"] = 161 -- out of screen
     game.selectBar["y"] = 46 -- out of screen
     -- change pattern to "a", noteNum to 0
@@ -2544,6 +2583,15 @@ function love.mousepressed( x, y, button, istouch, presses )
     VIZ.mouseY = 0
   end
 
+  -- hidden feature, copy current page into "about" by clicking Visualizer
+  if (mouse.x >= 5 and mouse.x <= 14) and mouse.y == 31 then
+    -- copy current page to about page
+    for i = 1,1944 do
+      SML.screen.about[game.selected["vizPage"]][i] = SML.screen[game.selected["pattern"]][game.selected["vizPage"]][i]
+    end
+
+  end
+
   -- Visualizer Page changing
   if mouse.x == 19 and mouse.y == 31 then
     -- change to page 1
@@ -2554,12 +2602,130 @@ function love.mousepressed( x, y, button, istouch, presses )
     game.selected["vizPage"] = 2
   end
   if mouse.x == 27 and mouse.y == 31 then
-    -- change to page 1
+    -- change to page 3
     game.selected["vizPage"] = 3
   end
   if mouse.x == 31 and mouse.y == 31 then
-    -- change to page 1
+    -- change to page 4
     game.selected["vizPage"] = 4
+  end
+
+  if (mouse.x >= 36 and mouse.x <= 40) and mouse.y == 31 then
+    -- clear
+    for i = 1,1944 do
+      -- if i is odd, fill {0,0,0,0}
+      -- if i is even, fill with "."
+      if (i % 2 == 0) then
+        -- even number
+        SML.screen[game.selected["pattern"]][game.selected["vizPage"]][i] = " "
+      else
+        -- odd number
+        SML.screen[game.selected["pattern"]][game.selected["vizPage"]][i] = {0,0,0,0}
+      end
+    end
+    for i = 1,12 do
+      SML.screen[game.selected["pattern"]][game.selected["vizPage"]][i*162] = "\n"
+    end
+  end
+
+  if (mouse.x >= 46 and mouse.x <= 49) and mouse.y == 31 then
+    -- start animation
+    game.vizAnimate = true
+    game.vizOnion = false
+  end
+
+  if (mouse.x >= 55 and mouse.x <= 58) and mouse.y == 31 then
+    -- start animation
+    game.vizAnimate = false
+    game.selected["vizPage"] = 1 -- reset to page 1
+  end
+
+  -- Visualizer Bottom section
+  --  love.graphics.print(visualizerBottom,FONT_WIDTH*0,FONT_HEIGHT*43)
+  if mouse.y == 44 and (mouse.x > 1 and mouse.y < 80) then
+    -- Visualizer Color selector
+    if mouse.x == 12 then
+      game.selected["vizColor"] = 1
+    end
+    if mouse.x == 14 then
+      game.selected["vizColor"] = 2
+    end
+    if mouse.x == 16 then
+      game.selected["vizColor"] = 3
+    end
+    if mouse.x == 18 then
+      game.selected["vizColor"] = 4
+    end
+    if mouse.x == 20 then
+      game.selected["vizColor"] = 5
+    end
+    if mouse.x == 22 then
+      game.selected["vizColor"] = 6
+    end
+    if mouse.x == 24 then
+      game.selected["vizColor"] = 7
+    end
+    if mouse.x == 26 then
+      game.selected["vizColor"] = 8
+    end
+    if mouse.x == 28 then
+      game.selected["vizColor"] = 9
+    end
+    if mouse.x >= 30 and mouse.x <=31 then
+      game.selected["vizColor"] = 10
+    end
+    if mouse.x >= 33 and mouse.x <=34 then
+      game.selected["vizColor"] = 11
+    end
+    if mouse.x >= 36 and mouse.x <=37 then
+      game.selected["vizColor"] = 12
+    end
+    if mouse.x >= 39 and mouse.x <=40 then
+      game.selected["vizColor"] = 13
+    end
+    if mouse.x >= 42 and mouse.x <=43 then
+      game.selected["vizColor"] = 14
+    end
+    if mouse.x >= 45 and mouse.x <=46 then
+      game.selected["vizColor"] = 15
+    end
+
+    -- copy 1 2 3 4
+    if mouse.x == 58 then
+      -- copy page 1 to current page
+      for i = 1,1944 do
+        SML.screen[game.selected["pattern"]][game.selected["vizPage"]][i] = SML.screen[game.selected["pattern"]][1][i]
+      end
+    end
+    if mouse.x == 60 then
+      -- copy page 2 to current page
+      for i = 1,1944 do
+        SML.screen[game.selected["pattern"]][game.selected["vizPage"]][i] = SML.screen[game.selected["pattern"]][2][i]
+      end
+    end
+    if mouse.x == 62 then
+      -- copy page 3 to current page
+      for i = 1,1944 do
+        SML.screen[game.selected["pattern"]][game.selected["vizPage"]][i] = SML.screen[game.selected["pattern"]][3][i]
+      end
+    end
+    if mouse.x == 64 then
+      -- copy page 4 to current page
+      for i = 1,1944 do
+        SML.screen[game.selected["pattern"]][game.selected["vizPage"]][i] = SML.screen[game.selected["pattern"]][4][i]
+      end
+    end
+
+    -- toggle onion skin with "@" , 69 44
+    if mouse.x == 69 then
+      -- toggle game.vizOnion
+      if game.vizOnion == false then
+        game.vizOnion = true
+      else
+        game.vizOnion = false
+      end
+    end
+
   end
 
   -- Melody Instrument
